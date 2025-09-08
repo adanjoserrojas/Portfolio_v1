@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+/*My color palette, for now: 
+
+  Black: #212121
+    darkerBlack: #0c0c0c
+    
+  Blue: #00447c 
+    darkerBlue: #002756
+
+  Laguna: #0b7b8e
+    darkerLaguna: #035b7a
+
+  Beige: #dddace
+    darkerBeige: #c6c3b6
+
+  Cream: #f2f3f4
+    darkerCream: #eaeaea
+
+  */
+
+@theme{ /* In-line use Color Palette*/
+
+  --color-Black: #212121;
+  --color-darkBlack: #0c0c0c;
+  --color-Blue: #00447c;
+  --color-darkBlue: #002756;
+  --color-Laguna: #0b7b8e;
+  --color-darkLaguna: #035b7a; 
+  --color-Beige: #dddace;
+  --color-darkBeige: #c6c3b6; 
+  --color-Cream: #f2f3f4; 
+  --color-darkCream: #eaeaea;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0c0c0c;
+  }
+}
+
+body {
+  background: var(--background);
+  font-family: 'Montserrat', sans-serif;
+} 
