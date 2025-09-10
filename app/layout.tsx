@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: 'Minimalist portfolio showcasing creative Full-Stack Dev solutions :)',
   keywords: ['portfolio', 'web developer', 'UI/UX', 'TypeScript', 'Next.js', 'creative development', 'Full-Stack Developer', 'SWE'],
   authors: [{ name: 'Adan Rojas' }],
-  viewport: 'width=device-width, initial-scale=1',
+  viewport: 'width=device-width, initial-scale=1'
 };
 
 export default function RootLayout({

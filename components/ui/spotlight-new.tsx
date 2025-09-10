@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { motion } from "motion/react";
 
@@ -31,7 +32,7 @@ export const Spotlight = ({
         opacity: 0,
       }}
       animate={{
-        opacity: 1,
+        opacity: 0.6,
       }}
       transition={{
         duration: 1.5,
