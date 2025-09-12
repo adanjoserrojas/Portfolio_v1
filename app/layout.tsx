@@ -17,8 +17,9 @@ export const metadata: Metadata = {
   description: 'Minimalist portfolio showcasing creative Full-Stack Dev solutions :)',
   keywords: ['portfolio', 'web developer', 'UI/UX', 'TypeScript', 'Next.js', 'creative development', 'Full-Stack Developer', 'SWE'],
   authors: [{ name: 'Adan Rojas' }],
-  viewport: 'width=device-width, initial-scale=1'
 };
+
+export const viewport = 'width=device-width, initial-scale=1'
 
 export default function RootLayout({
   children,
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark !scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

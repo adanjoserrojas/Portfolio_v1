@@ -32,7 +32,7 @@ export const Spotlight = ({
         opacity: 0,
       }}
       animate={{
-        opacity: 0.6,
+        opacity: 0.8,
       }}
       transition={{
         duration: 1.5,

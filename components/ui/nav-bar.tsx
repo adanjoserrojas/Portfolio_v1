@@ -28,7 +28,7 @@ export function NavBar(){
 
 {/* Center of NavBar */}
 
-            <div className="grid grid-cols-3 items-center justify-items-center w-fit gap-24">
+            <div className="grid grid-cols-3 items-center justify-items-center w-fit gap-64">
                 
                 {/*onClick={() => setisVisible(!isVisible)}>*/}
                 <Link href="/projects">

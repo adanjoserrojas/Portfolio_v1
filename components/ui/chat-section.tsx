@@ -47,7 +47,7 @@ export default function AIChatSection() {
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Sorry, I'm having trouble responding right now. Please try again later!",
+        text: "I don't know about that lol",
         isUser: false,
         timestamp: new Date(),
       };
@@ -64,9 +64,9 @@ export default function AIChatSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           
-          <div className="rounded-lg shadow-lg h-96 flex flex-col">
+          <div className=" bg-background/30 backdrop-blur-md rounded-3xl shadow-lg h-96 flex flex-col">
             <ChatContainer messages={messages} isLoading={isLoading} />
-            <div className="border-t p-4">
+            <div className="p-4">
               <SearchBar onSearch={handleSearch} isLoading={isLoading} />
             </div>
           </div>
