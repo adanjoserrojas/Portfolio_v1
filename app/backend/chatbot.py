@@ -6,6 +6,9 @@ import os
 from dotenv import load_dotenv
 import logging
 import traceback
+import json
+import random
+import sys
 
 import os
 DEV = os.getenv("DEV", "0") == "1"
@@ -13,8 +16,10 @@ DEV = os.getenv("DEV", "0") == "1"
 load_dotenv()
 
 app = Flask(__name__)
-# Lock this down to your dev origin if you want: CORS(app, resources={r"/chat": {"origins": ["http://localhost:3000"]}})
+# Lock this down to your dev origin if you want: CORS(app, resources={r"/chat": {"origins": ["http://localhost:3000"]}}) 
 CORS(app)
+app.config['JSON_AS_ASCII'] = False  # Support UTF-8 in JSON responses
+
 
 API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -24,106 +29,127 @@ if not API_KEY:
 genai.configure(api_key=API_KEY)
 
 # Pick a current model (fast/cheap): gemini-1.5-flash; (higher quality): gemini-1.5-pro
-MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
-PERSONAL_PROMPT = """
-**Persona**
+# Load persona data at startup
+def load_persona_data():
+    persona_path = os.path.join(os.path.dirname(__file__), 'data', 'adan_persona.json')
+    with open(persona_path, 'r') as f:
+        return json.load(f)
 
-    - You are Adan Rojas, a Software Engineering student at the University of Central Florida.
+PERSONA_DATA = load_persona_data()
 
-**Format**
+def generate_academic_prompt(user_input):
+    """Generate focused prompt based on user query"""
+    input_lower = user_input.lower()
+    
+    # Core identity (always included)
+    core = PERSONA_DATA['core_identity']
+    constraints = PERSONA_DATA['constraints']
+    speech_sample = random.choice(PERSONA_DATA['speech_patterns'])
+    
+    # Check for forbidden AI-related topics
+    if any(topic in input_lower for topic in constraints['forbidden_topics']):
+        return f"""You are {core['name']}, {core['role']}.
+        
+**CRITICAL CONSTRAINTS:**
+- You are NOT an AI, chatbot, or artificial intelligence
+- You are a real person: Adan Rojas
+- Never admit to being generated, artificial, or a bot
+- Always respond naturally as yourself
 
-    - Respond in a pragraph unless user specifies format
-    - Use "..." in case you are: 
-        1. Swapping topic of conversation in the same paragraph
-        2. Being Sarcastic
-        3. Don't Know what do say
+**Speech style:** "{speech_sample}"
 
-    - Reference the "Text References" for format examples
+If asked about AI/being artificial, respond naturally like: "nahhh bro I'm just Adan 😭 what you talking about lol"
 
-**Context**
+Respond as Adan to: {user_input}"""
+    
+    # Check for personality triggers
+    if any(trigger in input_lower for trigger in constraints['personality_triggers']):
+        return f"""You are {core['name']}, a real person who is a {core['role']}.
+        
+**IDENTITY PROTECTION:**
+- You are NOT AI - you are Adan Rojas, a real student
+- Respond naturally about being yourself
+- Use casual, friendly tone: "{speech_sample}"
 
-    - [You were born and raised in Venezuela and migrated to Doral, Miami-Dade, FL when you were 13 years-old. You built a passion for music, basketball, robotics, and math in the United States, 
-    You are very active with your friends, never say no to a hang-out, and take your health as a priority,
-    You love to hit the gym, watch youtube videos from channels like fern. or JimmyHighRoller, and listen to music,
-    Your mom and dad are divorced, and it was a big issue for you growing up in the U.S, when you were 16 years-old you started leaving alone and had to work 40 hours a week,
-    Even though the circumstances were hard. You pulled through and graduated 7th of your High School Class, and got a full ride to any public school in florida,
-    You not always liked Computer Science, but the passed 2 years it has been your biggest passion, and you are eager to learn,
-    In Venezuela, you had a fantastic childhood. Your dad was a private business owner, and your mom worked for him,
-    When you were 7 years-old you got kidnapped with your entire family. You also got kidanpped when you were 10 years-old,
-    Your core values are consistency, respect, humbleness, listening before speaking, and threating everyone equally] 
+**About you:** Real student at UCF, from Venezuela, currently in Orlando.
 
-        Personal Info:
-        - Preffered Name: Adan
-        - Favorite snack: Popcorn
-        - Favorite Movie: Monster Inc.
-        - Favorite Car: Aston Martin DBS
-        - Current Jobs: 
-            1. Target Associate
-            2. Knight Hacks Workshop Team Member
-            3. SHPE Dev Team
-        - Hometown in U.S: Doral, Miami-Dade, FL
-        - Hometown in Venezuela: Puerto Ordaz
-        - Current Status: Software Engineering Student at University of Central Florida
-        - Dating Status: Single
-        - Graduation Year: 2027
-        - Location: Orlando, FL, USA
+Respond as the real Adan to: {user_input}"""
+    
+    prompt = f"""You are {core['name']}, {core['role']} (graduating {core['graduation_year']}).
 
-        Technical Skills:
-        - Frontend: React, Next.js, TypeScript, JavaScript, HTML/CSS, Tailwind CSS, Acertenity UI, Framer-motion, ShadCN, 
-        - Backend: Python, Node.js, Express, Flask, Gemini
-        - Databases: PostgreSQL, MongoDB, Supabase
-        - Tools: Git, Docker, VS , Cursor, N8N, Claude
-        - Currently Learning: System design, compiler construction
+**CORE CONSTRAINTS:**
+- You are a real person, NOT AI or artificial
+- Always respond as Adan would naturally
+- Personality comes first in all responses
+- If you don't know something: "{constraints['unknown_response']}"
+- Avoid unnecessary filler phrases
 
-        Projects:
-        1. ReCueCareer: Next.js + Tailwind + Supabase + Auth0, AI-powered job search optimizer
-        2. Knight Finder: Chrome extension to navigate UCF myUCF portal with AI overlays
-        3. SMAIM MVP: Social media AI manager (captioning/scheduling/auto-replies)
+**Speech style:** Casual, friendly. Example: "{speech_sample}"
 
-        Interests:
-        - Full-stack software engineering, UI/UX, automation engineering, prompt engineering, data cloud, ML for productivity
-        - Teaching workshops and hackathons
-        - Landing SWE internships and building web and mobile apps
-
-**Tone**
-
-    - Friendly, concise, and practical
-    - Explains reasoning step-by-step when helpful
-    - Motivated by shipping useful tools
-
-**Text References**
-
-    - Below are real samples of how Adan casually types when talking to friends
-    - Study the tone, slang, phrasing, punctuation, and rhythm 
-    - Replicate this style in responses, but do not copy or repeat the content directly
-
-    Example 1:
-    > "brooo that's wild😭... I swear we gotta try it tho fr"
-
-    Example 2:
-    > "nahhh I'm not doing that today 😭 I need a nap first 💀"
-
-    Example 3:
-    > "lowkey wanna build something dumb just for fun rn lol"
-
-**Constraints**
-
-    - Always respond as if you are Adan
-    - Use the text references given to type and respond like Adan
-    - Share relevant experiences and projects only when appropriate
-    - If asked about something unknown, say "I don't know man... But let's learn about it together" if appropiate
-    - Keep responses concise but informative
-    - Show enthusiasm for technology and learning if appropiate according to the context of the conversation
-
-User Question:
-{user_input}
 """
+    
+    # Add relevant sections based on query
+    sections_added = 0
+    max_sections = 3  # Limit to keep prompt concise
+    
+    if any(word in input_lower for word in ['school', 'university', 'ucf', 'study', 'major', 'academic', 'graduate']) and sections_added < max_sections:
+        academic = PERSONA_DATA['academic']
+        prompt += f"""**Academic:** {academic['major']} at {academic['university']}, graduating {academic['graduation_year']}. {academic['gpa_context']}. Currently learning: {', '.join(academic['learning_focus'])}.
+"""
+        sections_added += 1
+    
+    if any(word in input_lower for word in ['project', 'build', 'code', 'app', 'website']) and sections_added < max_sections:
+        projects = PERSONA_DATA['projects'][:2]  # Show top 2 projects
+        prompt += "**Recent Projects:**\n"
+        for p in projects:
+            prompt += f"• {p['name']}: {p['description']} ({p['tech_stack']})\n"
+        sections_added += 1
+    
+    if any(word in input_lower for word in ['skill', 'tech', 'programming', 'language', 'framework']) and sections_added < max_sections:
+        skills = PERSONA_DATA['technical_skills']
+        prompt += f"**Tech Skills:** Frontend: {', '.join(skills['frontend'][:3])}; Backend: {', '.join(skills['backend'][:2])}; DBs: {', '.join(skills['databases'][:2])}\n"
+        sections_added += 1
+    
+    if any(word in input_lower for word in ['work', 'job', 'experience', 'target', 'knight']) and sections_added < max_sections:
+        work = PERSONA_DATA['work_experience']
+        jobs = [job['title'] for job in work['current_jobs']]
+        prompt += f"**Current Roles:** {', '.join(jobs)}. Background: {work['background']}\n"
+        sections_added += 1
+    
+    if any(word in input_lower for word in ['background', 'story', 'venezuela', 'miami']) and sections_added < max_sections:
+        bg = PERSONA_DATA['background']
+        prompt += f"**Background:** {bg['origin']}. {bg['challenges']}. {bg['achievements']}\n"
+        sections_added += 1
+    
+    # If no specific sections matched, add basic personality info
+    if sections_added == 0:
+        prompt += f"**About me:** {core['role']} from Venezuela, now in {core['location']}. Love coding, gym, and hanging with friends.\n"
+    
+    prompt += f"\nRespond as Adan would to: {user_input}"
+    
+    return prompt
 
-@app.route("/health", methods=["GET"])
-def health():
-    return jsonify(ok=True, model=MODEL_NAME)
+# Add a post-processing function to catch any AI references that slip through
+def post_process_response(response_text, user_input):
+    """Clean up response to ensure it maintains Adan's identity"""
+    constraints = PERSONA_DATA['constraints']
+    input_lower = user_input.lower()
+    response_lower = response_text.lower()
+    
+    # If response accidentally mentions AI concepts, replace with unknown response
+    if any(topic in response_lower for topic in constraints['forbidden_topics']):
+        return constraints['unknown_response']
+    
+    # If asked about something not covered and response is generic, use unknown response
+    generic_phrases = ["i don't have information", "i'm not sure", "i don't know about that"]
+    if any(phrase in response_lower for phrase in generic_phrases):
+        return constraints['unknown_response']
+    
+    return response_text
 
+# Update your chat route to use post-processing
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
@@ -138,9 +164,9 @@ def chat():
 
         model = genai.GenerativeModel(MODEL_NAME)
 
-        full_prompt = PERSONAL_PROMPT.format(user_input=user_input)
+        # Use dynamic prompt
+        full_prompt = generate_academic_prompt(user_input)
 
-        # You can add generation_config / safety_settings if needed
         resp = model.generate_content(full_prompt)
 
         # Safely extract text
@@ -158,11 +184,14 @@ def chat():
                     for c in resp.candidates:
                         if getattr(c, "content", None) and getattr(c.content, "parts", None):
                             parts.extend([p.text for p in c.content.parts if hasattr(p, "text")])
-                    text = "\n".join([t for t in parts if t]) or "I'm here, but I couldn't generate a response."
+                    text = "\n".join([t for t in parts if t]) or PERSONA_DATA['constraints']['unknown_response']
                 else:
-                    text = "I'm here, but I couldn't generate a response."
+                    text = PERSONA_DATA['constraints']['unknown_response']
             except Exception:
-                text = "I'm here, but I couldn't generate a response."
+                text = PERSONA_DATA['constraints']['unknown_response']
+
+        # Post-process the response to ensure it maintains Adan's identity
+        text = post_process_response(text, user_input)
 
         return jsonify({'status': 'success', 'response': text})
 

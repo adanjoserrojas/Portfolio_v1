@@ -17,12 +17,10 @@ export default function Landing() {
                 <div className="flex justify-center items-center min-h-screen">
                     <div className="items-center justify-items-center inline-block">
                         <motion.h1
-                            className="grid grid-row-3 gap-12 text-center text-darkBeige text-5xl font-thin"
+                            className="text-center text-darkBeige text-5xl font-thin mt-18"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{duration: 2}}
-                            exit={{}}>
-                            <p className="text-darkBeige"></p>
+                            transition={{duration: 2}}>
                             Hey there! I'm Adan 
                         </motion.h1>
                         <AIChatSection />

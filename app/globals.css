@@ -28,8 +28,8 @@
   --color-darkBlue: #002756;
   --color-Laguna: #0b7b8e;
   --color-darkLaguna: #035b7a; 
-  --color-Beige: #dddace;
-  --color-darkBeige: #c6c3b6; 
+  --color-Beige: #ffff;
+  --color-darkBeige: #ffff; 
   --color-Cream: #f2f3f4; 
   --color-darkCream: #eaeaea;
 }
@@ -51,6 +51,19 @@
   --animate-third: moveInCircle 40s linear infinite;
   --animate-fourth: moveHorizontal 40s ease infinite;
   --animate-fifth: moveInCircle 20s ease infinite;
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 @keyframes moveHorizontal {

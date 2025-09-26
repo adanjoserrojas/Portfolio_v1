@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import SearchBar from './search-bar';
 import ChatContainer, { Message } from './AIChatSection';
+import { motion } from "framer-motion";
 
 export default function AIChatSection() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -62,15 +63,14 @@ export default function AIChatSection() {
   return (
     <section className="min-h-screen bg-transparent py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          
-          <div className=" bg-background/30 backdrop-blur-md rounded-3xl shadow-lg h-96 flex flex-col">
+        <motion.div className="max-w-4xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{duration: 2}}>
+          <div className="bg-background/30 backdrop-blur-xl rounded-3xl shadow-xl h-96 flex flex-col">
             <ChatContainer messages={messages} isLoading={isLoading} />
             <div className="p-4">
               <SearchBar onSearch={handleSearch} isLoading={isLoading} />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -77,7 +77,7 @@ export function NavBar(){
                             whileHover={{ scale: 1.2 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
                             >
-                            <Github size={24} style={{ color: '#c6c3b6' }}/>
+                            <Github size={24} style={{ color: '#ffff' }}/>
                         </motion.button>
                     </a>
 
@@ -89,7 +89,7 @@ export function NavBar(){
                             transition={{ duration: 0.2, ease: "easeOut" }}
                             >
 
-                            <Linkedin size={24} style={{ color: '#c6c3b6' }}/>
+                            <Linkedin size={24} style={{ color: '#ffff' }}/>
                         </motion.button>
                     </a>
 
@@ -99,7 +99,7 @@ export function NavBar(){
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         onClick={() => window.open('/Adan_Rojas_Resume.pdf', '_blank')}
                         >
-                        <FileText size={24} style={{ color: '#c6c3b6' }}/>
+                        <FileText size={24} style={{ color: '#ffff' }}/>
                     </motion.button>
 
                 </div>

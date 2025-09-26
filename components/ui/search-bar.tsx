@@ -30,7 +30,7 @@ export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Chat with me :3"
-          className="w-full pl-10 pr-4 py-3 bg-Black-100 rounded-full focus:border-darkBeige focus:outline-none transition-colors text-Beige"
+          className="w-full pl-10 pr-4 py-3 border-1 border-Black-100 rounded-full focus:border-Laguna focus:outline-none transition-colors text-Beige"
           disabled={isLoading}
         />
         <button
