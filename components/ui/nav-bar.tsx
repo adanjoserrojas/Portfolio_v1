@@ -27,18 +27,7 @@ export function NavBar() {
     const navbarContent = (
         <motion.nav 
             className="fixed top-0 left-0 right-0 flex justify-between items-center w-full z-[100] px-4 py-4 backdrop-blur-xl border-Black border-b-1"
-            initial={{ }}
-            animate={{ }}
         >
-            {/* Expanding background */}
-            <motion.div
-                className="absolute inset-0 bg-Laguna/30 backdrop-blur-lg rounded-2xl"
-                style={{ 
-                    opacity: backgroundOpacity,
-                    scale: backgroundScale,
-                }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-            />
 
             {/* Your existing navbar content with relative z-10 */}
             <div className="relative z-10 w-24 h-auto">
@@ -57,7 +46,7 @@ export function NavBar() {
             <div className="relative z-10 flex-1 flex justify-center">
                 <motion.div className="grid grid-cols-3 items-center justify-items-center w-fit gap-64">
                     
-                    <Link href="/projects">
+                    <button>
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Projects
                             <motion.div
@@ -67,8 +56,8 @@ export function NavBar() {
                                 transition={{duration: 0.5, ease: "backInOut"}}>
                             </motion.div>    
                         </motion.div>
-                    </Link>
-                    <Link href="/experience">
+                    </button>
+                    <button id="scroll-to-experience">
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Experience
                             <motion.div
@@ -78,8 +67,8 @@ export function NavBar() {
                                 transition={{duration: 0.5, ease: "backInOut"}}>
                             </motion.div>    
                         </motion.div>
-                    </Link>
-                    <Link href="/skills">
+                    </button>
+                    <button id="scroll-to-skills">
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Skills
                             <motion.div
@@ -89,7 +78,7 @@ export function NavBar() {
                                 transition={{duration: 0.5, ease: "backInOut"}}>
                             </motion.div>    
                         </motion.div>
-                    </Link>
+                    </button>
                 </motion.div>
             </div>
 
