@@ -24,6 +24,16 @@ export function NavBar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
+
     const navbarContent = (
         <motion.nav 
             className="fixed top-0 left-0 right-0 flex justify-between items-center w-full z-[100] px-4 py-4 backdrop-blur-xl border-Black border-b-1"
@@ -46,7 +56,7 @@ export function NavBar() {
             <div className="relative z-10 flex-1 flex justify-center">
                 <motion.div className="grid grid-cols-3 items-center justify-items-center w-fit gap-64">
                     
-                    <button>
+                    <button onClick={() => scrollToSection('projects')}>
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Projects
                             <motion.div
@@ -57,7 +67,7 @@ export function NavBar() {
                             </motion.div>    
                         </motion.div>
                     </button>
-                    <button id="scroll-to-experience">
+                    <button onClick={() => scrollToSection('experience')}>
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Experience
                             <motion.div
@@ -68,7 +78,7 @@ export function NavBar() {
                             </motion.div>    
                         </motion.div>
                     </button>
-                    <button id="scroll-to-skills">
+                    <button onClick={() => scrollToSection('skills')}>
                         <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Skills
                             <motion.div
@@ -112,7 +122,7 @@ export function NavBar() {
                         className=""
                         whileHover={{ scale: 1.2 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        onClick={() => window.open('/Adan_Rojas_Resume.pdf', '_blank')}
+                        onClick={() => window.open('/Adan_Rojas_Resume_Oct.pdf', '_blank')}
                         >
                         <FileText size={24} style={{ color: '#ffff' }}/>
                     </motion.button>
