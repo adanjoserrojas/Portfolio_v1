@@ -53,7 +53,7 @@ export default function ProjectCard({
     <div className="w-full h-120">
       {!showCube ? (
         <motion.div 
-          className="w-full h-full bg-Black-100 rounded-lg shadow-md flex flex-col overflow-hidden border-Beige/30 border-1 relative"
+          className="w-full h-full bg-Black-100 rounded-lg shadow-md flex flex-col overflow-hidden border-Beige/30 border-2 relative"
           initial={{ opacity: 1 }}
           animate={isDisappearing ? { 
             opacity: 0
