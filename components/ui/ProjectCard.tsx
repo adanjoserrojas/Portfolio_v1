@@ -1,15 +1,14 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import type { StaticImageData } from 'next/image';
 import { RotatingCube } from "./RotatingCube";
 import { flushSync } from "react-dom";
 
 type ProjectCardProps = {
   title: string;
   date: string;
-  image: any;
+  image: StaticImageData | string;
   href?: string;
   description?: string;
   className?: string;
@@ -29,7 +28,6 @@ export default function ProjectCard({
   image,
   href = "#",
   description = "Brief description goes here.",
-  className = "",
 }: ProjectCardProps) {
 
   const [isDisappearing, setIsDisappearing] = useState(false);

@@ -89,7 +89,7 @@ export function NavBar() {
 
     const navbarContent = (
         <motion.nav 
-            className="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-xl border-Black border-2"
+            className="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-xl border-Black border-1"
         >
             {/* Main navbar row */}
             <div className="flex justify-between items-center w-full px-4 py-4">

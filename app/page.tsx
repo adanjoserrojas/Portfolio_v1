@@ -3,9 +3,8 @@
 import './globals.css';
 import React, { useState } from "react";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import  { NavBar }  from "@/components/ui/nav-bar";
-import AIChatSection from '@/components/ui/chat-section';
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 import McChicken1 from '@/pictures/iPalo.png';
@@ -16,7 +15,7 @@ import McChicken7 from '@/pictures/KH2025Logo.png';
 import McChicken9 from '@/pictures/CanvasLogo.png';
 import McChicken4 from '@/pictures/DSC_0037.png';
 
-import ProjectCard from "@/components/ui/ProjectCard";
+import ProjectCard from '@/components/ui/ProjectCard';
 import { CardDemo } from '@/components/ui/CardDemo';
 import FloatExperience from '@/components/ui/FloatExperience';
 import QuizComponent from '@/components/ui/quizComponent';
@@ -62,7 +61,7 @@ export default function Landing() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2 }}
             >
-              Hey there! I'm Adan
+              {'Hey there! I\'m Adan'}
             </motion.h1>
             {/*<AIChatSection />*/} {/* Chat section removed for cleaner intro, will work in V2 */}
             <section className="grid grid-cols-2 gap-16 items-center justify-items-center px-16 max-w-7xl mx-auto"> 
@@ -72,11 +71,11 @@ export default function Landing() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.5, delay: 0.3 }}
                 >
-                  I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+                  {'I\'m a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.'}
                   <br /><br />
-                  I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I'm actively exploring machine learning and quantitative research. These fields I'm just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.
+                  {'I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I\'m actively exploring machine learning and quantitative research. These fields I\'m just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.'}
                   <br /><br />
-                  This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.
+                  {'This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.'}
                 </motion.p>
                 <motion.img 
                   src={McChicken4.src} 
@@ -92,7 +91,7 @@ export default function Landing() {
         
         <h1 id="projects" className="text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8">Projects</h1>
         <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
-          Here are some of my personal and collaborative projects that I've worked on recently.
+          {'Here are some of my personal and collaborative projects that I\'ve worked on recently.'}
         </p>
         <div className="m-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-8 gap-8">
@@ -111,13 +110,13 @@ export default function Landing() {
 
         <h2 id="skills" className='text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8'>Skills</h2>
         <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
-          Here are some of the technologies and tools I work with:
+          {'Here are some of the technologies and tools I work with:'}
         </p>
         <CardDemo />
             
         <h3 id="experience" className='text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8'> Experience</h3>
         <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
-          A few roles I've had the pleasure to work in recently:
+          {'A few roles I\'ve had the pleasure to work in recently:'}
         </p>
         <section className="items-center justify-items-center">
           <div className='grid grid-cols-2 items-center justify-items-center gap-8 m-8'>
@@ -137,9 +136,9 @@ export default function Landing() {
         
         <h4 className='text-center text-5xl text-darkBeige font-extralight gap-8 m-8'>A little quiz about Me</h4>
         <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
-          To finish off, here is a fun little quiz to see how well you know me! If you guess all of them right, you will get redirected to a very important and secret project of mine
+          {'To finish off, here is a fun little quiz to see how well you know me! If you guess all of them right, you will get redirected to a very important and secret project of mine'}
           <br></br>
-          That I have been working on my own and very few people know about it! Good Luck, the quiz is Lowkey hard!
+          {'That I have been working on my own and very few people know about it! Good Luck, the quiz is Lowkey hard!'}
         </p>
         <div className='grid grid-cols-2 grid-rows-3 gap-12 items-center justify-items-center max-w-6xl mx-auto px-8 py-12'>
           <video
