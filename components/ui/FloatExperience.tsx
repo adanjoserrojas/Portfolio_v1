@@ -43,8 +43,8 @@ const FloatExperience = ({
     document.body.style.overflow = ''; // Restore scroll
   };
   return (
-    <section className="flex flex-col items-center justify-items-center">
-      <h1 className="text-darkBeige text-3xl font-bold mb-4 text-center">{title}</h1>
+    <section className="flex flex-col items-center justify-items-center border-2 border-Beige/30 rounded-4xl p-4 m-4 shadow-3xl bg-primary/30 backdrop-blur-lg">
+      <h1 className="text-darkBeige text-3xl font-extralight mb-4 text-center">{title}</h1>
       <motion.button
           className="h-64 w-64 rounded-full bg-transparent shadow-3xl backdrop-blur-xl border-Beige/30 border-2 mx-auto p-2 m-8 cursor-pointer flex items-center justify-center"
           initial={{ y: 0 }}
@@ -74,7 +74,7 @@ const FloatExperience = ({
       </motion.button>
 
       {/*Description*/}
-      <div className="text-center text-darkBeige">{description}</div>
+      <div className="text-center text-darkBeige/50 font-extralight whitespace-pre-line">{description}</div>
 
       {/* Modal Overlay */}
       <AnimatePresence>
@@ -116,7 +116,7 @@ const FloatExperience = ({
                 <h2 className="text-3xl font-bold text-darkBeige mb-4">{title}</h2>
                 {company && <h3 className="text-xl text-darkBeige mb-2">{company}</h3>}
                 {duration && <p className="text-lg text-darkBeige mb-4">{duration}</p>}
-                {description && <p className="text-darkBeige mb-6">{description}</p>}
+                {description && <p className="text-darkBeige mb-6 whitespace-pre-line">{description}</p>}
               </div>
             </motion.div>
           </motion.div>

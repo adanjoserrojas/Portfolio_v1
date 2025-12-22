@@ -1,4 +1,5 @@
 "use client";
+
 import './globals.css';
 import React, { useState } from "react";
 import { Spotlight } from "@/components/ui/spotlight-new";
@@ -13,10 +14,12 @@ import McChicken3 from '@/pictures/Face2Learn.jpg';
 import McChicken from '@/pictures/ReCueCareer.png';
 import McChicken7 from '@/pictures/KH2025Logo.png';
 import McChicken9 from '@/pictures/CanvasLogo.png';
+import McChicken4 from '@/pictures/adanprofessionalpic.jpeg';
 
 import ProjectCard from "@/components/ui/ProjectCard";
 import { CardDemo } from '@/components/ui/CardDemo';
 import FloatExperience from '@/components/ui/FloatExperience';
+import QuizComponent from '@/components/ui/quizComponent';
 
 export default function Landing() {
 
@@ -28,9 +31,17 @@ export default function Landing() {
   ];
 
   const experience = [
-    { title: "Workshop Instructor", company: "Knight Hacks", duration: "August 2025 - Present", description: "This is where I teach UI/UX to Knight Hacks members.", imageSrc: McChicken7 },
-    { title: "Software Engineer Intern", company: "Dahiana Rojas De Rojas LLC", duration: "June 2025 - Present", description: "I helped this Real Estate company atuomating processes for Pre-Lead acquisition and Lead conversion through Agentic workflows made with N8N.", imageSrc: McChicken9 },
+    { title: "Workshop Instructor", company: "Knight Hacks", duration: "August 2025 - Present", description: "This is where I teach UI/UX to Knight Hacks members.\n Knight Hacks is awesome, you should join!", imageSrc: McChicken7.src },
+    { title: "Software Engineer Intern", company: "Dahiana Rojas De Rojas LLC", duration: "June 2025 - Present", 
+      description: "I helped this Real Estate company automating processes \nAgentic workflows made with N8N.", imageSrc: McChicken9.src },
   ];
+
+  const quizData = [
+    {question: "Which is my favorite music genre?", options: ["McChicken", "Latin Music", "Don Toliver", "Harsh EDM (Miau)"], correctIndex: 3},
+    {question: "What do I do on my free-time?", options: ["Going Out Often Nightly", "Make music", "Play Taylor Swift LOUDLY", "Growing Outdoor Organic Nature"], correctIndex: 1},
+    {question: "Which is my favorite Language?", options: ["C--", "Spanish", "Banana", "Rust"], correctIndex: 0},
+    {question: "Which is my favorite animal?", options: ["Michael", "Jack", "Dogs! I love dogs, please select dogs!", "Ducks"], correctIndex: 0},
+    ];
 
   return (
     <main className="relative bg-primary min-h-screen overflow-hidden">
@@ -43,20 +54,45 @@ export default function Landing() {
         <div className="flex justify-center items-center min-h-screen">
           <div className="items-center justify-items-center inline-block">
             <motion.h1
-              className="text-center text-darkBeige text-5xl mt-24 font-inter font-semibold"
+              className="text-center text-darkBeige text-5xl font-extralight"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{duration: 2}}
+              transition={{ duration: 2 }}
             >
               Hey there! I'm Adan
             </motion.h1>
-            <AIChatSection />
+            {/*<AIChatSection />*/}
+            <section className="grid grid-cols-2 gap-16 items-center justify-items-center px-16 py-12 mt-8 max-w-7xl mx-auto"> 
+            <motion.p 
+                className="text-lg text-darkBeige/50 font-extralight leading-relaxed tracking-wide max-w-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, delay: 0.3 }}
+              >
+                I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+                <br /><br />
+                I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I'm actively exploring machine learning and quantitative research. These fields I'm just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.
+                <br /><br />
+                This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.
+              </motion.p>
+              <motion.img 
+                src={McChicken4.src} 
+                alt="Adan Rojas Professional Picture" 
+                className='w-[420px] h-[420px] rounded-full border border-white/20 shadow-lg object-cover'
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, delay: 0.5 }}
+              />
+            </section>
           </div> 
         </div>
         
-        <h1 id="projects" className="text-center text-5xl text-darkBeige transEffectText1">Projects</h1>
+        <h1 id="projects" className="text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8">Projects</h1>
+        <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
+          Here are some of my personal and collaborative projects that I've worked on recently.
+        </p>
         <div className="m-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-8 gap-8">
             {projects.map((p) => (
               <ProjectCard
                 key={p.title}
@@ -70,10 +106,16 @@ export default function Landing() {
           </div>
         </div>
 
-        <h2 id="skills" className='text-center text-5xl text-darkBeige transEffectText1'>Skills</h2>
+        <h2 id="skills" className='text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8'>Skills</h2>
+        <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
+          Here are some of the technologies and tools I work with:
+        </p>
         <CardDemo />
             
-        <h3 id="experience" className='text-center text-5xl text-darkBeige font-bold transEffectText1'> Experience</h3>
+        <h3 id="experience" className='text-center text-5xl text-darkBeige font-extralight transEffectText1 gap-8 m-8'> Experience</h3>
+        <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
+          A few roles I've had the pleasure to work in recently:
+        </p>
         <section className="items-center justify-items-center">
           <div className='grid grid-cols-2 items-center justify-items-center gap-8 m-8'>
           {experience.map((exp) => (
@@ -89,9 +131,37 @@ export default function Landing() {
           </div>
         </section>
         
-
-        {/*<h4 className='text-center text-5xl text-darkBeige z-50 transEffectText1'> The End of the Page... Where the fun begins!</h4>
-        <div className='flex justify-center items-center min-h-screen'></div>*/}
+        <h4 className='text-center text-5xl text-darkBeige font-extralight gap-8 m-8'>A little quiz about Me</h4>
+        <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
+          To finish off, here is a fun little quiz to see how well you know me! If you guess all of them right, you will get redirected to a very important and secret project of mine
+          <br></br>
+          That I have been working on my own and very few people know about it! Good Luck, the quiz is Lowkey hard!
+        </p>
+        <div className='grid grid-cols-2 grid-rows-3 gap-12 items-center justify-items-center max-w-6xl mx-auto px-8 py-12'>
+          <video
+            src="/videos/headBanging.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full max-w-[500px] h-auto rounded-xl border border-white/10 shadow-lg"
+          />
+          {quizData.map((quiz) => (
+            <QuizComponent
+              key={quiz.question}
+              question={quiz.question}
+              options={quiz.options}
+              correctIndex={quiz.correctIndex}
+            />
+          ))}
+          <video
+          src="/videos/CatBiting.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full max-w-[500px] h-auto rounded-xl border border-white/10 shadow-lg"/>
+        </div>
       </div>
     </main>
   );

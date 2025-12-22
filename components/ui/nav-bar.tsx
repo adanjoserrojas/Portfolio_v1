@@ -41,7 +41,7 @@ export function NavBar() {
 
             {/* Your existing navbar content with relative z-10 */}
             <div className="relative z-10 w-24 h-auto">
-                <a href="https://www.youtube.com/watch?v=Tz8ullZfVvo&list=RDTz8ullZfVvo&start_radio=1">
+                <a href="https://www.youtube.com/shorts/zMGNeaeyHR4">
                     <motion.button
                         className="inline-block"
                         animate={{ rotate: 360 }}
@@ -57,7 +57,7 @@ export function NavBar() {
                 <motion.div className="grid grid-cols-3 items-center justify-items-center w-fit gap-64">
                     
                     <button onClick={() => scrollToSection('projects')}>
-                        <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
+                        <motion.div className="relative text-center font-extralight h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Projects
                             <motion.div
                                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-darkBeige"
@@ -68,7 +68,7 @@ export function NavBar() {
                         </motion.div>
                     </button>
                     <button onClick={() => scrollToSection('experience')}>
-                        <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
+                        <motion.div className="relative text-center font-extralight h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Experience
                             <motion.div
                                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-darkBeige"
@@ -79,7 +79,7 @@ export function NavBar() {
                         </motion.div>
                     </button>
                     <button onClick={() => scrollToSection('skills')}>
-                        <motion.div className="relative text-center font-semibold h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
+                        <motion.div className="relative text-center font-extralight h-6 w-auto rounded-xl text-Beige" whileHover="barHover">
                             Skills
                             <motion.div
                                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-darkBeige"
