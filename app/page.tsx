@@ -14,7 +14,7 @@ import McChicken3 from '@/pictures/Face2Learn.jpg';
 import McChicken from '@/pictures/ReCueCareer.png';
 import McChicken7 from '@/pictures/KH2025Logo.png';
 import McChicken9 from '@/pictures/CanvasLogo.png';
-import McChicken4 from '@/pictures/adanprofessionalpic.jpeg';
+import McChicken4 from '@/pictures/DSC_0037.png';
 
 import ProjectCard from "@/components/ui/ProjectCard";
 import { CardDemo } from '@/components/ui/CardDemo';
