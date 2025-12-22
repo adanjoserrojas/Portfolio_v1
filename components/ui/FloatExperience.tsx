@@ -1,36 +1,24 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 
 const FloatExperience = ({
-    title, company, duration, description, imageSrc
+    title, company, duration, description, imageSrc, innerDescription
 }: {
     title?: string;
     company?: string;
     duration?: string | number;
     description?: string;
     imageSrc?: string | undefined;
+    innerDescription?: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Get navbar height on mount and window resize
-    const updateNavbarHeight = () => {
-      const navbar = document.querySelector('nav') || document.querySelector('[class*="nav"]') || document.querySelector('.fixed');
-      if (navbar) {
-        setNavbarHeight(navbar.offsetHeight);
-      } else {
-        // Fallback: assume standard navbar height
-        setNavbarHeight(80);
-      }
-    };
-
-    updateNavbarHeight();
-    window.addEventListener('resize', updateNavbarHeight);
-    
-    return () => window.removeEventListener('resize', updateNavbarHeight);
+    setMounted(true);
   }, []);
 
   const handleOpenModal = () => {
@@ -76,52 +64,47 @@ const FloatExperience = ({
       {/*Description*/}
       <div className="text-center text-darkBeige/50 font-extralight whitespace-pre-line">{description}</div>
 
-      {/* Modal Overlay */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-            style={{ 
-              zIndex: 999 // Lower than navbar so navbar stays visible
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={handleCloseModal} // Close on backdrop click
-          >
-            {/* Modal Content */}
+      {/* Modal Overlay - rendered via portal to body */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {isModalOpen && (
             <motion.div
-              className="bg-primary border-2 border-Beige rounded-lg overflow-hidden absolute"
-              style={{
-                top: `${navbarHeight}px`, // Position below navbar with margin
-                left: '8px',
-                width: 'calc(100vw - 16px)', // Screen width minus 8px margins
-                height: `calc(100vh - ${navbarHeight + 24}px)` // Available height minus navbar and margins
-              }}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm flex flex-col"
+              style={{ zIndex: 9999 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleCloseModal}
             >
-              {/* Close button */}
+              {/* Close button at top right */}
               <button
                 onClick={handleCloseModal}
-                className="absolute top-4 right-4 text-darkBeige hover:text-white z-10 text-2xl"
+                className="absolute top-6 right-6 text-white hover:text-darkBeige z-10 text-4xl font-light transition-colors"
               >
                 ×
               </button>
               
-              {/* Modal content */}
-              <div className="p-8 h-full overflow-y-auto">
-                <h2 className="text-3xl font-bold text-darkBeige mb-4">{title}</h2>
-                {company && <h3 className="text-xl text-darkBeige mb-2">{company}</h3>}
-                {duration && <p className="text-lg text-darkBeige mb-4">{duration}</p>}
-                {description && <p className="text-darkBeige mb-6 whitespace-pre-line">{description}</p>}
-              </div>
+              {/* Modal Content - full viewport */}
+              <motion.div
+                className="flex-1 w-full h-full overflow-y-auto p-8 pt-20"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.1 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-4xl font-bold text-white mb-4">{title}</h2>
+                  {company && <h3 className="text-2xl text-darkBeige mb-2">{company}</h3>}
+                  {duration && <p className="text-xl text-darkBeige/80 mb-6">{duration}</p>}
+                  {description && <p className="text-lg text-white/90 whitespace-pre-line leading-relaxed">{innerDescription}</p>}
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }

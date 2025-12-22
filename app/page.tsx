@@ -31,9 +31,12 @@ export default function Landing() {
   ];
 
   const experience = [
-    { title: "Workshop Instructor", company: "Knight Hacks", duration: "August 2025 - Present", description: "This is where I teach UI/UX to Knight Hacks members.\n Knight Hacks is awesome, you should join!", imageSrc: McChicken7.src },
-    { title: "Software Engineer Intern", company: "Dahiana Rojas De Rojas LLC", duration: "June 2025 - Present", 
-      description: "I helped this Real Estate company automating processes \nAgentic workflows made with N8N.", imageSrc: McChicken9.src },
+    { title: "Workshop Instructor", company: "Knight Hacks", duration: "August 2025 - Present", description: "This is where I teach UI/UX to Knight Hacks members.\n Knight Hacks is awesome, you should join!", imageSrc: McChicken7.src, 
+      innerDescription: "In this role, I get to share my passion for UI/UX design by leading workshops for Knight Hacks members, and honestly, one of the best parts is pushing myself outside my comfort zone through public speaking. Every workshop is a chance to grow while teaching others about design principles, tools, and best practices. I love creating presentations and hands-on activities that make user-centered design click for people. Beyond the workshops, I work one-on-one with members on their projects, giving feedback and guidance to help their designs shine. I also team up with other instructors to build out a curriculum that gives our members real, practical skills they can actually use in the field. It's rewarding to see people develop their design thinking while I develop my own confidence in front of a room."
+     },
+    { title: "Software Engineer Intern", company: "Dahiana Rojas De Rojas LLC", duration: "June 2025 - Present", description: "I helped this Real Estate company automating processes \nAgentic workflows made with N8N.", imageSrc: McChicken9.src,
+      innerDescription: "I worked with a real estate firm to build agentic workflows using N8N that automated their manual processes. One of the most rewarding parts was presenting these solutions to clients and stakeholders—it really pushed me to develop my public speaking skills and get comfortable explaining technical concepts to non-technical audiences. I collaborated with their IT department to understand their pain points, then designed and implemented automation systems that streamlined their operations. Getting to see the impact firsthand and communicate that value to clients made stepping outside my comfort zone totally worth it."
+     }
   ];
 
   const quizData = [
@@ -54,35 +57,35 @@ export default function Landing() {
         <div className="flex justify-center items-center min-h-screen">
           <div className="items-center justify-items-center inline-block">
             <motion.h1
-              className="text-center text-darkBeige text-5xl font-extralight"
+              className="text-center text-darkBeige text-5xl font-extralight mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2 }}
             >
               Hey there! I'm Adan
             </motion.h1>
-            {/*<AIChatSection />*/}
-            <section className="grid grid-cols-2 gap-16 items-center justify-items-center px-16 py-12 mt-8 max-w-7xl mx-auto"> 
-            <motion.p 
-                className="text-lg text-darkBeige/50 font-extralight leading-relaxed tracking-wide max-w-xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, delay: 0.3 }}
-              >
-                I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
-                <br /><br />
-                I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I'm actively exploring machine learning and quantitative research. These fields I'm just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.
-                <br /><br />
-                This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.
-              </motion.p>
-              <motion.img 
-                src={McChicken4.src} 
-                alt="Adan Rojas Professional Picture" 
-                className='w-[420px] h-[420px] rounded-full border border-white/20 shadow-lg object-cover'
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-              />
+            {/*<AIChatSection />*/} {/* Chat section removed for cleaner intro, will work in V2 */}
+            <section className="grid grid-cols-2 gap-16 items-center justify-items-center px-16 max-w-7xl mx-auto"> 
+              <motion.p 
+                  className="text-lg text-darkBeige/50 font-extralight leading-relaxed tracking-wide"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.5, delay: 0.3 }}
+                >
+                  I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+                  <br /><br />
+                  I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I'm actively exploring machine learning and quantitative research. These fields I'm just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.
+                  <br /><br />
+                  This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.
+                </motion.p>
+                <motion.img 
+                  src={McChicken4.src} 
+                  alt="Adan Rojas Professional Picture" 
+                  className='w-[420px] h-[420px] rounded-full border border-white/20 shadow-lg object-cover'
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                />
             </section>
           </div> 
         </div>
@@ -125,6 +128,7 @@ export default function Landing() {
               company={exp.company}
               duration={exp.duration}
               description={exp.description}
+              innerDescription={exp.innerDescription}
               imageSrc={exp.imageSrc}
             />
           ))}
