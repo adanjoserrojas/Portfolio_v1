@@ -67,60 +67,111 @@ import {
 
 import { GoCopilot } from "react-icons/go";
 
+// Skills data shared between mobile and desktop views
+const skills = [
+  { logo: FaReact, name: "React", link: "https://reactjs.org/" },
+  { logo: FaNodeJs, name: "Node.js", link: "https://nodejs.org/" },
+  { logo: FaPython, name: "Python", link: "https://www.python.org/" },
+  { logo: FaJava, name: "Java", link: "https://www.java.com/" },
+  { logo: SiTypescript, name: "TypeScript", link: "https://www.typescriptlang.org/" },
+  { logo: SiJavascript, name: "JavaScript", link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+  { logo: SiNextdotjs, name: "Next.js", link: "https://nextjs.org/" },
+  { logo: SiTailwindcss, name: "Tailwind", link: "https://tailwindcss.com/" },
+  { logo: SiMongodb, name: "MongoDB", link: "https://www.mongodb.com/" },
+  { logo: SiPostgresql, name: "PostgreSQL", link: "https://www.postgresql.org/" },
+  { logo: DiSwift, name: "Swift", link: "https://swift.org/" },
+  { logo: DiFirebase, name: "Firebase", link: "https://firebase.google.com/" },
+  { logo: VscVscode, name: "VSCode", link: "https://code.visualstudio.com/" },
+  { logo: SiXcode, name: "XCode", link: "https://developer.apple.com/xcode/" },
+  { logo: FaHtml5, name: "HTML5", link: "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5" },
+  { logo: FaCss3Alt, name: "CSS", link: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+  { logo: GoCopilot, name: "Copilot", link: "https://copilot.github.com/" },
+  { logo: SiSupabase, name: "Supabase", link: "https://supabase.com/" },
+  { logo: TbSql, name: "SQL", link: "https://en.wikipedia.org/wiki/SQL" },
+  { logo: SiMysql, name: "MySQL", link: "https://www.mysql.com/" },
+  { logo: SiSelenium, name: "Selenium", link: "https://www.selenium.dev/" },
+  { logo: SiFlask, name: "Flask", link: "https://flask.palletsprojects.com/" },
+  { logo: Bs4CircleFill, name: "Bs4", link: "https://pypi.org/project/beautifulsoup4/" },
+  { logo: SiPandas, name: "Pandas", link: "https://pandas.pydata.org/" },
+  { logo: SiGooglegemini, name: "Gemini", link: "https://ai.googleblog.com/2024/10/introducing-gemini-1-5-next-step-toward.html" },
+  { logo: SiScikitlearn, name: "Scikit-learn", link: "https://scikit-learn.org/" },
+  { logo: SiNumpy, name: "NumPy", link: "https://numpy.org/" },
+  { logo: SiScipy, name: "SciPy", link: "https://scipy.org/" },
+  { logo: SiTensorflow, name: "TensorFlow", link: "https://www.tensorflow.org/" },
+  { logo: SiN8N, name: "N8N", link: "https://n8n.io/" },
+  { logo: SiFigma, name: "Figma", link: "https://www.figma.com/" },
+  { logo: SiNotion, name: "Notion", link: "https://www.notion.so/" },
+  { logo: SiHuggingface, name: "Huggingface", link: "https://huggingface.co/" },
+  { logo: SiVercel, name: "Vercel", link: "https://vercel.com/" },
+  { logo: SiHubspot, name: "Hubspot", link: "https://www.hubspot.com/" },
+  { logo: SiDocker, name: "Docker", link: "https://www.docker.com/" },
+  { logo: SiAuth0, name: "Auth0", link: "https://auth0.com/" },
+  { logo: FaAws, name: "AWS", link: "https://aws.amazon.com/" },
+];
+
 type CardDemoProps = {
     SkillName?: string | number | undefined;
     Description?: string;
     logo?: React.ComponentType<{ className?: string }>;
 };
-export function CardDemo({}: CardDemoProps) {
 
-  return (
-    <Skeleton />
-  );
+// Hook to detect if we're on mobile/tablet
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
 }
 
-const Skeleton = () => {
-  const skills = [
-    { logo: FaReact, name: "React", link: "https://reactjs.org/" },
-    { logo: FaNodeJs, name: "Node.js", link: "https://nodejs.org/" },
-    { logo: FaPython, name: "Python", link: "https://www.python.org/" },
-    { logo: FaJava, name: "Java", link: "https://www.java.com/" },
-    { logo: SiTypescript, name: "TypeScript", link: "https://www.typescriptlang.org/" },
-    { logo: SiJavascript, name: "JavaScript", link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-    { logo: SiNextdotjs, name: "Next.js", link: "https://nextjs.org/" },
-    { logo: SiTailwindcss, name: "Tailwind", link: "https://tailwindcss.com/" },
-    { logo: SiMongodb, name: "MongoDB", link: "https://www.mongodb.com/" },
-    { logo: SiPostgresql, name: "PostgreSQL", link: "https://www.postgresql.org/" },
-    { logo: DiSwift, name: "Swift", link: "https://swift.org/" },
-    { logo: DiFirebase, name: "Firebase", link: "https://firebase.google.com/" },
-    { logo: VscVscode, name: "VSCode", link: "https://code.visualstudio.com/" },
-    { logo: SiXcode, name: "XCode", link: "https://developer.apple.com/xcode/" },
-    { logo: FaHtml5, name: "HTML5", link: "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5" },
-    { logo: FaCss3Alt, name: "CSS", link: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
-    { logo: GoCopilot, name: "Copilot", link: "https://copilot.github.com/" },
-    { logo: SiSupabase, name: "Supabase", link: "https://supabase.com/" },
-    { logo: TbSql, name: "SQL", link: "https://en.wikipedia.org/wiki/SQL" },
-    { logo: SiMysql, name: "MySQL", link: "https://www.mysql.com/" },
-    { logo: SiSelenium, name: "Selenium", link: "https://www.selenium.dev/" },
-    { logo: SiFlask, name: "Flask", link: "https://flask.palletsprojects.com/" },
-    { logo: Bs4CircleFill, name: "Bs4", link: "https://pypi.org/project/beautifulsoup4/" },
-    { logo: SiPandas, name: "Pandas", link: "https://pandas.pydata.org/" },
-    { logo: SiGooglegemini, name: "Gemini", link: "https://ai.googleblog.com/2024/10/introducing-gemini-1-5-next-step-toward.html" },
-    { logo: SiScikitlearn, name: "Scikit-learn", link: "https://scikit-learn.org/" },
-    { logo: SiNumpy, name: "NumPy", link: "https://numpy.org/" },
-    { logo: SiScipy, name: "SciPy", link: "https://scipy.org/" },
-    { logo: SiTensorflow, name: "TensorFlow", link: "https://www.tensorflow.org/" },
-    { logo: SiN8N, name: "N8N", link: "https://n8n.io/" },
-    { logo: SiFigma, name: "Figma", link: "https://www.figma.com/" },
-    { logo: SiNotion, name: "Notion", link: "https://www.notion.so/" },
-    { logo: SiHuggingface, name: "Huggingface", link: "https://huggingface.co/" },
-    { logo: SiVercel, name: "Vercel", link: "https://vercel.com/" },
-    { logo: SiHubspot, name: "Hubspot", link: "https://www.hubspot.com/" },
-    { logo: SiDocker, name: "Docker", link: "https://www.docker.com/" },
-    { logo: SiAuth0, name: "Auth0", link: "https://auth0.com/" },
-    { logo: FaAws, name: "AWS", link: "https://aws.amazon.com/" },
-  ];
+export function CardDemo({}: CardDemoProps) {
+  const isMobile = useIsMobile();
 
+  return isMobile ? <MobileSkillsGrid /> : <DesktopCarousel />;
+}
+
+// Mobile/Tablet Grid Layout
+const MobileSkillsGrid = () => {
+  return (
+    <section className="px-4 py-8">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4 sm:gap-6 max-w-3xl mx-auto">
+        {skills.map((skill, index) => {
+          const LogoComponent = skill.logo;
+          return (
+            <motion.a
+              key={`${skill.name}-${index}`}
+              href={skill.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-[rgba(248,248,248,0.02)] border border-white/10 hover:border-white/30 transition-colors"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.02 }}
+              viewport={{ once: true }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <LogoComponent className="h-6 w-6 sm:h-8 sm:w-8 text-white/80" />
+              <span className="text-Beige/70 text-[10px] sm:text-xs text-center leading-tight">
+                {skill.name}
+              </span>
+            </motion.a>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+// Desktop Horizontal Scroll Carousel (existing logic)
+const DesktopCarousel = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isCarouselActive, setIsCarouselActive] = useState(false);
   const [carouselProgress, setCarouselProgress] = useState(0);

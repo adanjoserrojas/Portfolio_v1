@@ -203,7 +203,7 @@ export function NavBar() {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        className="md:hidden overflow-hidden bg-black/80 backdrop-blur-xl border-t border-gray-800"
+                        className="md:hidden overflow-hidden bg-Black/20 backdrop-blur-xl border-t border-gray-800"
                         variants={menuVariants}
                         initial="closed"
                         animate="open"

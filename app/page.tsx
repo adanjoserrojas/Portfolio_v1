@@ -56,7 +56,7 @@ export default function Landing() {
         <div className="flex justify-center items-center min-h-screen">
           <div className="items-center justify-items-center inline-block">
             <motion.h1
-              className="text-center text-darkBeige text-5xl font-extralight mb-12"
+              className="text-center text-darkBeige md:text-5xl text-4xl font-extralight mt-24 mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2 }}
@@ -66,7 +66,7 @@ export default function Landing() {
             {/*<AIChatSection />*/} {/* Chat section removed for cleaner intro, will work in V2 */}
             <section className="grid grid-cols-2 gap-16 items-center justify-items-center px-16 max-w-7xl mx-auto"> 
               <motion.p 
-                  className="text-lg text-darkBeige/50 font-extralight leading-relaxed tracking-wide"
+                  className="md:text-lg text-xs text-darkBeige/50 font-extralight leading-relaxed tracking-wide"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.5, delay: 0.3 }}
@@ -80,7 +80,7 @@ export default function Landing() {
                 <motion.img 
                   src={McChicken4.src} 
                   alt="Adan Rojas Professional Picture" 
-                  className='w-[420px] h-[420px] rounded-full border border-white/20 shadow-lg object-cover'
+                  className='md:w-[420px] md:h-[420px] sm:w-[280px] sm:h-[280px] rounded-full border border-white/20 shadow-lg object-cover'
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 1.5, delay: 0.5 }}
@@ -118,8 +118,8 @@ export default function Landing() {
         <p className="text-center text-lg text-darkBeige/40 font-extralight m-8">
           {'A few roles I\'ve had the pleasure to work in recently:'}
         </p>
-        <section className="items-center justify-items-center">
-          <div className='grid grid-cols-2 items-center justify-items-center gap-8 m-8'>
+        <section className="items-center justify-items-center px-4">
+          <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-items-center gap-4 sm:gap-8 m-4 sm:m-8 max-w-5xl mx-auto'>
           {experience.map((exp) => (
             <FloatExperience
               key={exp.title}
