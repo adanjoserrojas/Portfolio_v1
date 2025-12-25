@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Github, Linkedin, FileText, Menu, X as CloseIcon } from 'lucide-react';
 import { X } from 'lucide-react';
-import Link from 'next/link';
 
 export function NavBar() {
     const [mounted, setMounted] = useState(false);

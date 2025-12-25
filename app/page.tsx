@@ -80,7 +80,7 @@ export default function Landing() {
                 <motion.img 
                   src={McChicken4.src} 
                   alt="Adan Rojas Professional Picture" 
-                  className='md:w-[420px] md:h-[420px] sm:w-[280px] sm:h-[280px] rounded-full border border-white/20 shadow-lg object-cover'
+                  className='w-[180px] h-[180px] sm:w-[300px] sm:h-[300px] md:w-[420px] md:h-[420px] rounded-full border border-white/20 shadow-lg object-cover'
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 1.5, delay: 0.5 }}
