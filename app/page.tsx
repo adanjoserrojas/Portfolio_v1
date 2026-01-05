@@ -119,7 +119,7 @@ export default function Landing() {
           {'A few roles I\'ve had the pleasure to work in recently:'}
         </p>
         <section className="items-center justify-items-center px-4">
-          <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-items-center gap-4 sm:gap-8 m-4 sm:m-8 max-w-5xl mx-auto'>
+          <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-items-center gap-4 sm:gap-8 m-4 sm:m-8 mx-auto'>
           {experience.map((exp) => (
             <FloatExperience
               key={exp.title}
