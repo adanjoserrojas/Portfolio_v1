@@ -43,7 +43,9 @@ export const metadata: Metadata = {
     "Agentic AI",
     "Model Context Protocol",
     "MCP",
-    "Full-Stack Developer",
+    // "Full-Stack Developer" removed per Adan's §Q13 instruction; the phrasing
+    // he approved for the role line is used instead.
+    "Full-Stack Development",
     "University of Central Florida",
     "UCF",
     "Information Technology",

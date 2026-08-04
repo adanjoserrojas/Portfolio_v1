@@ -41,7 +41,6 @@ Marked `(new)` per the rule that new agent-written words stay visible in one pla
 | `Atlas` + `The same 45 skills, plotted by category. Hovering or focusing a project highlights the ones named in its stack — every line is an edge that exists in the source, not a decorative connection.` | `/skills` | States the honesty constraint in the UI. |
 | `Focus or hover a project to highlight the skills in its stack.` | atlas readout | |
 | `no stack on record` | atlas, Knight Finder | Honest absence, not a placeholder. |
-| `N further items from this role are not shown — pending a confidentiality review of employer-internal figures.` | held bullets | §0.3. Says real content exists and is withheld — a different statement from "there is nothing more". |
 | `This project predates the material on record, so there is no detail beyond the above. It is listed because it was built, not padded to match the others.` | `/projects/knight-finder` | §5.1: "a short honest page outranks a padded one." |
 | `No document at that address` + `Nothing is indexed here. Everything on this site is listed below.` | 404 | |
 | `Elsewhere` | `/about` links heading | |
@@ -54,7 +53,7 @@ Marked `(new)` per the rule that new agent-written words stay visible in one pla
 Recorded so the boundary stays unambiguous:
 
 - `Hey there! I'm Adan` — reads like a greeting, but it is Adan speaking in his own voice and it names him. **Data.** *(Currently unused: the homepage leads with the name and role line. Retained in `content/profile.ts`.)*
-- All three bio paragraphs — verbatim, including the contradiction flagged in `OPEN-QUESTIONS.md` §Q13.
+- Bio paragraphs 2 and 3 — verbatim. Paragraph 1 had four words removed on Adan's instruction; see below.
 - All four project names, dates, and one-line summaries.
 - All role titles, orgs, durations, and both Knight Hacks description fields.
 - Every résumé bullet — verbatim, never compressed or merged.
@@ -62,11 +61,24 @@ Recorded so the boundary stays unambiguous:
 
 **Not "changed copy":** the quiz text, the Dahiana Rojas prose, and the dead chatbot strings were *removed*. Those belong in `CHANGES-CONTENT.md`.
 
-### One change that looks like copy but is data
+### Two changes that look like copy but are data
 
-`profile.roleLine` changed from **"Full-Stack Developer"** to **"Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development"**.
+Both describe Adan, so both are data rather than chrome. Both were made **only** on his explicit instruction, and both are logged in `CHANGES-CONTENT.md`.
 
-That is data, not chrome — it describes Adan. It is logged in `CHANGES-CONTENT.md` §10, and it was made **only** because Adan approved it explicitly at Gate 1. The trailing "etc etc" in his instruction was deliberately not expanded; inventing further interests would breach §0.2.
+**1. `profile.roleLine`** — "Full-Stack Developer" → "Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development" (Gate 1; `CHANGES-CONTENT.md` §10c). The trailing "etc etc" in his instruction was deliberately not expanded — inventing further interests would breach §0.2.
+
+**2. `profile.bio[0]`** — the words "a Full-Stack Developer" deleted (`CHANGES-CONTENT.md` §13b):
+
+> **Before:** I'm **a Full-Stack Developer** passionate about crafting elegant, efficient web solutions…
+> **After:** I'm passionate about crafting elegant, efficient web solutions…
+
+A strict subsequence of the original — only removal, no substitution.
+
+### One string removed on confidentiality grounds
+
+`N further items from this role are not shown — pending a confidentiality review of employer-internal figures.`
+
+Deleted, not reworded. While the §0.3 question was open this was the honest thing to render: it distinguished "there is more, withheld" from "there is nothing more". Adan closed the question with *do not disclose*, and at that point the notice became a disclosure in its own right — it tells a reader and a crawler that four more facts about a named employer exist. See `CHANGES-CONTENT.md` §13a.
 
 ---
 
@@ -78,3 +90,4 @@ That is data, not chrome — it describes Adan. It is logged in `CHANGES-CONTENT
 | 2026-08-04 | `/skills` lede | `Here are some of the technologies and tools I work with:` | `45 entries in three categories, grouped as the résumé groups them.` | As above; names the grouping |
 | 2026-08-04 | `/experience` lede | `A few roles I've had the pleasure to work in recently:` | `4 roles, most recent first.` | As above |
 | 2026-08-04 | project cards | `Click to learn more!` | *(deleted)* | Control replaced by real links to real routes |
+| 2026-08-04 | role pages + `/experience` | `N further items from this role are not shown — pending a confidentiality review of employer-internal figures.` | *(deleted)* | §Q5 closed: do not disclose. The notice itself became a disclosure. |

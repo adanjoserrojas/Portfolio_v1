@@ -19,8 +19,10 @@ export default function ExperienceIndex() {
     org: r.org,
     location: r.location,
     dates: r.ongoing ? `${r.start} – Present` : r.end ? `${r.start} – ${r.end}` : r.start,
+    // §0.3 closed 2026-08-04: do not disclose. Held bullets are filtered out
+    // here and their count is not carried forward — the page says nothing
+    // about what it is not showing.
     bullets: r.bullets.filter((b) => b.disclosure === "cleared").map((b) => b.text),
-    heldCount: r.bullets.filter((b) => b.disclosure === "hold").length,
   }));
 
   return (

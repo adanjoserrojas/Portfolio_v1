@@ -102,16 +102,17 @@ export function Tags({ items }: { items: readonly string[] }) {
 }
 
 /**
- * §0.3 — a role with withheld bullets says so plainly rather than silently
- * showing a shorter list. Real content exists; it is not cleared for a public
- * page. That is a different statement from "there is nothing more".
+ * §0.3 — REMOVED, deliberately.
+ *
+ * An earlier version rendered "N further items from this role are not shown —
+ * pending a confidentiality review". That was right while the question was
+ * open: it distinguished "there is more, withheld" from "there is nothing
+ * more".
+ *
+ * Adan closed the question on 2026-08-04: do not disclose. Once the answer is
+ * "never", the notice becomes a disclosure in its own right — it tells a
+ * reader (and a crawler) that four more facts about a named employer exist and
+ * invites the question of what they are. The withheld bullets stay in
+ * content/experience.ts, marked and reasoned, and simply have no public
+ * surface.
  */
-export function Withheld({ count }: { count: number }) {
-  if (count < 1) return null;
-  return (
-    <p className="mt-6 rounded-(--radius) border border-dashed border-line px-3.5 py-2.5 font-mono text-xs leading-relaxed text-muted">
-      {count} further {count === 1 ? "item" : "items"} from this role are not shown —
-      pending a confidentiality review of employer-internal figures.
-    </p>
-  );
-}

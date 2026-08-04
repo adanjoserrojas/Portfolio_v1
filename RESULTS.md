@@ -154,13 +154,13 @@ Every résumé-sourced string is mechanically verified as a substring of `conten
 
 ## 10. Still outstanding
 
+**Closed 2026-08-04:** §Q5 (Publix disclosure — do not disclose, four bullets withheld permanently) and §Q13 (bio paragraph — "a Full-Stack Developer" deleted).
+
 | | Where |
 |---|---|
-| Publix disclosure scope — 4 bullets withheld | `OPEN-QUESTIONS.md` §Q5 |
 | ReCueCareer date: "Jun 2025 – Present" vs "Jul 2025" | §Q10 #2 |
 | Knight Finder inclusion — kept by default | §Q10 #3 |
 | Dropped skills (incl. Auth0) — 6 held, restorable | §Q10 #4 |
 | GitHub themes / arXiv reading list — not rendered | §Q9 |
-| Bio paragraph 1 still says "Full-Stack Developer" | §Q13 |
-| Old October résumé — 301'd, not yet deleted | §Q12 |
+| Old October résumé PDF — 301'd, file not yet deleted | §Q12 |
 | Orphaned `McChicekn.png` (5.3 MB), `WrongLogo.png` | §Q11 |

@@ -227,13 +227,13 @@ The site now shows **4 roles**. Its content is frozen site prose from `app/page.
 
 This is data, not chrome — it describes Adan — so it changed only on his explicit approval. **The trailing "etc etc" was not expanded.** Inventing further interests would breach §0.2.
 
-⚠️ `profile.bio[0]` still opens *"I'm a Full-Stack Developer…"*. Adan approved the role line, not the paragraph, so the paragraph stays frozen. The two now disagree, visibly. See `OPEN-QUESTIONS.md` §Q13.
+The bio paragraph that contradicted this was resolved separately — see §13.
 
 ### 10d. Benchmarks exist
 
 §Q5 question 4 answered: the four individual benchmark names and percentages **do** exist. They were not supplied, so §6.1 was not built — inventing four bars is exactly what §6.1 forbids.
 
-**§Q5 questions 1–3 and 5 remain unanswered**, so the four Publix bullets stay held and §6.1/§6.2 stay unbuilt. Per §390, the signature components are **§6.3 (skill atlas)** and the v2 trace treatment on `/experience`, both backed by cleared data.
+§Q5 was closed separately — see §13 below.
 
 ---
 
@@ -279,3 +279,47 @@ Only two categories, both from the content layer:
 **No new factual claims.** `verify:content` proves it: 235 checks, every résumé-sourced string verified as a substring of `content/.resume-source.txt`.
 
 The email is in neither. `/llms.txt` points to `/about` instead of printing the address — a plaintext file at a well-known path is the easiest thing on a site to harvest, and §0.2 requires obfuscation.
+
+---
+
+## 13. Final disclosure decisions, 2026-08-04
+
+Two instructions from Adan, both closing questions this document had been holding open.
+
+### 13a. "Do not disclose the 4 bullet points" — §Q5 CLOSED
+
+The four Publix bullets carrying employer-internal figures are withheld **permanently**, not provisionally.
+
+| Withheld bullet | Figure |
+|---|---|
+| VB6 → C#/.NET batch job modernisation | "more than 3 million customers" |
+| Enterprise LMS, 18-engineer team | "245,000 employees" |
+| LMS cost reduction | "over seven figures" |
+| Output Token Optimization Agent Skill | "more than 3000 engineers" |
+
+**Publicly shown for Publix:** the Multi-Agent MCP bullet only — 5 agents, MCP protocol, Supply Chain Logistics Department.
+
+**The withheld-count notice was removed from the UI.** While the question was open, each affected role rendered *"N further items not shown — confidentiality review pending"*. That was correct then: it distinguished "there is more, withheld" from "there is nothing more". Once the answer is *never*, the notice becomes a disclosure in its own right — it tells a reader and a crawler that four more facts about a named employer exist. `Withheld` is deleted from `components/site/Prose.tsx`, and `heldCount` no longer crosses into any component.
+
+The bullets stay in `content/experience.ts`, verbatim, each with its reason, so the record of what the résumé says is not lost and nobody re-adds them later without the context. They are filtered at the corpus boundary in `lib/retrieval.ts`, so they reach neither the page, the search index, nor `/llms.txt`.
+
+**Verified:** all four figures — plus "18 engineers", "Caveman", and "71.1" — return **0 matches** across `/`, `/about`, `/experience`, `/experience/publix`, `/projects`, `/skills`, `/llms.txt`, and `/sitemap.xml`.
+
+**Consequence:** §6.1 and §6.2 are permanently out. Per §390 the signature components are §6.3 (skill atlas) and the v2 trace treatment on `/experience` — both built, both backed entirely by cleared data.
+
+### 13b. "delete full-stack developer" — §Q13 CLOSED
+
+This is the **second and final** authorised change to frozen bio prose.
+
+`profile.bio[0]`:
+
+> **Before:** I'm **a Full-Stack Developer** passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+> **After:** I'm passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+
+The result is a strict **subsequence** of the original words — nothing rewritten or substituted, only removed. §0.2 permits "a shorter true subset" but forbids paraphrase; dropping the article with the noun phrase is the most conservative edit that leaves a grammatical sentence.
+
+Also changed: metadata keyword `"Full-Stack Developer"` → `"Full-Stack Development"` (`app/layout.tsx`), matching the phrasing Adan approved for the role line.
+
+**The exact string "Full-Stack Developer" now appears on no public surface** — 0 occurrences across all eight routes, `/llms.txt`, and `/sitemap.xml`.
+
+`profile.roleLine` is unchanged: *Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development*. Adan dictated that wording himself at Gate 1, so this instruction was read as resolving the contradiction, not retracting it. Flagged in `OPEN-QUESTIONS.md` §Q13 in case that reading is wrong.

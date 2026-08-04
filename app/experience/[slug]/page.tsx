@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { experience, roleBySlug } from "@/content/experience";
-import {
-  Page,
-  Breadcrumbs,
-  Fields,
-  Field,
-  Bullets,
-  Withheld,
-} from "@/components/site/Prose";
+import { Page, Breadcrumbs, Fields, Field, Bullets } from "@/components/site/Prose";
 
 export const dynamic = "force-static";
 
@@ -50,8 +43,10 @@ export default async function RolePage({ params }: { params: Promise<{ slug: str
   if (!r) notFound();
 
   const dates = r.ongoing ? `${r.start} – Present` : r.end ? `${r.start} – ${r.end}` : r.start;
+  // Held bullets are filtered out and not counted. §0.3 closed 2026-08-04:
+  // do not disclose. The page shows what is cleared and says nothing about
+  // what is not.
   const cleared = r.bullets.filter((b) => b.disclosure === "cleared").map((b) => b.text);
-  const held = r.bullets.filter((b) => b.disclosure === "hold").length;
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -105,8 +100,6 @@ export default async function RolePage({ params }: { params: Promise<{ slug: str
       {r.siteProse && (
         <p className="mt-6 max-w-(--measure) leading-relaxed">{r.siteProse}</p>
       )}
-
-      <Withheld count={held} />
     </Page>
   );
 }

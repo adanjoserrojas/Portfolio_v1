@@ -20,7 +20,7 @@ Watch: Phase 2 §3.4 needs a Playwright Chromium download (~150 MB) plus six pro
 
 **Adan supplied `Adan_Rojas_Resume.pdf`. It matches §2.3a exactly** — AWS, Knight Hacks Organizer, Publix, Information Technology / Fall 2027, `adan@4dan.dev`, and every figure the plan names (100+ students, 3 workshops, 100+ sign-ups, 200+ students, 1,000+ participants, 36-hour, 2 batch jobs, 18 engineers, 5 agents, 71.1% across 4 benchmarks).
 
-Extracted verbatim to `content/.resume-source.txt`. All 220 résumé-backing checks in `npm run verify:content` pass. **Phase 1 unblocked and complete.**
+Extracted verbatim to `content/.resume-source.txt`. All résumé-backing checks in `npm run verify:content` pass (235 total). **Phase 1 unblocked and complete.**
 
 The original finding is kept below, because it explains why `public/Adan_Rojas_Resume_Oct.pdf` must not be used as a truth source and why §2.3b #5 resolved the way it did.
 
@@ -58,32 +58,30 @@ Reconstructing AWS / Knight Hacks Organizer / Publix bullets from §2.3a's summa
 
 ---
 
-## 🟡 Q13 — The hero role line and bio paragraph 1 now disagree
+## ✅ Q13 — Hero role line vs. bio paragraph (CLOSED 2026-08-04)
 
-Adan approved the new role line at Gate 1 (§Q10 #6): *"Software Engineer with a passion for AI Agents, MCPs, Full-Stack Development, etc etc."* Applied to `profile.roleLine`.
+**Adan's answer: "delete full-stack developer."**
 
-But `profile.bio[0]` — frozen prose from `app/page.tsx:74` — still opens **"I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions…"**. The approval covered the role line, not the paragraph, so the paragraph was left frozen (§0.1).
+`profile.bio[0]` opened *"I'm a Full-Stack Developer passionate about crafting…"*, contradicting the role line he approved at Gate 1. The words `a Full-Stack Developer` are deleted:
 
-Visible in every prototype screenshot: the hero says *Software Engineer with a passion for AI Agents, MCPs…* and two lines below the bio says *I'm a Full-Stack Developer*.
+> **Before:** I'm ~~a Full-Stack Developer~~ passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
+> **After:** I'm passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.
 
-**Question:** rewrite bio paragraph 1 to match, or leave both as they are? Rewriting is a content change to frozen prose and needs explicit approval; if approved, supply the wording — I will not draft new claims about Adan.
+The result is a strict **subsequence** of the original words — nothing rewritten or substituted, only removed. §0.2 permits "a shorter true subset" but forbids paraphrase, so dropping the article along with the noun phrase is the most conservative edit that still leaves a grammatical sentence.
 
-Also note the trailing "etc etc" was **not** expanded. Inventing further interests would breach §0.2. If there are more, name them.
+**Also changed:** the metadata keyword `"Full-Stack Developer"` (`app/layout.tsx`) → `"Full-Stack Development"`, the phrasing Adan himself approved for the role line. The exact string he asked to delete now appears **nowhere** on any public surface — verified across all eight routes, `/llms.txt`, and `/sitemap.xml`: 0 occurrences.
+
+The role line is unchanged: *Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development*. Adan dictated it two turns earlier, so "delete full-stack developer" was read as resolving this contradiction, not as retracting his own wording. **Say so if that reading is wrong** — it is a one-line change.
 
 ---
 
-## 🟡 Q12 — The site serves the outdated résumé
+## 🟡 Q12 — The old October résumé is still served
 
-`components/ui/nav-bar.tsx:175` and `:271` both open `/Adan_Rojas_Resume_Oct.pdf`. That is the **October** résumé — the one with Computer Science, the Dahiana Rojas role, and none of the AWS/Knight Hacks/Publix history.
+**Partly handled.** `Adan_Rojas_Resume.pdf` is now in `public/`, and `next.config.ts` permanently redirects `/Adan_Rojas_Resume_Oct.pdf` → `/Adan_Rojas_Resume.pdf`, so any existing link resolves to the current file rather than breaking. `/resume` is a convenience redirect to the same place. The old nav that linked the October PDF no longer exists.
 
-`Adan_Rojas_Resume.pdf` currently sits untracked in the repo root, outside `public/`, so it is not served at all.
+**Still outstanding:** `public/Adan_Rojas_Resume_Oct.pdf` is still on disk. The 301 means nothing reaches it, so this is now hygiene rather than exposure — but the file itself contains a superseded major (Computer Science, Spring 2027), a removed employer, and an old personal email address.
 
-**Recommended, pending confirmation:**
-1. Move `Adan_Rojas_Resume.pdf` into `public/`.
-2. Point the nav at it.
-3. Delete `public/Adan_Rojas_Resume_Oct.pdf` — it contains a superseded major and a removed employer, and it is publicly fetchable today.
-
-**Question:** confirm the October PDF should be deleted rather than kept at its URL. If anything links to it externally, deleting it 404s that link.
+**Question:** delete it? The 301 already covers inbound links, so deleting it costs nothing. I left it because deleting a résumé is your call, not mine.
 
 ---
 
@@ -110,32 +108,36 @@ Recommend confirming in Search Console's Pages report post-launch rather than pr
 
 ---
 
-## 🔴 Q5 — Publix disclosure scope (§0.3) — **the most important open question**
+## ✅ Q5 — Publix disclosure scope (CLOSED 2026-08-04)
 
-Now assessable. This is a judgment call only Adan can make, and it gates both recommended signature components.
+**Adan's answer: "Do not disclose the 4 bullet points."**
 
-**The distinction that matters:** a résumé is a private document shown to a chosen audience. A webpage is public, permanent, and indexed by Google. The same sentence is fine in one and a problem in the other.
+The four Publix bullets carrying employer-internal figures are withheld **permanently**, not provisionally.
 
-Per §0.3 I have applied the conservative default. Four of the five Publix bullets are marked `disclosure: "hold"` in `content/experience.ts` and **will not render**:
+| Bullet | Held figure |
+|---|---|
+| VB6 → C#/.NET batch job modernisation | "more than 3 million customers" |
+| Enterprise LMS, 18-engineer team | "245,000 employees" |
+| LMS cost reduction | "over seven figures" |
+| Output Token Optimization Agent Skill | "more than 3000 engineers" |
 
-| Bullet | Held figure | §0.3 lists it? |
-|---|---|---|
-| VB6 → C#/.NET batch jobs | "more than 3 million customers" | ✅ yes |
-| Enterprise LMS, 18-engineer team | "245,000 employees" | ✅ yes |
-| LMS cost reduction | "over seven figures" | ✅ yes |
-| Output Token Optimization Agent Skill | "more than 3000 engineers" | ✅ yes |
+**Shown publicly:** the Multi-Agent MCP bullet only — 5 agents, MCP protocol, Supply Chain Logistics Department. No figure from the hold list.
 
-**Cleared by default:** the Multi-Agent MCP bullet (5 agents, MCP protocol, Supply Chain Logistics Department) — §0.3's conservative version explicitly clears "the agent/token-optimization work", and it carries no figure from the hold list.
+### What changed as a result
 
-### Questions
+The UI no longer reports that anything is withheld. While the question was open, each affected role rendered *"N further items not shown — confidentiality review pending"*, which correctly distinguished "there is more, withheld" from "there is nothing more". Once the answer is *never*, **that notice becomes a disclosure in its own right** — it tells a reader and a crawler that four more facts about a named employer exist, and invites the question of what they are. It is gone.
 
-1. **Which of the four held bullets are cleared for a public site?** Answer per bullet, in writing (§10's Confidentiality gate requires written confirmation before any internal figure ships).
-2. **The token-optimization bullet is the awkward one.** Its result — surpassing the Caveman skill on 4 benchmarks by 71.1% average token savings, adopted into the Publix Plugin Marketplace — is the single most distinctive thing on the résumé and the basis for §6.1, the recommended signature component. Only the trailing "impacting the development cycles of more than 3000 engineers" triggers the hold. **May a shorter true subset ending at "Publix Plugin Marketplace" ship?** §0.2 permits rendering "a shorter true subset" but forbids paraphrase, so this needs your explicit yes rather than my judgment.
-3. **Is "Supply Chain Logistics Department" cleared?** It names an internal org unit. Not on §0.3's hold list, so it is currently cleared — flagging it because it is the kind of detail §0.3's closing rule ("when in doubt about a detail from an employer, leave it out and ask") is aimed at.
-4. **For §6.1, do the four individual benchmark names and their individual percentages exist?** §6.1 is explicit: without them, build the honest aggregate-only version. **Do not invent four bars.** If you have the real per-benchmark numbers, §6.1 becomes the full comparison; if not, option (b) is a perfectly good component.
-5. **For §6.2, what are the five actual agent roles?** Five unlabeled circles are decoration; five labeled ones are a portfolio piece. If you supply nothing, §6.2 does not get built and §6.3 (skill atlas) takes its place.
+The bullets remain in `content/experience.ts`, verbatim and reasoned, so the record of what the résumé says is not lost and nobody re-adds them later without the context. They are filtered at the corpus boundary in `lib/retrieval.ts`, so they reach neither the page, the search index, nor `/llms.txt`.
 
-**If the answer to (1) is "hold everything":** §6.1 and §6.2 are both out, and per §390 the two signature components become §6.3 (skill atlas) and §6.4 (Face2Learn concept demo). Both are backed by cleared data and neither needs a Publix answer.
+**Verified:** grepping the rendered output of `/`, `/about`, `/experience`, `/experience/publix`, `/projects`, `/skills`, `/llms.txt`, and `/sitemap.xml` for all four figures — plus "18 engineers", "Caveman", and "71.1" — returns **0 matches on every surface**.
+
+### Consequences for §6
+
+§6.1 (token-optimization benchmark) and §6.2 (multi-agent MCP trace) are **permanently out** — both need cleared Publix figures. Per §390, the two signature components are §6.3 (skill atlas) and the v2 trace treatment on `/experience`. Both are built and both are backed entirely by cleared data.
+
+> Adan confirmed separately that the four individual benchmark names and percentages exist. They were never supplied, and are now moot: the bullet they belong to is withheld.
+
+**Do not change any `disclosure: "hold"` to `"cleared"` without a fresh written instruction.**
 
 ---
 

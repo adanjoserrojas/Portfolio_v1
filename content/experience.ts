@@ -12,10 +12,21 @@ import { ExperienceSchema, validate, type Experience } from "./types";
  * verifier in scripts/verify-content.ts strips whitespace on both sides
  * before comparing, so these still match mechanically.
  *
- * §0.3 CONFIDENTIALITY. A résumé is shown to a chosen audience; a website is
- * public and permanent. Bullets carrying Publix-internal figures default to
- * `disclosure: "hold"` and MUST NOT render until Adan clears them in writing.
- * See OPEN-QUESTIONS.md §Q5.
+ * §0.3 CONFIDENTIALITY — SETTLED, NOT PENDING.
+ *
+ * A résumé is shown to a chosen audience; a website is public and permanent.
+ * On 2026-08-04 Adan instructed: "Do not disclose the 4 bullet points."
+ *
+ * The four Publix bullets marked `disclosure: "hold"` below are therefore
+ * withheld permanently, not provisionally. They are kept here — verbatim, with
+ * the reason recorded — because deleting them would lose the record of what
+ * the résumé actually says and invite someone to re-add them later without
+ * the context. They have no public surface: they are filtered at the corpus
+ * boundary in lib/retrieval.ts, so they reach neither the page, the search
+ * index, nor /llms.txt. The UI does not report their existence or their count
+ * either; see the note in components/site/Prose.tsx.
+ *
+ * Do not change any of these to "cleared" without a fresh written instruction.
  */
 const roles = [
   {
@@ -89,17 +100,17 @@ const roles = [
       {
         text: "Modernized and re-engineered 2 warehouse replenishment batch jobs from legacy VB6 to C#/.NET, improving long-term maintainability for inventory workflows supporting more than 3 million customers across Publix locations nationwide.",
         disclosure: "hold",
-        holdReason: "'more than 3 million customers' — §0.3 names this among the internal figures to hold until Adan confirms.",
+        holdReason: "'more than 3 million customers' — employer-internal figure. Withheld permanently per Adan, 2026-08-04.",
       },
       {
         text: "Collaborated with a cross-functional team of 18 engineers and associates to develop an enterprise Learning Management System supporting 245,000 employees, leveraging MongoDB, Azure Blob/File Storage, ASP.NET MVC, and SQL Server while adhering to organizational security, privacy, and data-governance standards.",
         disclosure: "hold",
-        holdReason: "'245,000 employees' — §0.3 names this among the internal figures to hold. The 18-engineer team size is not on §0.3's list but travels in the same sentence.",
+        holdReason: "'245,000 employees' — employer-internal figure; the 18-engineer team size travels in the same sentence. Withheld permanently per Adan, 2026-08-04.",
       },
       {
         text: "Contributed to the in-house development of a modern enterprise LMS that reduced annual training costs by over seven figures, replacing third-party platform dependencies with scalable internal solutions that improved operational efficiency.",
         disclosure: "hold",
-        holdReason: "'over seven figures' in annual cost reduction — §0.3 names this among the internal figures to hold.",
+        holdReason: "'over seven figures' in annual cost reduction — employer-internal figure. Withheld permanently per Adan, 2026-08-04.",
       },
       {
         text: "Improved engineer productivity by building a Multi-Agent AI system of 5 agents that leveraged the MCP protocol to consult documentation across the development cycle in the Supply Chain Logistics Department.",
@@ -110,7 +121,7 @@ const roles = [
       {
         text: "Developed an Output Token Optimization Agent Skill that surpassed the Caveman skill on 4 benchmarks by 71.1% on average token output savings and was adopted by the Publix Plugin Marketplace, impacting the development cycles of more than 3000 engineers.",
         disclosure: "hold",
-        holdReason: "'more than 3000 engineers' — §0.3 names this among the internal figures to hold. The 71.1%/4-benchmark result itself is cleared work; only the engineer count triggers the hold. Ask whether a shorter true subset ending at 'Publix Plugin Marketplace' may ship.",
+        holdReason: "'more than 3000 engineers' — employer-internal figure. Adan was asked on 2026-08-04 whether a shorter subset ending at 'Publix Plugin Marketplace' could ship and answered do not disclose, so the whole bullet is withheld permanently.",
       },
     ],
     _source: "resume",

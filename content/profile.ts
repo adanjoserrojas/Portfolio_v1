@@ -15,9 +15,8 @@ const data = {
   // own role line; the trailing "etc etc" is deliberately NOT expanded into
   // invented interests (§0.2).
   //
-  // ⚠️ bio[0] below still opens "I'm a Full-Stack Developer…". Adan approved
-  // the role line, not the paragraph, so the paragraph stays frozen. See
-  // OPEN-QUESTIONS.md §Q13.
+  // §Q13 RESOLVED (Adan, 2026-08-04): "delete full-stack developer".
+  // bio[0] no longer contradicts this line — see the note on bio below.
   roleLine:
     "Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development",
 
@@ -34,8 +33,21 @@ const data = {
 
   // _source: app/page.tsx:74, :76, :78 — verbatim, including the curly
   // apostrophes as they appear in the JSX string literals.
+  //
+  // ONE EXCEPTION, authorised by Adan on 2026-08-04 ("delete full-stack
+  // developer", resolving §Q13): the words "a Full-Stack Developer" are
+  // deleted from the first sentence, which previously contradicted the role
+  // line above.
+  //
+  // The result is a strict subsequence of the original words — nothing was
+  // rewritten or substituted, only removed:
+  //   before: "I'm a Full-Stack Developer passionate about crafting…"
+  //   after:  "I'm             passionate about crafting…"
+  // §0.2 permits "a shorter true subset" but forbids paraphrase, so dropping
+  // the article along with the noun phrase is the most conservative edit that
+  // still leaves a grammatical sentence. Logged in CHANGES-CONTENT.md §13.
   bio: [
-    "I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.",
+    "I'm passionate about crafting elegant, efficient web solutions that feel as good to use as they are to build.",
     "I enjoy turning complex ideas into clean, intuitive experiences. Alongside web development, I'm actively exploring machine learning and quantitative research. These fields I'm just beginning to dive into, driven by curiosity and a desire to understand how data, models, and mathematics can power smarter systems.",
     "This minimalist portfolio reflects how I think and work: focused, intentional, and always evolving, where creativity meets functionality and learning never stops.",
   ],

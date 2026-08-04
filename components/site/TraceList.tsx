@@ -22,8 +22,8 @@ export type TraceRole = {
   org: string;
   location: string;
   dates: string;
+  /** Cleared bullets only. Held ones are filtered upstream and never counted. */
   bullets: string[];
-  heldCount: number;
 };
 
 export default function TraceList({ roles }: { roles: TraceRole[] }) {
@@ -71,7 +71,7 @@ export default function TraceList({ roles }: { roles: TraceRole[] }) {
           {i < roles.length - 1 && (
             <span
               aria-hidden="true"
-              className="absolute bottom-0 left-[6px] top-6 w-px bg-line"
+              className="absolute bottom-0 left-1.5 top-6 w-px bg-line"
             />
           )}
           <span
@@ -107,12 +107,6 @@ export default function TraceList({ roles }: { roles: TraceRole[] }) {
               </li>
             ))}
           </ul>
-
-          {r.heldCount > 0 && (
-            <p className="mt-4 font-mono text-xs text-muted">
-              {r.heldCount} further items not shown — confidentiality review pending
-            </p>
-          )}
         </section>
       ))}
     </div>
