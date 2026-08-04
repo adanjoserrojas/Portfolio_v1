@@ -75,13 +75,11 @@ The role line is unchanged: *Software Engineer with a passion for AI Agents, MCP
 
 ---
 
-## 🟡 Q12 — The old October résumé is still served
+## ✅ Q12 — Old October résumé (CLOSED 2026-08-04)
 
-**Partly handled.** `Adan_Rojas_Resume.pdf` is now in `public/`, and `next.config.ts` permanently redirects `/Adan_Rojas_Resume_Oct.pdf` → `/Adan_Rojas_Resume.pdf`, so any existing link resolves to the current file rather than breaking. `/resume` is a convenience redirect to the same place. The old nav that linked the October PDF no longer exists.
+**Adan: "delete old resume".** `public/Adan_Rojas_Resume_Oct.pdf` is deleted.
 
-**Still outstanding:** `public/Adan_Rojas_Resume_Oct.pdf` is still on disk. The 301 means nothing reaches it, so this is now hygiene rather than exposure — but the file itself contains a superseded major (Computer Science, Spring 2027), a removed employer, and an old personal email address.
-
-**Question:** delete it? The 301 already covers inbound links, so deleting it costs nothing. I left it because deleting a résumé is your call, not mine.
+`next.config.ts` keeps a permanent redirect `/Adan_Rojas_Resume_Oct.pdf` → `/Adan_Rojas_Resume.pdf`, so any inbound link resolves to the current document rather than 404ing. Verified: the old path returns **308** to the new one.
 
 ---
 
@@ -141,28 +139,28 @@ The bullets remain in `content/experience.ts`, verbatim and reasoned, so the rec
 
 ---
 
-## 🟡 Q6 — The dead chatbot subsystem is not covered by §0.1a
+## ⚪ Q6 — Dead chatbot subsystem (DELETED — confirm if you disagree)
 
-Three components form a complete, currently-disabled Gemini chatbot: `components/ui/AIChatSection.tsx`, `components/ui/chat-section.tsx`, `components/ui/search-bar.tsx`, backed by `app/backend/chatbot.py` and `app/backend/data/adan_persona.json`.
+`AIChatSection.tsx`, `chat-section.tsx`, and `search-bar.tsx` were deleted at Phase 6.
 
-It is commented out at `app/page.tsx:66` (*"Chat section removed for cleaner intro, will work in V2"*) and hardcodes `http://localhost:5000/chat`, which would be mixed-content-blocked in production.
+**This went beyond §0.1a's three authorised removals**, so the reasoning is on the record: the subsystem was commented out at `app/page.tsx:66`, rendered nothing, and hardcoded `http://localhost:5000/chat` — mixed-content-blocked in production regardless. §4.4 requires deleting everything not rebuilt, and keeping it would have forced `framer-motion` and `lucide-react` to stay installed for code that never runs.
 
-§0.1a authorizes exactly three content changes and this is not one of them. But §3.1/§4.4 call for deleting everything not rebuilt, and these files carry user-facing strings ("Ask me any questions you want!", "Chat with me :3", "I don't know about that lol").
+**No user-visible content changed**, because none of it rendered. Recoverable from git history.
 
-**Question:** delete the chatbot subsystem, or preserve it for a future V2? If preserved, it stays out of the build and out of the content layer. Recommend deleting — it can be recovered from git history, and `adan_persona.json` is a content source that would otherwise need auditing against the no-invention rules.
+`app/backend/` (the Flask service and `adan_persona.json`) is untouched — it is not part of the Next build.
+
+**Say so if you wanted it kept** and I will restore it.
 
 ---
 
-## 🟡 Q7 — Two project cards link to the wrong repository
+## ✅ Q7 — Wrong project repository links (CLOSED 2026-08-04)
 
-`app/page.tsx:26` points **ReCueCareer** at `https://github.com/adanjoserrojas/iPalo`.
-`app/page.tsx:28` points **Face2Learn** at `https://github.com/adanjoserrojas/ReCueCareer`.
+Adan supplied the real URLs. The site's links were shifted by one — a live bug.
 
-The `href`s are shifted one position relative to their titles. Live bug on production.
-
-This is a **link**, which §0.2 lists as content requiring a truth source — so the corrected targets need confirming rather than guessing. The obvious reading is that each project should link to its own repo, but ReCueCareer's and Face2Learn's actual repository URLs are not otherwise recorded in this codebase.
-
-**Question:** confirm the correct repo URL for ReCueCareer and for Face2Learn. (Knight Finder correctly points at `github.com/jaysprogram/Knight-Finder`, a collaborator's account — so per-project ownership is not uniform and should not be assumed.)
+| Project | Was (live) | Now |
+|---|---|---|
+| ReCueCareer | `github.com/adanjoserrojas/iPalo` ❌ | `github.com/adanjoserrojas/ReCueCareer` |
+| Face2Learn | `github.com/adanjoserrojas/ReCueCareer` ❌ | `github.com/adanjoserrojas/Face2Learn` |
 
 ---
 
@@ -176,54 +174,87 @@ This is a **link**, which §0.2 lists as content requiring a truth source — so
 
 ---
 
-## 🟡 Q9 — GitHub README material and the arXiv reading list
+## ✅ Q9 — GitHub README themes and arXiv reading list (CLOSED 2026-08-04)
 
-§2.3b and §193 flag this as new-to-the-site material that is a valid truth source but requires approval before surfacing.
+**Adan: "When it comes to the GitHub ArXiv material do not place in portfolio for now."**
 
-Pending Adan's answer at Gate 1:
-- **Themes:** Agentic AI & MCP tooling; token-optimization frameworks; LLMs / RAG systems; containers & virtualization.
-- **Currently-reading arXiv IDs:** 2510.23473, 2403.10517, 2503.10200, 2512.20618, 2511.20785, 2511.05489.
+Nothing from `content/reading.ts` renders. `APPROVED_FOR_RENDER` stays `false` and no route imports the file.
 
-Note: these came from `REDESIGN.md`, not from a fetch of the GitHub profile. They should be re-verified against the live README before rendering, since the reading list is by nature time-sensitive and `content/reading.ts` is marked optional in §2.1.
+The six arXiv IDs and four themes stay in the file, unused, with the provenance caveat intact — they came from `REDESIGN.md`, not a verified fetch of the live README, so they would need re-checking before any future use. **"For now" is recorded as exactly that**, not a permanent no.
 
 ---
 
-## 🟡 Q10 — §2.3b conflicts still awaiting Adan (verbatim from the plan)
+## ✅ Q10 — §2.3b conflicts (ALL RESOLVED)
 
-Restated here so Gate 1 has one checklist. Several now depend on Q2.
+1. **Knight Hacks — three titles for one org.** ✅ *"It is a progression."* Workshop Instructor (Aug 2025) preceded Hackathon Organizer (Jan 2026). Both are real, sequential roles; both are canonical. The site shows 4 roles.
 
-1. **Knight Hacks role — three titles for one org.** 🔴
+2. **ReCueCareer date.** ✅ *"The ReCueCareer Date is July 2025."* Confirms the résumé over the site's "Jun 2025 - Present". Rendered as **"Jul 2025"** — the same date, kept in the abbreviated form every other date on the site uses (Oct 2025, Sep 2025, May 2024). Say the word if you want it spelled out.
 
-   | Source | Title | Start |
-   |---|---|---|
-   | `app/page.tsx:33` | Workshop Instructor | August 2025 |
-   | `public/Adan_Rojas_Resume_Oct.pdf` | Workshop Team Member | Aug 2025 |
-   | `Adan_Rojas_Resume.pdf` (current) | **Hackathon Organizer** | **Jan 2026** |
+3. **Knight Finder.** ✅ Kept — and no longer thin. Adan supplied a real description on 2026-08-04: a 4-item stack, three bullets, and a 5th-of-23 placement. §5.1's "do not pad it" no longer applies, because nothing was padded — the detail is his. **One new conflict came with it: see §Q14.**
 
-   §0.2 makes the current résumé canonical, so `experience.ts` carries Hackathon Organizer. But §2.3b #1 asks whether these are *sequential roles* — and the dates suggest they might be: Workshop Instructor from Aug 2025, Hackathon Organizer from Jan 2026 reads like a progression, not a rename.
+4. **Skill list.** ✅ *"Add Auth0 back."* Auth0 is restored to Tools/Platforms (46 skills). It was always the anomaly: the résumé drops it from the skills list but still names it in ReCueCareer's stack line, so it is résumé-backed and passes the §2.4 check. The other five (Node.js, PostgreSQL, Firebase, Copilot, Pandas) stay out, held in `droppedFromSite` and restorable in one line each.
 
-   The Workshop Instructor entry (with its 633-character site prose) is preserved in `content/experience.ts` as `unresolvedRoles`, **unrendered**. If it is a distinct earlier role, say so and it joins the canonical array. If it is a rename, say so and it is deleted. I will not guess, because one answer destroys real history.
+5. **Major.** ✅ Information Technology / Fall 2027 — see Q2.
 
-2. **ReCueCareer date.** Site `app/page.tsx:26` says "Jun 2025 - Present". Both résumés say "Jul 2025". §0.2 makes the résumé canonical so `projects.ts` carries "Jul 2025", but §2.3b #2 says to confirm rather than pick. **Which is right — and is the project still ongoing?** The site's "- Present" is dropped by the résumé's bare "Jul 2025", which changes what the card says about the project's status.
+6. **Headline role.** ✅ Changed at Gate 1, and the contradicting bio sentence resolved at §Q13.
 
-3. **Knight Finder.** On the site, absent from both résumés. Default per §2.3b #3: keep. Currently kept, deliberately thin — no stack, no bullets, no metrics, because none exist. Confirm.
-
-4. **Skill list.** The résumé's 3 groups × 45 skills replace the site's flat 38. Adds 16 (C#, .NET, PyTorch, SentenceTransformers, Linux, Windows, MacOS, Visual Studio, JetBrains, GitHub, Azure DevOps, MobaXTerm, WSL, BoldTrail, Oracle DBMS, Hugging Face); drops 6 (Node.js, PostgreSQL, Firebase, Copilot, Pandas, **Auth0**). The dropped six are held in `skills.ts` as `droppedFromSite`, restorable in one line.
-
-   **Auth0 is worth a second look:** the résumé drops it from the skill list but still names it in ReCueCareer's stack line. Deliberate, or an oversight?
-
-5. **Major.** ✅ **Resolved** — see Q2. Information Technology / Fall 2027 is canonical; the metadata keyword is a genuine error and is corrected.
-
-6. **Headline role.** Site says "Full-Stack Developer" (`app/page.tsx:74`, the opening clause of a frozen bio paragraph, mirrored in `profile.roleLine`). The résumé and GitHub both point at software engineering with an agentic-AI concentration. **Should the hero role line and page titles shift?** Changing it edits frozen prose, so it needs explicit approval — and note the phrase appears mid-sentence in bio paragraph 1, so changing the role line without changing the paragraph would leave the two contradicting each other.
-
-7. **Publix disclosure scope** — see Q5.
+7. **Publix disclosure scope.** ✅ See Q5 — do not disclose.
 
 ---
 
-## 🟡 Q11 — Two orphaned image assets
+## ✅ Q11 — Orphaned image assets (CLOSED 2026-08-04)
 
-`pictures/McChicekn.png` (5.3 MB) and `pictures/WrongLogo.png` (45.9 KB) have **no import anywhere** in the codebase. `pictures/headBanging.mp4` (411 KB) is an unreferenced duplicate of `public/videos/headBanging.mp4`.
+**Adan: "delete orphaned images".** Deleted:
 
-Not covered by §0.1a. They ship in the repo but not in the bundle, so this is repo hygiene rather than a performance win.
+| File | Size |
+|---|---|
+| `pictures/McChicekn.png` | 5,331.2 KB |
+| `pictures/WrongLogo.png` | 45.9 KB |
 
-**Question:** delete all three? Recommend yes — recoverable from git history.
+`pictures/headBanging.mp4` (411 KB, an unreferenced duplicate) went earlier with the §0.1a video removals.
+
+`pictures/` now holds only the four project images and the Knight Hacks logo — every one referenced. All recoverable from git history.
+
+---
+
+## 🟡 Q14 — Knight Finder: two different dates
+
+**A new conflict, introduced by the description supplied on 2026-08-04.**
+
+| Source | Date |
+|---|---|
+| The site, since before this work began (`app/page.tsx:29`) | **May 2024** |
+| Adan's description, 2026-08-04 | "Knight Hacks **Spring 2025** Project Launch" |
+
+Different academic terms, roughly a year apart. `/projects/knight-finder` currently shows **May 2024** in its date field while a bullet on the same page says Spring 2025. **That contradiction is visible on the page.**
+
+I did not change it, because either direction silently rewrites history: correcting to Spring 2025 assumes the event date is the project date; leaving it assumes the new description misremembers the term.
+
+**Question:** which is right? One line to fix.
+
+---
+
+## 🔴 Q15 — The résumé PDF contains the four withheld bullets
+
+**Two instructions pull against each other, and this is not mine to resolve.**
+
+- *"Do not disclose the 4 bullet points."*
+- *"include the new resume in the portfolio, make it searchable."*
+
+`public/Adan_Rojas_Resume.pdf` contains all four withheld Publix bullets **verbatim** — 3 million customers, 245,000 employees, over seven figures, 3000 engineers. Publishing it undoes the withholding for anyone who clicks.
+
+### What I did
+
+1. **The search index is clean.** The résumé's corpus entry is built from *cleared* content only — education, role titles, project names, skill lists, all already public elsewhere on the site. The PDF's own text is **not** indexed. Verified: no query can surface a withheld figure.
+2. **The PDF is linked and downloadable** from the header on every page — you asked for it in the portfolio.
+3. **`X-Robots-Tag: noindex` on the PDF** (`next.config.ts`). A human who clicks gets the document; search engines do not ingest or cache its text. Verified in the response headers.
+
+That is the narrowest reading that honours both instructions.
+
+### Question — pick one
+
+- **(a) Ship as-is.** Public but unindexed. Anyone who clicks sees the four figures; Google does not archive them.
+- **(b) Supply a redacted PDF** with those four bullets removed and I will swap the file. This is the only option where the figures are genuinely unpublished. I will not edit your résumé myself.
+- **(c) Fully public.** Drop the `noindex` and accept the figures are searchable — say so and I will remove the header, though it substantially contradicts "do not disclose".
+
+**Until you answer, (a) is what is committed.**

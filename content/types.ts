@@ -29,6 +29,11 @@ export const SourceSchema = z.enum([
   "resume",   // Adan_Rojas_Resume.pdf (August 2026)
   "both",     // present in the repo and corroborated by the résumé
   "github",   // github.com/adanjoserrojas profile README
+  // Supplied directly by Adan in conversation. He is the owner and therefore
+  // an authoritative source, but this content appears on NO résumé, so it is
+  // exempt from the §2.4 résumé-backing check by design. Every record using
+  // this must name the date it was supplied in `_sourceRef`.
+  "owner",
 ]);
 
 /**

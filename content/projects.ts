@@ -49,16 +49,10 @@ const items = [
     // (app/page.tsx:26) pointed at the iPalo repo; this is the real one.
     href: "https://github.com/adanjoserrojas/ReCueCareer",
     image: "ReCueCareer.png",
-    conflicts: [
-      {
-        field: "date",
-        value: "Jul 2025",
-        alternative: "Jun 2025 - Present",
-        question:
-          "The résumé says Jul 2025; the site says 'Jun 2025 - Present'. §0.2 makes the résumé canonical, but §2.3b #2 says to confirm rather than pick. Which is right — and is the project still ongoing?",
-        openQuestion: "Q10 #2",
-      },
-    ],
+    // §Q10 #2 RESOLVED (Adan, 2026-08-04): "The ReCueCareer Date is July
+    // 2025." Confirms the résumé over the site's "Jun 2025 - Present". Kept in
+    // the site's abbreviated form for consistency with every other date on the
+    // page (Oct 2025, Sep 2025, May 2024) — "Jul 2025" is the same date.
     _source: "both",
     _sourceRef: "app/page.tsx:26 + Adan_Rojas_Resume.pdf:51-55",
   },
@@ -144,27 +138,50 @@ const items = [
   {
     slug: "knight-finder",
     name: "Knight Finder",
-    // _source: app/page.tsx:29. Not on either résumé — §2.3b #3 defaults to
-    // keeping it. No stack, no bullets, no metrics: none exist. This entry is
-    // deliberately thin and must not be padded (§5.1).
+    // _source: app/page.tsx:29 — frozen site one-liner, retained.
     summary: "myUCF portal helper extension.",
+    // ⚠️ CONFLICT. The site has always said May 2024. The description Adan
+    // supplied on 2026-08-04 names "Knight Hacks Spring 2025 Project Launch",
+    // which is a different term entirely. Neither value is changed here
+    // because guessing would silently rewrite history in one direction or the
+    // other. See OPEN-QUESTIONS.md §Q14.
     date: "May 2024",
-    // _source: app/page.tsx:29 — points at a collaborator's account, so
-    // per-project repo ownership is not uniform (relevant to §Q7).
-    href: "https://github.com/jaysprogram/Knight-Finder",
-    image: "Knight_Finder.png",
-    conflicts: [
+    // _source: Adan, 2026-08-04. Named in the description he supplied.
+    stack: ["JavaScript", "Python", "GenAI", "MySQL"],
+    bullets: [
       {
-        field: "inclusion",
-        value: "kept",
-        alternative: "dropped or demoted",
-        question:
-          "Knight Finder is on the site but on neither résumé. §2.3b #3 defaults to keeping it. Confirm.",
-        openQuestion: "Q10 #3",
+        // Adan's lead sentence, with its trailing clause removed because the
+        // next bullet states the same fact verbatim and rendering both reads
+        // as a stutter. §0.2 permits "a shorter true subset" but forbids
+        // paraphrase, so this is a strict subsequence of what he wrote —
+        // nothing substituted.
+        //
+        // His full original, for one-line restoration:
+        //   "Delivered Knight Finder Chrome extension using JavaScript,
+        //    Python, GenAI & MySQL for Knight Hacks Spring 2025 Project
+        //    Launch—placed 5th of 23—and cut navigation from five clicks to
+        //    two, saving approximately 4,200 student-hours weekly."
+        text: "Delivered Knight Finder Chrome extension using JavaScript, Python, GenAI & MySQL for Knight Hacks Spring 2025 Project Launch—placed 5th of 23.",
+        disclosure: "cleared",
+      },
+      {
+        text: "Cut navigation from five clicks to two, saving approximately 4,200 student-hours weekly.",
+        disclosure: "cleared",
+      },
+      {
+        text: "Engineered a GenAI-powered search assistant that highlights myUCF menu paths, tripling task completion speed and reducing support tickets by 90%.",
+        disclosure: "cleared",
       },
     ],
-    _source: "repo",
-    _sourceRef: "app/page.tsx:29",
+    // _source: app/page.tsx:29 — points at a collaborator's account, so
+    // per-project repo ownership is not uniform.
+    href: "https://github.com/jaysprogram/Knight-Finder",
+    image: "Knight_Finder.png",
+    // §Q10 #3 RESOLVED (Adan, 2026-08-04): kept, and no longer thin — he
+    // supplied real detail, so §5.1's "do not pad it" no longer applies.
+    // Nothing here was invented to fill space.
+    _source: "owner",
+    _sourceRef: "Adan, 2026-08-04 (conversation) + app/page.tsx:29",
   },
 ] as const;
 

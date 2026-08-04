@@ -10,7 +10,7 @@
 
 export type Doc = {
   id: string;
-  kind: "profile" | "role" | "project" | "skills" | "education";
+  kind: "profile" | "role" | "project" | "skills" | "education" | "resume";
   title: string;
   meta: string;
   fields: string[];

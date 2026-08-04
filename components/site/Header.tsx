@@ -18,6 +18,10 @@ const LINKS = [
   { href: "/about", label: "About" },
 ];
 
+// Not a route — a file. Kept out of LINKS so it renders as a plain <a>
+// rather than a prefetching <Link>, and so its label can say what it is.
+const RESUME = { href: "/Adan_Rojas_Resume.pdf", label: "Résumé" };
+
 export default function Header() {
   return (
     <header className="border-b border-line">
@@ -42,6 +46,16 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li>
+              <a
+                href={RESUME.href}
+                data-target
+                className="inline-flex items-center text-sm text-muted no-underline transition-colors hover:text-ink"
+              >
+                {RESUME.label}
+                <span className="sr-only"> (PDF)</span>
+              </a>
+            </li>
           </ul>
         </nav>
 

@@ -323,3 +323,61 @@ Also changed: metadata keyword `"Full-Stack Developer"` → `"Full-Stack Develop
 **The exact string "Full-Stack Developer" now appears on no public surface** — 0 occurrences across all eight routes, `/llms.txt`, and `/sitemap.xml`.
 
 `profile.roleLine` is unchanged: *Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development*. Adan dictated that wording himself at Gate 1, so this instruction was read as resolving the contradiction, not retracting it. Flagged in `OPEN-QUESTIONS.md` §Q13 in case that reading is wrong.
+
+---
+
+## 14. Final content decisions, 2026-08-04 (second batch)
+
+### 14a. Deletions — §Q11, §Q12 closed
+
+| File | Size | Why |
+|---|---|---|
+| `public/Adan_Rojas_Resume_Oct.pdf` | 110.3 KB | Superseded résumé — wrong major, removed employer, old email. A permanent redirect to the current PDF keeps inbound links alive. |
+| `pictures/McChicekn.png` | 5,331.2 KB | Orphaned, zero imports |
+| `pictures/WrongLogo.png` | 45.9 KB | Orphaned, zero imports |
+
+`pictures/` now holds only the four project images and the Knight Hacks logo — every one referenced.
+
+### 14b. Auth0 restored — §Q10 #4 closed
+
+Added back to **Tools/Platforms**. Skill count 45 → **46**.
+
+Appended rather than inserted, because everything above it holds the résumé's own ordering and Auth0 is not in the résumé's *skill list*. It is still résumé-backed and passes the §2.4 substring check — the résumé names it in ReCueCareer's stack line, which was always the anomaly that made dropping it look like an oversight.
+
+The other five dropped skills (Node.js, PostgreSQL, Firebase, Copilot, Pandas) stay out, held in `droppedFromSite`.
+
+### 14c. ReCueCareer date confirmed — §Q10 #2 closed
+
+*"The ReCueCareer Date is July 2025."* Confirms the résumé over the site's "Jun 2025 - Present". Rendered as **"Jul 2025"** — the same date, in the abbreviated form every other date on the site uses (Oct 2025, Sep 2025, May 2024). The conflict record is removed.
+
+### 14d. Knight Finder — real detail, supplied by Adan — §Q10 #3 closed
+
+Adan supplied a description on 2026-08-04. Knight Finder is no longer a thin entry, and **nothing was padded to make it fuller** — every word is his.
+
+**Added:** stack `JavaScript · Python · GenAI · MySQL`, three bullets, and `award: "5th place of 23, Knight Hacks Spring 2025 Project Launch"` in its `SoftwareApplication` schema.
+
+**One edit, and exactly what it was.** His lead sentence ended with a clause that the next bullet then repeated word for word:
+
+> "…Project Launch—placed 5th of 23—**and cut navigation from five clicks to two, saving approximately 4,200 student-hours weekly.**"
+> "• **Cut navigation from five clicks to two, saving approximately 4,200 student-hours weekly.**"
+
+Rendering both reads as a stutter. The trailing clause is removed from the lead sentence, which the following bullet already states. §0.2 permits "a shorter true subset" but forbids paraphrase, so the result is a strict **subsequence** of what he wrote — nothing substituted. His full original is preserved in a comment in `content/projects.ts` for one-line restoration.
+
+**New `owner` source type.** `SourceSchema` gains `"owner"` for content supplied directly by Adan in conversation. He is authoritative for his own history, but this material is on no résumé, so it is exempt from the §2.4 résumé-backing check by design — and `_sourceRef` must name the date it was supplied, so the provenance stays traceable.
+
+> ⚠️ **This introduced a date conflict.** The site has always said Knight Finder is May 2024; the new description names "Knight Hacks Spring 2025 Project Launch". Both now appear on the same page. Unresolved — `OPEN-QUESTIONS.md` §Q14.
+
+### 14e. GitHub / arXiv material — §Q9 closed
+
+*"do not place in portfolio for now."* Nothing from `content/reading.ts` renders; `APPROVED_FOR_RENDER` stays `false` and no route imports it. Recorded as "for now", not a permanent no.
+
+### 14f. The résumé, in the portfolio and searchable
+
+*"include the new resume in the portfolio, make it searchable."*
+
+- **Linked** from the header on every page, as a plain `<a>` to `/Adan_Rojas_Resume.pdf` (a file, not a route — no prefetch), labelled "Résumé" with "(PDF)" for screen readers.
+- **Searchable** as a 14th corpus document, so a query returns it alongside everything else.
+
+> ⚠️ **The résumé's corpus entry contains no résumé text.** Its fields are assembled from *cleared* content only — education, role titles, project names, skill lists — all already public elsewhere on the site. `content/.resume-source.txt` holds all four withheld Publix bullets, so indexing the file itself would have quietly undone the §0.3 decision through the search box.
+>
+> The PDF still contains them. `X-Robots-Tag: noindex` is set on it so a human who clicks gets the document while search engines do not ingest its text — the narrowest way to honour both instructions without editing Adan's résumé for him. **Flagged for decision: `OPEN-QUESTIONS.md` §Q15.**

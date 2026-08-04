@@ -80,6 +80,14 @@ const TOOLS: Row[] = [
   { name: "Vercel", href: "https://vercel.com/", onSiteBefore: true, source: "both" },
   { name: "MongoDB", href: "https://www.mongodb.com/", onSiteBefore: true, source: "both" },
   { name: "Hugging Face", href: "https://huggingface.co/", onSiteBefore: true, source: "both" },
+  // Restored by Adan on 2026-08-04 ("Add Auth0 back"), resolving §Q10 #4.
+  //
+  // Appended rather than inserted, because everything above holds the
+  // résumé's own ordering and Auth0 is not in the résumé's skill list. It is
+  // still résumé-backed and passes the §2.4 substring check — the résumé
+  // names it in ReCueCareer's stack line, which was always the anomaly that
+  // made dropping it look like an oversight.
+  { name: "Auth0", href: "https://auth0.com/", onSiteBefore: true, source: "both" },
 ];
 
 function build(rows: Row[], category: SkillCategory, group: string): Skill[] {
@@ -110,16 +118,16 @@ export function skillsByCategory(category: SkillCategory): Skill[] {
 }
 
 /**
- * Skills the site listed that the current résumé does not.
+ * Skills the old site listed that the current résumé does not.
  *
- * §2.3b #4 defaults to the résumé list as canonical, so these are NOT part of
- * `skills` and will not render. They are recorded here so the removal is
- * visible at Gate 1 and reversible in one line. See OPEN-QUESTIONS.md §Q10 #4.
+ * §Q10 #4 RESOLVED (Adan, 2026-08-04): Auth0 restored — it moved into
+ * `skills` above. The remaining five stay out: the résumé list is canonical
+ * per §2.3b #4, and Adan restored only the one he was asked about.
  *
- * _source: components/ui/CardDemo.tsx:72-109
+ * Kept here so the removal stays visible and any of them is one line from
+ * coming back.
  *
- * Note Auth0 is the awkward one: the résumé drops it from the skill list but
- * still names it in ReCueCareer's stack line, so Adan clearly uses it.
+ * _source: components/ui/CardDemo.tsx:72-109 (deleted at Phase 6)
  */
 export const droppedFromSite = [
   { name: "Node.js", href: "https://nodejs.org/" },
@@ -127,5 +135,4 @@ export const droppedFromSite = [
   { name: "Firebase", href: "https://firebase.google.com/" },
   { name: "Copilot", href: "https://copilot.github.com/" },
   { name: "Pandas", href: "https://pandas.pydata.org/" },
-  { name: "Auth0", href: "https://auth0.com/" },
 ] as const;

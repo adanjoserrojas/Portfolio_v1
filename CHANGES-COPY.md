@@ -11,7 +11,7 @@ Every **chrome-copy** change, before/after, per §0.1.
 | # | Before | After | Where | Why |
 |---|---|---|---|---|
 | 1 | `Here are some of my personal and collaborative projects that I've worked on recently.` | `4 projects, in the order they appear on the site.` | `/projects` lede | The original was written for a single-page site where the sentence introduced a section. On a dedicated index route it restates the page title; the replacement says something the heading doesn't. |
-| 2 | `Here are some of the technologies and tools I work with:` | `45 entries in three categories, grouped as the résumé groups them.` | `/skills` lede | Same reason, plus it now names the grouping — which is Adan's own, from the résumé, not one an agent invented. |
+| 2 | `Here are some of the technologies and tools I work with:` | `46 entries in three categories, grouped as the résumé groups them.` | `/skills` lede | Same reason, plus it now names the grouping — which is Adan's own, from the résumé, not one an agent invented. |
 | 3 | `A few roles I've had the pleasure to work in recently:` | `4 roles, most recent first.` | `/experience` lede | Same reason. |
 | 4 | `Click to learn more!` | *(deleted)* | project cards | The control it labelled no longer exists. Project names are now real links to real routes (`/projects/[slug]`), so the affordance is the link itself. §0.1 names this string explicitly as chrome. |
 
@@ -27,9 +27,9 @@ Marked `(new)` per the rule that new agent-written words stay visible in one pla
 |---|---|---|
 | `Skip to content` | skip link | §8 requirement. |
 | `Search` + `⌘K` / `Ctrl K` | header trigger | §5.2. |
-| `Query · lexical BM25 over 13 documents` | homepage label | Says exactly what the ranking is. Not "semantic", not "AI-powered" — it is lexical, and the label says so. |
+| `Query · lexical BM25 over 14 documents` | homepage label | Says exactly what the ranking is. Not "semantic", not "AI-powered" — it is lexical, and the label says so. |
 | `Search everything on this site…` | query placeholder | |
-| `Showing all 13 documents · no query` / `N of 13 documents matched` | status line | |
+| `Showing all 14 documents · no query` / `N of 14 documents matched` | status line | |
 | `↑↓ to walk results · esc to clear` | keyboard hint | |
 | `Try:` + 6 query chips | homepage empty state | The chips are **real corpus terms** (MCP, hackathon, Swift, TypeScript, accessibility, AWS), not invented suggestions — none can return zero results. |
 | `matched in title · meta · body` | per result | Why it ranked, not just that it did. |
@@ -38,10 +38,11 @@ Marked `(new)` per the rule that new agent-written words stay visible in one pla
 | `Index` | eyebrow on index routes | |
 | `4 projects, in the order they appear on the site.` etc. | ledes | See table above. |
 | `N/4 resolved` | `/experience` trace | Reports genuine traversal state. No durations — none exist to report. |
-| `Atlas` + `The same 45 skills, plotted by category. Hovering or focusing a project highlights the ones named in its stack — every line is an edge that exists in the source, not a decorative connection.` | `/skills` | States the honesty constraint in the UI. |
+| `Atlas` + `The same 46 skills, plotted by category. Hovering or focusing a project highlights the ones named in its stack — every line is an edge that exists in the source, not a decorative connection.` | `/skills` | States the honesty constraint in the UI. |
 | `Focus or hover a project to highlight the skills in its stack.` | atlas readout | |
 | `no stack on record` | atlas, Knight Finder | Honest absence, not a placeholder. |
-| `This project predates the material on record, so there is no detail beyond the above. It is listed because it was built, not padded to match the others.` | `/projects/knight-finder` | §5.1: "a short honest page outranks a padded one." |
+| `This project predates the material on record, so there is no detail beyond the above. It is listed because it was built, not padded to match the others.` | *(no longer rendered)* | Written when Knight Finder had no detail. Adan supplied a real description on 2026-08-04, so the fallback no longer fires. Kept in the code for any future project that genuinely has nothing. |
+| `Résumé` + `(PDF)` (screen-reader suffix) | header | Adan asked for the résumé in the portfolio. |
 | `No document at that address` + `Nothing is indexed here. Everything on this site is listed below.` | 404 | |
 | `Elsewhere` | `/about` links heading | |
 | `Switch to light theme` / `Switch to dark theme` | toggle `aria-label` | |
@@ -57,7 +58,7 @@ Recorded so the boundary stays unambiguous:
 - All four project names, dates, and one-line summaries.
 - All role titles, orgs, durations, and both Knight Hacks description fields.
 - Every résumé bullet — verbatim, never compressed or merged.
-- All 45 skill names.
+- All 46 skill names.
 
 **Not "changed copy":** the quiz text, the Dahiana Rojas prose, and the dead chatbot strings were *removed*. Those belong in `CHANGES-CONTENT.md`.
 
@@ -87,7 +88,7 @@ Deleted, not reworded. While the §0.3 question was open this was the honest thi
 | Date | Location | Before | After | Reason |
 |---|---|---|---|---|
 | 2026-08-04 | `/projects` lede | `Here are some of my personal and collaborative projects that I've worked on recently.` | `4 projects, in the order they appear on the site.` | Section sub-line became a route lede |
-| 2026-08-04 | `/skills` lede | `Here are some of the technologies and tools I work with:` | `45 entries in three categories, grouped as the résumé groups them.` | As above; names the grouping |
+| 2026-08-04 | `/skills` lede | `Here are some of the technologies and tools I work with:` | `46 entries in three categories, grouped as the résumé groups them.` | As above; names the grouping |
 | 2026-08-04 | `/experience` lede | `A few roles I've had the pleasure to work in recently:` | `4 roles, most recent first.` | As above |
 | 2026-08-04 | project cards | `Click to learn more!` | *(deleted)* | Control replaced by real links to real routes |
 | 2026-08-04 | role pages + `/experience` | `N further items from this role are not shown — pending a confidentiality review of employer-internal figures.` | *(deleted)* | §Q5 closed: do not disclose. The notice itself became a disclosure. |

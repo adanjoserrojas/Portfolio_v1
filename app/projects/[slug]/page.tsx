@@ -44,7 +44,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const award =
     p.slug === "ipalo"
       ? "1st place of 22 teams, Best Use of ElevenLabs, Knight Hacks VIII"
-      : undefined;
+      : p.slug === "knight-finder"
+        ? // Supplied by Adan on 2026-08-04. A real placement at a real event.
+          "5th place of 23, Knight Hacks Spring 2025 Project Launch"
+        : undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",

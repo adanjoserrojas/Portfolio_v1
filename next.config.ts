@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
    */
   async redirects() {
     return [
+      // The October résumé file is deleted. This keeps any inbound link alive
+      // and pointing at the current document instead of 404ing.
       {
         source: "/Adan_Rojas_Resume_Oct.pdf",
         destination: "/Adan_Rojas_Resume.pdf",
@@ -46,6 +48,23 @@ const nextConfig: NextConfig = {
         // Fingerprinted build assets are immutable.
         source: "/_next/static/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        /**
+         * The résumé PDF is downloadable but not indexed.
+         *
+         * Adan asked for the résumé in the portfolio, and separately asked
+         * that four Publix bullets not be disclosed. The PDF still contains
+         * those four bullets verbatim — so a human who clicks through gets the
+         * document he wants published, while search engines do not ingest and
+         * cache its text. That is the narrowest way to honour both
+         * instructions without editing his résumé for him.
+         *
+         * See OPEN-QUESTIONS.md §Q15. Remove this header if the intent is for
+         * the PDF's contents to be fully public.
+         */
+        source: "/Adan_Rojas_Resume.pdf",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
       },
     ];
   },

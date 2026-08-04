@@ -116,6 +116,13 @@ for (const role of experience) {
 
 for (const p of projects) {
   const at = `projects[${p.slug}]`;
+  // Records sourced from the repo or supplied directly by Adan are not on any
+  // résumé, so requiring résumé backing for them would be wrong. Knight Finder
+  // is the only one: its detail came from Adan on 2026-08-04.
+  if (p._source === "repo" || p._source === "owner") {
+    pass();
+    continue;
+  }
   // Only résumé-sourced fields are checked. `summary` is frozen site prose and
   // `name`/`date`/`image`/`href` are exempt per the allowlist.
   p.stack?.forEach((s, i) => mustBeInResume(s, `${at}.stack[${i}]`));
@@ -272,7 +279,7 @@ console.log(`  ${checks} checks passed, ${failures} failed.`);
 console.log(`  ${experience.length} roles, ${projects.length} projects, ${skills.length} skills.`);
 
 if (held.length) {
-  console.log(`\n  ⚠️  ${held.length} bullets withheld pending the §0.3 confidentiality answer:`);
+  console.log(`\n  ${held.length} bullets withheld permanently (§0.3, settled 2026-08-04):`);
   held.forEach((h) => console.log(`      · ${h}`));
 }
 
@@ -281,7 +288,7 @@ const conflicts = [
   ...projects.flatMap((p) => p.conflicts.map((c) => `${p.slug}.${c.field} → ${c.openQuestion}`)),
 ];
 if (conflicts.length) {
-  console.log(`\n  ⚠️  ${conflicts.length} unresolved conflicts awaiting Gate 1:`);
+  console.log(`\n  ⚠️  ${conflicts.length} unresolved conflict(s):`);
   conflicts.forEach((c) => console.log(`      · ${c}`));
 }
 
