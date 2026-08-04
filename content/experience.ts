@@ -12,21 +12,27 @@ import { ExperienceSchema, validate, type Experience } from "./types";
  * verifier in scripts/verify-content.ts strips whitespace on both sides
  * before comparing, so these still match mechanically.
  *
- * §0.3 CONFIDENTIALITY — SETTLED, NOT PENDING.
+ * §0.3 CONFIDENTIALITY — CLEARED.
  *
- * A résumé is shown to a chosen audience; a website is public and permanent.
- * On 2026-08-04 Adan instructed: "Do not disclose the 4 bullet points."
+ * History, because a reversal should be legible rather than silently
+ * overwritten:
  *
- * The four Publix bullets marked `disclosure: "hold"` below are therefore
- * withheld permanently, not provisionally. They are kept here — verbatim, with
- * the reason recorded — because deleting them would lose the record of what
- * the résumé actually says and invite someone to re-add them later without
- * the context. They have no public surface: they are filtered at the corpus
- * boundary in lib/retrieval.ts, so they reach neither the page, the search
- * index, nor /llms.txt. The UI does not report their existence or their count
- * either; see the note in components/site/Prose.tsx.
+ *   · 2026-08-04, first instruction: "Do not disclose the 4 bullet points."
+ *     The four Publix bullets carrying employer-internal figures were held.
+ *   · 2026-08-04, superseding instruction: "aggregate the 4 bullet points to
+ *     Publix description, at the end, that information is fine to disclose,
+ *     I forgot but it is ok to disclose those."
  *
- * Do not change any of these to "cleared" without a fresh written instruction.
+ * That second instruction is the written confirmation §10's confidentiality
+ * gate requires before any employer-internal figure ships. All five Publix
+ * bullets are now `cleared` and render.
+ *
+ * Per Adan's wording the four previously-held bullets are appended AFTER the
+ * MCP bullet rather than restored to résumé order — "at the end" is explicit,
+ * and it is his page.
+ *
+ * The `disclosure` mechanism is retained even though nothing is currently
+ * held: it costs nothing, and the next employer will raise the same question.
  */
 const roles = [
   {
@@ -91,31 +97,28 @@ const roles = [
     end: "Jul 2026",
     ongoing: false,
     bullets: [
+      // The bullet that was public from the start — no held figure.
+      {
+        text: "Improved engineer productivity by building a Multi-Agent AI system of 5 agents that leveraged the MCP protocol to consult documentation across the development cycle in the Supply Chain Logistics Department.",
+        disclosure: "cleared",
+      },
+      // The four previously held, appended "at the end" per Adan's wording.
+      // Each is verbatim from the résumé; none was edited on the way in.
       {
         text: "Modernized and re-engineered 2 warehouse replenishment batch jobs from legacy VB6 to C#/.NET, improving long-term maintainability for inventory workflows supporting more than 3 million customers across Publix locations nationwide.",
-        disclosure: "hold",
-        holdReason: "'more than 3 million customers' — employer-internal figure. Withheld permanently per Adan, 2026-08-04.",
+        disclosure: "cleared",
       },
       {
         text: "Collaborated with a cross-functional team of 18 engineers and associates to develop an enterprise Learning Management System supporting 245,000 employees, leveraging MongoDB, Azure Blob/File Storage, ASP.NET MVC, and SQL Server while adhering to organizational security, privacy, and data-governance standards.",
-        disclosure: "hold",
-        holdReason: "'245,000 employees' — employer-internal figure; the 18-engineer team size travels in the same sentence. Withheld permanently per Adan, 2026-08-04.",
+        disclosure: "cleared",
       },
       {
         text: "Contributed to the in-house development of a modern enterprise LMS that reduced annual training costs by over seven figures, replacing third-party platform dependencies with scalable internal solutions that improved operational efficiency.",
-        disclosure: "hold",
-        holdReason: "'over seven figures' in annual cost reduction — employer-internal figure. Withheld permanently per Adan, 2026-08-04.",
-      },
-      {
-        text: "Improved engineer productivity by building a Multi-Agent AI system of 5 agents that leveraged the MCP protocol to consult documentation across the development cycle in the Supply Chain Logistics Department.",
-        // §0.3's conservative default explicitly clears "the agent/token-
-        // optimization work". This bullet carries no figure from the hold list.
         disclosure: "cleared",
       },
       {
         text: "Developed an Output Token Optimization Agent Skill that surpassed the Caveman skill on 4 benchmarks by 71.1% on average token output savings and was adopted by the Publix Plugin Marketplace, impacting the development cycles of more than 3000 engineers.",
-        disclosure: "hold",
-        holdReason: "'more than 3000 engineers' — employer-internal figure. Adan was asked on 2026-08-04 whether a shorter subset ending at 'Publix Plugin Marketplace' could ship and answered do not disclose, so the whole bullet is withheld permanently.",
+        disclosure: "cleared",
       },
     ],
     _source: "resume",

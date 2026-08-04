@@ -101,36 +101,29 @@ Recommend confirming in Search Console's Pages report post-launch rather than pr
 
 ---
 
-## ✅ Q5 — Publix disclosure scope (CLOSED 2026-08-04)
+## ✅ Q5 — Publix disclosure scope (REVERSED, then CLOSED 2026-08-04)
 
-**Adan's answer: "Do not disclose the 4 bullet points."**
+**This question was answered twice, in opposite directions. Both are recorded, because a reversal should be legible rather than silently overwritten.**
 
-The four Publix bullets carrying employer-internal figures are withheld **permanently**, not provisionally.
-
-| Bullet | Held figure |
+| | Instruction |
 |---|---|
-| VB6 → C#/.NET batch job modernisation | "more than 3 million customers" |
-| Enterprise LMS, 18-engineer team | "245,000 employees" |
-| LMS cost reduction | "over seven figures" |
-| Output Token Optimization Agent Skill | "more than 3000 engineers" |
+| First | *"Do not disclose the 4 bullet points."* |
+| **Superseding** | *"aggregate the 4 bullet points to Publix description, at the end, that information is fine to disclose, I forgot but it is ok to disclose those."* |
 
-**Shown publicly:** the Multi-Agent MCP bullet only — 5 agents, MCP protocol, Supply Chain Logistics Department. No figure from the hold list.
+**Final state: all five Publix bullets are public.** The second instruction is the written confirmation §10's confidentiality gate requires before any employer-internal figure ships.
 
-### What changed as a result
+Per Adan's wording, the four previously-held bullets are appended **after** the MCP bullet rather than restored to résumé order — "at the end" is explicit.
 
-The UI no longer reports that anything is withheld. While the question was open, each affected role rendered *"N further items not shown — confidentiality review pending"*, which correctly distinguished "there is more, withheld" from "there is nothing more". Once the answer is *never*, **that notice becomes a disclosure in its own right** — it tells a reader and a crawler that four more facts about a named employer exist, and invites the question of what they are. It is gone.
+Now public: *more than 3 million customers*, *245,000 employees*, *over seven figures* in annual training cost reduction, *more than 3000 engineers*, the 18-engineer team size, the *Caveman* skill comparison, and the *71.1%* benchmark result.
 
-The bullets remain in `content/experience.ts`, verbatim and reasoned, so the record of what the résumé says is not lost and nobody re-adds them later without the context. They are filtered at the corpus boundary in `lib/retrieval.ts`, so they reach neither the page, the search index, nor `/llms.txt`.
+**One thing worth saying once, not repeated:** a webpage is public, permanent, and indexed. Once this deploys and Google crawls it, those figures are effectively out for good — deleting the page later does not retract them. That is Adan's call to make and he has made it in writing.
 
-**Verified:** grepping the rendered output of `/`, `/about`, `/experience`, `/experience/publix`, `/projects`, `/skills`, `/llms.txt`, and `/sitemap.xml` for all four figures — plus "18 engineers", "Caveman", and "71.1" — returns **0 matches on every surface**.
+The `disclosure` mechanism stays in `content/experience.ts` even though nothing is currently held. It costs nothing, and the next employer will raise the same question.
 
-### Consequences for §6
+### Consequences
 
-§6.1 (token-optimization benchmark) and §6.2 (multi-agent MCP trace) are **permanently out** — both need cleared Publix figures. Per §390, the two signature components are §6.3 (skill atlas) and the v2 trace treatment on `/experience`. Both are built and both are backed entirely by cleared data.
-
-> Adan confirmed separately that the four individual benchmark names and percentages exist. They were never supplied, and are now moot: the bullet they belong to is withheld.
-
-**Do not change any `disclosure: "hold"` to `"cleared"` without a fresh written instruction.**
+- **§6.1 and §6.2 are unblocked.** The token-optimization benchmark and multi-agent MCP trace components are now buildable. Neither was built, because neither was asked for — and §6.1's full four-bar version still needs the individual benchmark names and percentages, which exist but have not been supplied. The honest aggregate-only version (71.1% across 4 benchmarks) is now possible.
+- The withheld-count notice stays deleted. Nothing is withheld, so there is nothing to report.
 
 ---
 
@@ -212,72 +205,28 @@ The six arXiv IDs and four themes stay in the file, unused, with the provenance 
 
 ---
 
-## 🟡 Q14 — Knight Finder: two different dates
+## ✅ Q14 — Knight Finder date (CLOSED 2026-08-04)
 
-**A new conflict, introduced by the description supplied on 2026-08-04.**
+**Adan: "Knight Finder date is Spring 2025."**
 
-| Source | Date |
-|---|---|
-| The site, since before this work began (`app/page.tsx:29`) | **May 2024** |
-| Adan's description, 2026-08-04 | "Knight Hacks **Spring 2025** Project Launch" |
-
-Different academic terms, roughly a year apart. `/projects/knight-finder` currently shows **May 2024** in its date field while a bullet on the same page says Spring 2025. **That contradiction is visible on the page.**
-
-I did not change it, because either direction silently rewrites history: correcting to Spring 2025 assumes the event date is the project date; leaving it assumes the new description misremembers the term.
-
-**Question:** which is right? One line to fix.
+Supersedes the site's long-standing "May 2024" and agrees with the "Knight Hacks Spring 2025 Project Launch" named in the description he supplied. The page and its bullet now say the same thing.
 
 ---
 
-## 🔴 Q15 — The résumé PDF contains the four withheld bullets
+## ✅ Q15 — The résumé PDF (CLOSED 2026-08-04, by §Q5)
 
-**Two instructions pull against each other, and this is not mine to resolve.**
+This question existed only because the PDF contained four bullets the site was withholding. **§Q5 reversed: those bullets are now public on the site itself**, so the PDF discloses nothing the pages do not.
 
-- *"Do not disclose the 4 bullet points."*
-- *"include the new resume in the portfolio, make it searchable."*
+The résumé is linked from the header and searchable as a corpus document.
 
-`public/Adan_Rojas_Resume.pdf` contains all four withheld Publix bullets **verbatim** — 3 million customers, 245,000 employees, over seven figures, 3000 engineers. Publishing it undoes the withholding for anyone who clicks.
-
-### What I did
-
-1. **The search index is clean.** The résumé's corpus entry is built from *cleared* content only — education, role titles, project names, skill lists, all already public elsewhere on the site. The PDF's own text is **not** indexed. Verified: no query can surface a withheld figure.
-2. **The PDF is linked and downloadable** from the header on every page — you asked for it in the portfolio.
-3. **`X-Robots-Tag: noindex` on the PDF** (`next.config.ts`). A human who clicks gets the document; search engines do not ingest or cache its text. Verified in the response headers.
-
-That is the narrowest reading that honours both instructions.
-
-### Question — pick one
-
-- **(a) Ship as-is.** Public but unindexed. Anyone who clicks sees the four figures; Google does not archive them.
-- **(b) Supply a redacted PDF** with those four bullets removed and I will swap the file. This is the only option where the figures are genuinely unpublished. I will not edit your résumé myself.
-- **(c) Fully public.** Drop the `noindex` and accept the figures are searchable — say so and I will remove the header, though it substantially contradicts "do not disclose".
-
-**Until you answer, (a) is what is committed.**
-
+**One thing left deliberately in place:** `X-Robots-Tag: noindex` on `/Adan_Rojas_Resume.pdf` (`next.config.ts`). This is now a normal SEO choice rather than a confidentiality one — an indexed PDF competes with `/about` and `/experience/*` for the same queries and usually outranks them with a worse landing experience. Say the word and I will remove it.
 
 ---
 
-## 🟡 Q16 — Project images are in the content layer but render nowhere
+## ✅ Q16 — Project images (CLOSED 2026-08-04)
 
-Noticed while clearing the logo asset. `content/projects.ts` carries an `image` field on all four projects:
+**Adan: "Untrack and delete the pictures folder."**
 
-| File | Size | Rendered? |
-|---|---|---|
-| `pictures/iPalo.png` | 274.8 KB | ❌ |
-| `pictures/ReCueCareer.png` | 138.3 KB | ❌ |
-| `pictures/Face2Learn.jpg` | 27.8 KB | ❌ |
-| `pictures/Knight_Finder.png` | 25.7 KB | ❌ |
+`pictures/` is removed from git and from disk — all four project screenshots, 466 KB. The `image` field is dropped from `ProjectSchema` and from every project.
 
-Nothing imports them. **The redesign dropped project imagery entirely** — the old site showed a picture on each project card; the new project pages are text-first.
-
-That was a design consequence of the Retrieval direction rather than a decision anyone made explicitly, and I should have flagged it at the time. It is not covered by "no logos is fine" — those are corporate trademarks; these are your own project screenshots, which raise no licensing question at all.
-
-**I have not deleted them.** They are your content, and 466 KB sitting unused in the repo is cheaper than losing them by assumption.
-
-**Question — pick one:**
-
-- **(a) Render them.** Project detail pages get their screenshot, pre-optimised to AVIF/WebP the way the portrait was. Costs a little weight on four routes; those routes currently score 100.
-- **(b) Delete them** and drop the `image` field. The site stays text-first and the repo gets 466 KB lighter.
-- **(c) Leave as-is** — unused but retained, in case you want them later.
-
-**(c) is what is committed**, because it is the only one that is reversible in both directions.
+The site is text-first by design. Recoverable from git history if that changes.

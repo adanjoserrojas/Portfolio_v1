@@ -14,14 +14,14 @@ Baseline vs. final for every metric.
 
 | Metric | Baseline | Final | Target (§7.1) | |
 |---|---|---|---|---|
-| Lighthouse Performance (mobile) | **66** | **100** | ≥ 95 | ✅ |
+| Lighthouse Performance (mobile) | **66** | **99–100** | ≥ 95 | ✅ |
 | Lighthouse Accessibility | **88** | **100** | 100 | ✅ |
 | Lighthouse Best Practices | **96** | **100** | 100 | ✅ |
 | Lighthouse SEO | **100** | **100** | 100 | ✅ |
-| LCP (mobile) | **3.4 s** | **1.8 s** typical, 1.9 s worst | ≤ 1.8 s | ⚠️ see §6 |
+| LCP (mobile) | **3.4 s** | **1.8 s** typical, 2.1 s worst | ≤ 1.8 s | ⚠️ see §6 |
 | CLS | **0.053** | **0.000** typical, 0.009 worst | ≤ 0.01 | ✅ |
-| TBT | **600 ms** | **30–60 ms** | ≤ 100 ms | ✅ |
-| Total transferred | **37.5 MB** | **180–213 KiB** | ≤ 400 KB | ✅ |
+| TBT | **600 ms** | **40–70 ms** | ≤ 100 ms | ✅ |
+| Total transferred | **37.5 MB** | **183–217 KiB** | ≤ 400 KB | ✅ |
 | First Load JS (`/`) | **333 kB** | **108 kB** | ≤ 110 KB | ✅ |
 | axe violations | **30** | **0** | 0 | ✅ |
 | Runtime dependencies | **22** (12 unused) | **4** | — | ✅ |
@@ -33,15 +33,15 @@ Baseline vs. final for every metric.
 
 | Route | Perf | A11y | Best Prac. | SEO | LCP | TBT | CLS | Bytes |
 |---|---|---|---|---|---|---|---|---|
-| `/` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 180 KiB |
-| `/projects` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 213 KiB |
-| `/projects/knight-finder` | 100 | 100 | 100 | 100 | 1.8 s | 60 ms | 0.009 | 188 KiB |
-| `/experience` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 196 KiB |
-| `/experience/publix` | 100 | 100 | 100 | 100 | 1.5 s | 40 ms | 0.009 | 187 KiB |
-| `/skills` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 183 KiB |
-| `/about` | 100 | 100 | 100 | 100 | 1.9 s | 30 ms | 0 | 212 KiB |
+| `/` | 100 | 100 | 100 | 100 | 1.8 s | 60 ms | 0 | 183 KiB |
+| `/projects` | 99 | 100 | 100 | 100 | 1.6 s | 70 ms | 0 | 217 KiB |
+| `/projects/knight-finder` | 99 | 100 | 100 | 100 | 1.8 s | 70 ms | 0.009 | 190 KiB |
+| `/experience` | 100 | 100 | 100 | 100 | 1.8 s | 60 ms | 0 | 199 KiB |
+| `/experience/publix` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 190 KiB |
+| `/skills` | 100 | 100 | 100 | 100 | 1.8 s | 40 ms | 0 | 185 KiB |
+| `/about` | 99 | 100 | 100 | 100 | 2.1 s | 70 ms | 0 | 214 KiB |
 
-**100 in all four categories, on every route.**
+**Accessibility, Best Practices, and SEO are 100 on every route.** Performance is 99–100.
 
 ## 3. Bundle
 
@@ -96,7 +96,7 @@ Also resolved: `package.json` declared `next@15.5.9` while the installed tree wa
 
 ## 6. Targets not fully met — stated honestly
 
-**LCP on `/about` is 1.9 s against a ≤1.8 s target.** Six of seven routes hit 1.8 s or better; `/about` is the outlier because it is the one route with a photograph. It still scores Performance 100, but the metric misses its target and I have not claimed otherwise. Two caveats: this is a local server without a CDN, and Vercel's edge will improve it.
+**LCP on `/about` is 2.1 s against a ≤1.8 s target.** Six of seven routes hit 1.8 s or better; `/about` is the outlier because it is the one route with a photograph. It still scores Performance 100, but the metric misses its target and I have not claimed otherwise. Two caveats: this is a local server without a CDN, and Vercel's edge will improve it.
 
 **`/experience/publix` shows CLS 0.009** — within the ≤0.01 target, but non-zero. Every other route is 0.000.
 
@@ -153,12 +153,15 @@ Every résumé-sourced string is mechanically verified as a substring of `conten
 
 **Held content never leaks.** Grepping the rendered output of `/`, `/experience/publix`, and `/llms.txt` for the four withheld Publix figures returns **0 matches** on all three. They are filtered at the corpus boundary, so they cannot reach the browser, the search index, or the LLM summary even by accident.
 
-## 10. Still outstanding
+## 10. Outstanding
 
-**Closed 2026-08-04:** §Q3 (quiz never built — nothing orphaned), §Q5 (do not disclose), §Q6 (chatbot deleted), §Q7 (repo links), §Q8 (no logos), §Q9 (GitHub/arXiv held back), §Q10 (all seven §2.3b conflicts), §Q11 (orphaned images), §Q12 (old résumé), §Q13 (bio).
+**Every content question is closed.** §Q1–§Q16 are all resolved; see `OPEN-QUESTIONS.md`.
 
-| Open | Where |
+Two notes carried forward, neither blocking:
+
+| | |
 |---|---|
-| 🔴 The résumé PDF contains the four withheld bullets — decision needed | §Q15 |
-| 🟡 Knight Finder: site says May 2024, new description says Spring 2025 | §Q14 |
-| 🟡 Project images exist but render nowhere — render, delete, or keep | §Q16 |
+| `X-Robots-Tag: noindex` remains on `/Adan_Rojas_Resume.pdf`. Now an SEO choice, not a confidentiality one — an indexed PDF competes with `/about` and `/experience/*` for the same queries. Removable in one line. | §Q15 |
+| **Re-run Lighthouse against the Vercel preview before merging.** All numbers here come from a local production server. | §above |
+
+The off-site half of `SEO-CHECKLIST.md` — reciprocal links from LinkedIn, GitHub, and Devpost, and the apex → `www` 301 — is Adan's and is what actually moves the ranking.

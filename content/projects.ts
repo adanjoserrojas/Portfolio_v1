@@ -48,7 +48,6 @@ const items = [
     // _source: Adan, 2026-08-04, at Gate 1 — resolving §Q7. The site's link
     // (app/page.tsx:26) pointed at the iPalo repo; this is the real one.
     href: "https://github.com/adanjoserrojas/ReCueCareer",
-    image: "ReCueCareer.png",
     // §Q10 #2 RESOLVED (Adan, 2026-08-04): "The ReCueCareer Date is July
     // 2025." Confirms the résumé over the site's "Jun 2025 - Present". Kept in
     // the site's abbreviated form for consistency with every other date on the
@@ -91,7 +90,6 @@ const items = [
     ],
     // _source: app/page.tsx:27 — the one project card whose href is correct.
     href: "https://github.com/adanjoserrojas/iPalo",
-    image: "iPalo.png",
     _source: "both",
     _sourceRef: "app/page.tsx:27 + Adan_Rojas_Resume.pdf:37-43",
   },
@@ -130,7 +128,6 @@ const items = [
     // _source: Adan, 2026-08-04, at Gate 1 — resolving §Q7. The site's link
     // (app/page.tsx:28) pointed at the ReCueCareer repo; this is the real one.
     href: "https://github.com/adanjoserrojas/Face2Learn",
-    image: "Face2Learn.jpg",
     _source: "both",
     _sourceRef: "app/page.tsx:28 + Adan_Rojas_Resume.pdf:44-50",
   },
@@ -140,12 +137,10 @@ const items = [
     name: "Knight Finder",
     // _source: app/page.tsx:29 — frozen site one-liner, retained.
     summary: "myUCF portal helper extension.",
-    // ⚠️ CONFLICT. The site has always said May 2024. The description Adan
-    // supplied on 2026-08-04 names "Knight Hacks Spring 2025 Project Launch",
-    // which is a different term entirely. Neither value is changed here
-    // because guessing would silently rewrite history in one direction or the
-    // other. See OPEN-QUESTIONS.md §Q14.
-    date: "May 2024",
+    // §Q14 RESOLVED (Adan, 2026-08-04): "Knight Finder date is Spring 2025."
+    // Supersedes the site's long-standing "May 2024" and agrees with the
+    // "Knight Hacks Spring 2025 Project Launch" named in his description.
+    date: "Spring 2025",
     // _source: Adan, 2026-08-04. Named in the description he supplied.
     stack: ["JavaScript", "Python", "GenAI", "MySQL"],
     bullets: [
@@ -176,7 +171,6 @@ const items = [
     // _source: app/page.tsx:29 — points at a collaborator's account, so
     // per-project repo ownership is not uniform.
     href: "https://github.com/jaysprogram/Knight-Finder",
-    image: "Knight_Finder.png",
     // §Q10 #3 RESOLVED (Adan, 2026-08-04): kept, and no longer thin — he
     // supplied real detail, so §5.1's "do not pad it" no longer applies.
     // Nothing here was invented to fill space.

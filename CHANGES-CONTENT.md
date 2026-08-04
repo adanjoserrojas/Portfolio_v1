@@ -409,3 +409,46 @@ Found while clearing the logo asset. All four projects carry an `image` field th
 **The redesign dropped project imagery entirely.** The old site put a picture on each project card; the new project pages are text-first. That followed from the Retrieval direction rather than from an explicit decision, and it should have been flagged at Gate 2 rather than discovered now.
 
 The files are retained, unused, pending Adan's answer at `OPEN-QUESTIONS.md` §Q16 — deleting his project screenshots on an assumption would be the wrong error to make.
+
+---
+
+## 16. Final batch, 2026-08-04 — including one reversal
+
+### 16a. Publix disclosure REVERSED — §Q5 re-opened and re-closed
+
+**This question was answered twice, in opposite directions.** Both are on the record, because a reversal should be legible rather than silently overwritten.
+
+| | Instruction |
+|---|---|
+| First | *"Do not disclose the 4 bullet points."* |
+| **Superseding** | *"aggregate the 4 bullet points to Publix description, at the end, that information is fine to disclose, I forgot but it is ok to disclose those."* |
+
+**All five Publix bullets are now public.** The second instruction is the written confirmation §10's confidentiality gate requires before any employer-internal figure ships.
+
+Per Adan's wording the four previously-held bullets are appended **after** the MCP bullet rather than restored to résumé order — "at the end" is explicit, and it is his page. Each is verbatim from the résumé; none was edited on the way in.
+
+Now public: *more than 3 million customers*, *245,000 employees*, *over seven figures*, *more than 3000 engineers*, the 18-engineer team size, the *Caveman* comparison, and the *71.1%* result.
+
+Said once and not repeated: a webpage is public, permanent, and indexed. Once this deploys and Google crawls it, those figures are effectively out for good. That is Adan's call and he has made it in writing.
+
+The `disclosure` mechanism stays even though nothing is held — it costs nothing and the next employer will raise the same question.
+
+**Unblocked but not built:** §6.1 (token-optimization benchmark) and §6.2 (multi-agent MCP trace) are now possible. Neither was built, because neither was asked for. §6.1's full four-bar version still needs the individual benchmark names and percentages, which exist but have not been supplied; the honest aggregate-only version is now buildable.
+
+### 16b. Knight Finder date — §Q14 closed
+
+**"Knight Finder date is Spring 2025."** Supersedes the site's long-standing "May 2024" and agrees with the "Knight Hacks Spring 2025 Project Launch" named in his description. The date field and the bullet now say the same thing.
+
+### 16c. `pictures/` deleted — §Q16 closed
+
+**"Untrack and delete the pictures folder."** Removed from git and from disk: `iPalo.png`, `ReCueCareer.png`, `Face2Learn.jpg`, `Knight_Finder.png` — 466 KB.
+
+The `image` field is dropped from `ProjectSchema` and from every project. The site is text-first by design. All recoverable from git history.
+
+With this, `pictures/` no longer exists. Every image the site serves lives in `public/img/`.
+
+### 16d. §Q15 closed as a consequence
+
+The résumé PDF question existed only because the PDF carried four bullets the site was withholding. Those bullets are now public on the site itself, so the PDF discloses nothing the pages do not.
+
+`X-Robots-Tag: noindex` stays on the PDF — now an ordinary SEO choice (an indexed PDF competes with `/about` and `/experience/*` for the same queries), not a confidentiality one.

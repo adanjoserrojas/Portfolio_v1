@@ -131,12 +131,11 @@ export const ProjectSchema = z.object({
   stack: z.array(NonEmpty).min(1).optional(),
   /** Verbatim résumé bullets. Absent for projects not on the résumé. */
   bullets: z.array(BulletSchema).min(1).optional(),
-  /**
-   * Repo URL. Two of the four are currently wrong on the site
-   * (OPEN-QUESTIONS.md §Q7), so this is optional rather than guessed.
-   */
+  /** Repo URL. Optional rather than guessed. */
   href: z.url().optional(),
-  image: NonEmpty,
+  // No `image` field. Adan deleted pictures/ on 2026-08-04 (§Q16): the
+  // redesign is text-first and nothing rendered the project screenshots, so
+  // the field described assets that no longer exist.
   conflicts: z.array(ConflictSchema).default([]),
   _source: SourceSchema,
   _sourceRef: NonEmpty,

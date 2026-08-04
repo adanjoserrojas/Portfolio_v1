@@ -92,19 +92,18 @@
       "$comment": "Fields that are legitimately NOT résumé-backed. Each names its own truth source, which must be the repo or the live site per §0.2.",
       "profile.bio": "app/page.tsx:74,76,78 — frozen site prose",
       "profile.greeting": "app/page.tsx:64",
-      "profile.roleLine": "app/page.tsx:74 — frozen; §2.3b #6 pending",
+      "profile.roleLine": "Adan, 2026-08-04 — approved change from app/page.tsx:74",
       "profile.location": "live site — REDESIGN.md §2.3",
       "profile.links": "components/ui/nav-bar.tsx:151,161 + résumé line 2; Devpost from REDESIGN.md §2.3",
       "projects[].summary": "app/page.tsx:26-29 — frozen site one-liners, explicitly retained by §2.3a",
       "projects[].name": "app/page.tsx:26-29",
       "projects[].date": "résumé where present, else app/page.tsx",
-      "projects[].href": "app/page.tsx:27,29 — only the two verified-correct links",
-      "projects[].image": "pictures/ filenames",
-      "experience[].logo": "pictures/KH2025Logo.png",
-      "unresolvedRoles[]": "app/page.tsx:33-35 — retained pending §Q10 #1, not rendered",
-      "skills[].href": "components/ui/CardDemo.tsx:72-109 — carried over, never invented",
-      "reading[]": "GitHub README via REDESIGN.md §191 — NOT approved for render, §Q9",
-      "githubThemes": "GitHub README via REDESIGN.md §191 — NOT approved for render, §Q9"
+      "projects[].href": "app/page.tsx:27,29 + Adan 2026-08-04 for the two that were wrong",
+      "experience[] where _source is repo": "app/page.tsx:33-35 — Knight Hacks Workshop Instructor, frozen site prose, on no résumé",
+      "projects[] where _source is owner": "Adan, 2026-08-04 — Knight Finder stack and bullets, on no résumé",
+      "skills[].href": "components/ui/CardDemo.tsx:72-109 (deleted at Phase 6) — carried over, never invented",
+      "reading[]": "GitHub README via REDESIGN.md §191 — NOT rendered, §Q9 answered 'not for now'",
+      "githubThemes": "GitHub README via REDESIGN.md §191 — NOT rendered, §Q9 answered 'not for now'"
     },
 
     "knownExtractionArtifacts": {
