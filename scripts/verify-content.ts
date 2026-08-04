@@ -24,7 +24,7 @@ import { join, relative, sep } from "node:path";
 
 import { profile, emailAddress } from "../content/profile";
 import { education } from "../content/education";
-import { experience, unresolvedRoles } from "../content/experience";
+import { experience } from "../content/experience";
 import { projects } from "../content/projects";
 import { skills } from "../content/skills";
 
@@ -100,6 +100,14 @@ function mustBeInResume(value: string, where: string) {
 
 for (const role of experience) {
   const at = `experience[${role.slug}]`;
+  // Records sourced from the repo are frozen SITE prose, not résumé content.
+  // The Knight Hacks Workshop Instructor role is the only one: Adan confirmed
+  // at Gate 1 that it is a real earlier role, but it appears on no résumé, so
+  // requiring résumé backing for it would be wrong.
+  if (role._source === "repo") {
+    pass();
+    continue;
+  }
   mustBeInResume(role.role, `${at}.role`);
   mustBeInResume(role.org.replace(/\s*\(.*\)\s*/, ""), `${at}.org`);
   mustBeInResume(role.location, `${at}.location`);
@@ -252,7 +260,6 @@ if (held.length) {
 const conflicts = [
   ...experience.flatMap((r) => r.conflicts.map((c) => `${r.slug}.${c.field} → ${c.openQuestion}`)),
   ...projects.flatMap((p) => p.conflicts.map((c) => `${p.slug}.${c.field} → ${c.openQuestion}`)),
-  ...unresolvedRoles.flatMap((r) => r.conflicts.map((c) => `${r.slug}.${c.field} → ${c.openQuestion}`)),
 ];
 if (conflicts.length) {
   console.log(`\n  ⚠️  ${conflicts.length} unresolved conflicts awaiting Gate 1:`);

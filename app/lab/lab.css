@@ -1,0 +1,61 @@
+/* Design-lab chrome only. Never ships — see app/lab/layout.tsx. */
+
+.lab-root {
+  min-height: 100vh;
+}
+
+.lab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  background: #1a1a1a;
+  color: #cfcfcf;
+  font: 400 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* #9a9a9a on #1a1a1a = 6.1:1. The previous #7a7a7a was 4.05:1 and was the
+   ONLY color-contrast failure across all six prototypes — my scaffolding,
+   not anyone's palette. Fixed so the scores measure the designs. */
+.lab-bar__tag {
+  color: #9a9a9a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lab-bar__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-bar a {
+  color: #cfcfcf;
+  text-decoration: none;
+  padding: 0.15rem 0.3rem;
+  border-radius: 3px;
+}
+
+.lab-bar a:hover,
+.lab-bar a:focus-visible {
+  background: #2e2e2e;
+  color: #fff;
+}
+
+.lab-bar b {
+  color: #8a8a8a;
+  font-weight: 500;
+}
+
+/* The prototypes below own their own surfaces; reset the app shell's
+   near-black body background so light mode renders honestly. */
+.lab-root :where(.proto) {
+  min-height: calc(100vh - 28px);
+}

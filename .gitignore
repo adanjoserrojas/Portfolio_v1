@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Phase 2 design lab screenshots - regenerate with: node scripts/shoot.mjs
+design-lab/

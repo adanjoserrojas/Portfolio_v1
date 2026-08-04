@@ -69,16 +69,9 @@ const roles = [
         disclosure: "cleared",
       },
     ],
-    conflicts: [
-      {
-        field: "role",
-        value: "Hackathon Organizer",
-        alternative: "Workshop Instructor",
-        question:
-          "The site shows 'Workshop Instructor' at Knight Hacks starting August 2025; the résumé shows 'Hackathon Organizer' starting January 2026. Are these two sequential roles at the same org, or one role renamed? If sequential, both belong on the site — see `unresolvedRoles` below.",
-        openQuestion: "Q10 #1",
-      },
-    ],
+    // §Q10 #1 RESOLVED (Adan, 2026-08-04): "It is a progression." Workshop
+    // Instructor (Aug 2025) preceded Hackathon Organizer (Jan 2026) at the
+    // same org. Both are real roles; neither is a rename of the other.
     _source: "resume",
     _sourceRef: "Adan_Rojas_Resume.pdf:15-22",
   },
@@ -123,64 +116,48 @@ const roles = [
     _source: "resume",
     _sourceRef: "Adan_Rojas_Resume.pdf:23-35",
   },
+
+  {
+    // §Q10 #1 RESOLVED (Adan, 2026-08-04): "It is a progression." This is a
+    // distinct earlier Knight Hacks role, not an old title for the Organizer
+    // role above. Promoted from `unresolvedRoles` into the canonical array.
+    //
+    // Placed last because it is the earliest start date, keeping the array
+    // reverse-chronological. The three résumé roles above hold résumé order
+    // per §2.2; this one is site-sourced and appends.
+    //
+    // Its content is frozen site prose (§0.1) — not on either résumé, so it
+    // is exempt from the §2.4 résumé-backing check by design.
+    slug: "knight-hacks-workshop-instructor",
+    role: "Workshop Instructor",
+    org: "Knight Hacks",
+    location: "Orlando, FL",
+    start: "August 2025",
+    ongoing: true,
+    logo: "KH2025Logo.png",
+    bullets: [
+      {
+        // _source: app/page.tsx:33 — the card's short description, verbatim
+        // including its embedded newline.
+        text: "This is where I teach UI/UX to Knight Hacks members.\n Knight Hacks is awesome, you should join!",
+        disclosure: "cleared",
+      },
+    ],
+    // _source: app/page.tsx:34 — the modal's long description, verbatim.
+    siteProse:
+      "In this role, I get to share my passion for UI/UX design by leading workshops for Knight Hacks members, and honestly, one of the best parts is pushing myself outside my comfort zone through public speaking. Every workshop is a chance to grow while teaching others about design principles, tools, and best practices. I love creating presentations and hands-on activities that make user-centered design click for people. Beyond the workshops, I work one-on-one with members on their projects, giving feedback and guidance to help their designs shine. I also team up with other instructors to build out a curriculum that gives our members real, practical skills they can actually use in the field. It's rewarding to see people develop their design thinking while I develop my own confidence in front of a room.",
+    _source: "repo",
+    _sourceRef: "app/page.tsx:33-35",
+  },
 ] as const;
 
 export const experience: Experience[] = roles.map((r, i) =>
   validate(ExperienceSchema, r, `experience.ts[${i}] (${r.slug})`),
 );
 
-/**
- * NOT CANONICAL — do not render until Gate 1 resolves OPEN-QUESTIONS.md §Q10 #1.
- *
- * The site currently shows a Knight Hacks "Workshop Instructor" role starting
- * August 2025. The résumé shows "Hackathon Organizer" starting January 2026.
- * §0.2 says the résumé wins on conflict, but §2.3b #1 says to ask whether
- * these are two sequential roles rather than one renamed — and if they are
- * sequential, deleting this one would destroy real history.
- *
- * It is preserved here, unrendered, so that either answer is cheap.
- *
- * Note a third variant exists: the OLD résumé (public/Adan_Rojas_Resume_Oct.pdf)
- * called it "Workshop Team Member", Aug 2025 – Present. Three titles, one org.
- */
-export const unresolvedRoles: Experience[] = [
-  validate(
-    ExperienceSchema,
-    {
-      slug: "knight-hacks-workshop-instructor",
-      role: "Workshop Instructor",
-      org: "Knight Hacks",
-      location: "Orlando, FL",
-      start: "August 2025",
-      ongoing: true,
-      logo: "KH2025Logo.png",
-      bullets: [
-        {
-          // _source: app/page.tsx:33 — the card's short description, verbatim
-          // including its embedded newline.
-          text: "This is where I teach UI/UX to Knight Hacks members.\n Knight Hacks is awesome, you should join!",
-          disclosure: "cleared",
-        },
-      ],
-      // _source: app/page.tsx:34 — the modal's long description, verbatim.
-      siteProse:
-        "In this role, I get to share my passion for UI/UX design by leading workshops for Knight Hacks members, and honestly, one of the best parts is pushing myself outside my comfort zone through public speaking. Every workshop is a chance to grow while teaching others about design principles, tools, and best practices. I love creating presentations and hands-on activities that make user-centered design click for people. Beyond the workshops, I work one-on-one with members on their projects, giving feedback and guidance to help their designs shine. I also team up with other instructors to build out a curriculum that gives our members real, practical skills they can actually use in the field. It's rewarding to see people develop their design thinking while I develop my own confidence in front of a room.",
-      conflicts: [
-        {
-          field: "existence",
-          value: "retained pending Gate 1",
-          alternative: "removed as a rename of Hackathon Organizer",
-          question:
-            "Is this a distinct earlier role, or the same Knight Hacks role under its old title?",
-          openQuestion: "Q10 #1",
-        },
-      ],
-      _source: "repo",
-      _sourceRef: "app/page.tsx:33-35",
-    },
-    "experience.ts unresolvedRoles[0]",
-  ),
-];
+export function roleBySlug(slug: string): Experience | undefined {
+  return experience.find((r) => r.slug === slug);
+}
 
 /** Bullets safe to render today, per the §0.3 conservative default. */
 export function clearedBullets(role: Experience) {

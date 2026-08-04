@@ -44,7 +44,9 @@ const items = [
         disclosure: "cleared",
       },
     ],
-    // href omitted — see §Q7. app/page.tsx:26 points this card at /iPalo.
+    // _source: Adan, 2026-08-04, at Gate 1 — resolving §Q7. The site's link
+    // (app/page.tsx:26) pointed at the iPalo repo; this is the real one.
+    href: "https://github.com/adanjoserrojas/ReCueCareer",
     image: "ReCueCareer.png",
     conflicts: [
       {
@@ -54,14 +56,6 @@ const items = [
         question:
           "The résumé says Jul 2025; the site says 'Jun 2025 - Present'. §0.2 makes the résumé canonical, but §2.3b #2 says to confirm rather than pick. Which is right — and is the project still ongoing?",
         openQuestion: "Q10 #2",
-      },
-      {
-        field: "href",
-        value: "omitted",
-        alternative: "https://github.com/adanjoserrojas/iPalo",
-        question:
-          "The site links this card to the iPalo repo. What is ReCueCareer's actual repository URL?",
-        openQuestion: "Q7",
       },
     ],
     _source: "both",
@@ -138,18 +132,10 @@ const items = [
         disclosure: "cleared",
       },
     ],
-    // href omitted — see §Q7. app/page.tsx:28 points this card at /ReCueCareer.
+    // _source: Adan, 2026-08-04, at Gate 1 — resolving §Q7. The site's link
+    // (app/page.tsx:28) pointed at the ReCueCareer repo; this is the real one.
+    href: "https://github.com/adanjoserrojas/Face2Learn",
     image: "Face2Learn.jpg",
-    conflicts: [
-      {
-        field: "href",
-        value: "omitted",
-        alternative: "https://github.com/adanjoserrojas/ReCueCareer",
-        question:
-          "The site links this card to the ReCueCareer repo. What is Face2Learn's actual repository URL?",
-        openQuestion: "Q7",
-      },
-    ],
     _source: "both",
     _sourceRef: "app/page.tsx:28 + Adan_Rojas_Resume.pdf:44-50",
   },

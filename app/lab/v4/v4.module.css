@@ -1,0 +1,180 @@
+/* v4 — Reading room. Token plan: DESIGN-NOTES.md § v4
+   Palette deliberately steered off §3.1 tell #1: paper is cooler and lighter
+   than #F4F1EA, and the accent is ink-blue, never terracotta. */
+
+.proto {
+  --surface: #fbfaf8;
+  --ink: #1c1b19;
+  --muted: #63605a;
+  --line: #e6e3dd;
+  --accent: #3a5a8c;
+
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body), Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .proto {
+    --surface: #131316;
+    --ink: #e9e7e3;
+    --muted: #918d86;
+    --line: #282a2e;
+    --accent: #7fa3d8;
+  }
+}
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem) 8rem;
+}
+
+/* Single measure with sidenotes in the right margin at ≥1024px,
+   collapsing inline below. */
+.col {
+  max-width: 62ch;
+}
+
+.title {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+
+.standfirst {
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 3rem;
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.body p {
+  font-size: 1.075rem;
+  line-height: 1.72;
+  margin: 0 0 1.35rem;
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+
+.h2 {
+  font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  margin: 3.5rem 0 1.25rem;
+  text-wrap: balance;
+}
+
+.h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 2rem 0 0.35rem;
+}
+
+/* An entry: project or role, set as a reference rather than a card. */
+.entry {
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.entryMeta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.entry p {
+  font-size: 1.02rem;
+  line-height: 1.68;
+  margin: 0 0 0.7rem;
+  text-wrap: pretty;
+}
+
+.notes {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+  padding-left: 1.15rem;
+  text-indent: -1.15rem;
+  margin-bottom: 0.55rem;
+  text-wrap: pretty;
+}
+
+.notes li::before {
+  content: "— ";
+  color: var(--accent);
+}
+
+/* Sidenotes — real margin notes on wide viewports. */
+.sidenote {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0.5rem 0 1rem;
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--line);
+}
+
+@media (min-width: 1024px) {
+  .sidenote {
+    position: absolute;
+    left: calc(62ch + 3rem);
+    width: 15rem;
+    top: 0;
+    margin: 0;
+  }
+}
+
+.appendix {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.appendixGroup {
+  margin-bottom: 1.5rem;
+}
+
+.appendixName {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin: 0 0 0.45rem;
+}
+
+.appendixList {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0;
+}
+
+.link {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
+.held {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+}

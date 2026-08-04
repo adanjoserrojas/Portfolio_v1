@@ -7,10 +7,19 @@ import { ProfileSchema, validate, type Profile } from "./types";
 const data = {
   name: "Adan Rojas",
 
-  // _source: app/page.tsx:74 — the opening clause of the first bio paragraph.
-  // §2.3b #6 asks whether this should shift toward software engineering /
-  // agentic AI. Changing it edits frozen prose, so it needs Adan's approval.
-  roleLine: "Full-Stack Developer",
+  // _source: Adan, 2026-08-04, at Gate 1 — approving §2.3b #6.
+  // Was "Full-Stack Developer" (app/page.tsx:74). Adan's instruction:
+  // "Change for Software Engineer with a passion for AI Agents, MCPs,
+  //  Full-Stack Development, etc etc."
+  // Logged in CHANGES-CONTENT.md §10. The owner is a truth source for his
+  // own role line; the trailing "etc etc" is deliberately NOT expanded into
+  // invented interests (§0.2).
+  //
+  // ⚠️ bio[0] below still opens "I'm a Full-Stack Developer…". Adan approved
+  // the role line, not the paragraph, so the paragraph stays frozen. See
+  // OPEN-QUESTIONS.md §Q13.
+  roleLine:
+    "Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development",
 
   // _source: live site footer / REDESIGN.md §2.3. Not present in the repo.
   location: "Oviedo, FL",

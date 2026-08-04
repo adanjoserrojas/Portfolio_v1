@@ -58,6 +58,20 @@ Reconstructing AWS / Knight Hacks Organizer / Publix bullets from §2.3a's summa
 
 ---
 
+## 🟡 Q13 — The hero role line and bio paragraph 1 now disagree
+
+Adan approved the new role line at Gate 1 (§Q10 #6): *"Software Engineer with a passion for AI Agents, MCPs, Full-Stack Development, etc etc."* Applied to `profile.roleLine`.
+
+But `profile.bio[0]` — frozen prose from `app/page.tsx:74` — still opens **"I'm a Full-Stack Developer passionate about crafting elegant, efficient web solutions…"**. The approval covered the role line, not the paragraph, so the paragraph was left frozen (§0.1).
+
+Visible in every prototype screenshot: the hero says *Software Engineer with a passion for AI Agents, MCPs…* and two lines below the bio says *I'm a Full-Stack Developer*.
+
+**Question:** rewrite bio paragraph 1 to match, or leave both as they are? Rewriting is a content change to frozen prose and needs explicit approval; if approved, supply the wording — I will not draft new claims about Adan.
+
+Also note the trailing "etc etc" was **not** expanded. Inventing further interests would breach §0.2. If there are more, name them.
+
+---
+
 ## 🟡 Q12 — The site serves the outdated résumé
 
 `components/ui/nav-bar.tsx:175` and `:271` both open `/Adan_Rojas_Resume_Oct.pdf`. That is the **October** résumé — the one with Computer Science, the Dahiana Rojas role, and none of the AWS/Knight Hacks/Publix history.
