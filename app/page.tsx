@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   // Homepage title leads with the name (§9.1), so it overrides the template.
   title: { absolute: "Adan Rojas — Software Engineer | 4dan.dev" },
   description:
-    "Software engineer working on agentic AI, MCP tooling, and full-stack development. UCF Information Technology, Fall 2027. Search every project, role, and skill.",
+    "Aspiring Software engineer working on agentic AI, MCP tooling, and full-stack development. UCF Information Technology, Fall 2027. Search every project, role, and skill.",
   alternates: { canonical: "/" },
 };
 

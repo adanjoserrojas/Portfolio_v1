@@ -18,7 +18,7 @@ const data = {
   // §Q13 RESOLVED (Adan, 2026-08-04): "delete full-stack developer".
   // bio[0] no longer contradicts this line — see the note on bio below.
   roleLine:
-    "Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development",
+    "Aspiring Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development",
 
   // _source: live site footer / REDESIGN.md §2.3. Not present in the repo.
   location: "Oviedo, FL",
