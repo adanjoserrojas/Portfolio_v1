@@ -1,94 +1,163 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { THEME_SCRIPT } from "@/lib/theme";
+import { profile, emailAddress } from "@/content/profile";
+import { education } from "@/content/education";
+import Header from "@/components/site/Header";
+import Footer from "@/components/site/Footer";
+import Palette from "@/components/site/Palette";
+import { corpus } from "@/lib/retrieval";
+
+const dmSans = DM_Sans({
   subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmMono = DM_Mono({
   subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-dm-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-    title: "Portfolio | Adan Rojas",
+  metadataBase: new URL("https://www.4dan.dev"),
+  title: {
+    default: "Adan Rojas — Software Engineer",
+    template: "Adan Rojas — %s | Software Engineer",
+  },
+  description:
+    "Adan Rojas is a software engineer and UCF Information Technology student working on agentic AI, MCP tooling, and full-stack development.",
+  applicationName: "Adan Rojas",
+  authors: [{ name: profile.name, url: "https://www.4dan.dev" }],
+  creator: profile.name,
+  publisher: profile.name,
+  // Rebuilt from the content layer. The old list carried "Dahiana Rojas" (a
+  // removed employer) and "Computer Science" (the wrong major) — AUDIT.md §6.6.
+  keywords: [
+    "Adan Rojas",
+    "Software Engineer",
+    "Agentic AI",
+    "Model Context Protocol",
+    "MCP",
+    // "Full-Stack Developer" removed per Adan's §Q13 instruction; the phrasing
+    // he approved for the role line is used instead.
+    "Full-Stack Development",
+    "University of Central Florida",
+    "UCF",
+    "Information Technology",
+    "Knight Hacks",
+    "Orlando",
+    "Next.js",
+    "TypeScript",
+    "Python",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    locale: "en_US",
+    url: "https://www.4dan.dev",
+    siteName: "Adan Rojas",
+    title: "Adan Rojas — Software Engineer",
     description:
-        "An aspiring software engineer passionate about building impactful and performant software solutions. Currently a student at the University of Central Florida, actively seeking opportunities to contribute to innovative projects and collaborate with like-minded professionals in the tech industry.",
-    keywords: [
-        "Adan Rojas",
-        "Software Engineer",
-        "UCF",
-        "Knight Hacks",
-        "Full-Stack Developer",
-        "Dahiana Rojas",
-        "Intern",
-        "UCF",
-        "University of Central Florida",
-        "Workshop Team Member",
-        "Python",
-        "React",
-        "Next.js",
-        "Computer Science",
-    ],
-    authors: [{ name: "Adan Rojas" }],
-    creator: "Adan Rojas",
-    publisher: "Adan Rojas",
-    metadataBase: new URL("https://www.4dan.dev"),
-    alternates: {
-        canonical: "/",
+      "Software engineer working on agentic AI, MCP tooling, and full-stack development. UCF Information Technology, Fall 2027.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Adan Rojas — Software Engineer",
+    description:
+      "Software engineer working on agentic AI, MCP tooling, and full-stack development.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-    openGraph: {
-        type: "website",
-        locale: "en_US",
-        url: "https://www.4dan.dev",
-        title: "Portfolio | Adan Rojas",
-        description:
-            "An aspiring software engineer passionate about building impactful and performant software solutions. Currently a student at the University of Central Florida, actively seeking opportunities to contribute to innovative projects and collaborate with like-minded professionals in the tech industry.",
-        siteName: "Adan Rojas Portfolio",
-        images: [
-            {
-                url: "/images/og-image.png",
-                width: 1200,
-                height: 630,
-                alt: "Adan Rojas - Software Engineer Portfolio",
-            },
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Portfolio | Adan Rojas",
-        description:
-            "An aspiring software engineer passionate about building impactful and performant software solutions.",
-        images: ["/images/og-image.png"],
-    },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
-            index: true,
-            follow: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
-        },
-    },
+  },
 };
 
-export const viewport = 'width=device-width, initial-scale=1'
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light dark",
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+/**
+ * §9.1 — Person schema. `sameAs` is the specific mechanism by which Google
+ * links the profiles into one entity, making the site a candidate for the
+ * knowledge panel rather than a competitor to LinkedIn.
+ *
+ * Deliberately ABSENT (§9.1): `worksFor`. The Publix internship ended in
+ * July 2026 and the AWS role is a program affiliation, not employment —
+ * `worksFor: Amazon` would read as a claim Adan is not making.
+ */
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  url: "https://www.4dan.dev",
+  email: `mailto:${emailAddress()}`,
+  jobTitle: "Software Engineer",
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: education.institution,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Orlando",
+      addressRegion: "FL",
+    },
+  },
+  affiliation: {
+    "@type": "CollegeOrUniversity",
+    name: education.institution,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Oviedo",
+    addressRegion: "FL",
+    addressCountry: "US",
+  },
+  knowsAbout: [
+    "Agentic AI",
+    "Model Context Protocol",
+    "Machine Learning",
+    "Computer Vision",
+    "Software Engineering",
+  ],
+  sameAs: profile.links.map((l) => l.href),
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth!">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <head>
+        {/* Blocking, before paint — no flash of the wrong theme (§4.1). */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
+      <body className={`${dmSans.variable} ${dmMono.variable}`}>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <Header />
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
+        <Footer />
+        {/* Corpus is built on the server and handed down, so zod and the
+            content modules never enter the client bundle (§5.3). */}
+        <Palette docs={corpus} />
       </body>
     </html>
   );
