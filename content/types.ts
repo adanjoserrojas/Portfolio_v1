@@ -111,8 +111,10 @@ export const ExperienceSchema = z.object({
   bullets: z.array(BulletSchema).min(1),
   /** Long-form prose carried over from the site. Frozen (§0.1). */
   siteProse: NonEmpty.optional(),
-  /** No logo is added for orgs without an asset in the repo (§7.3). */
-  logo: NonEmpty.optional(),
+  // No `logo` field. §7.3 and Adan (2026-08-04, "no logos is fine"): every
+  // experience entry renders typographically. Third-party trademarks on a
+  // personal site are a licensing question, not a design one — and a field
+  // nothing reads is a promise the UI does not keep.
   conflicts: z.array(ConflictSchema).default([]),
   _source: SourceSchema,
   _sourceRef: NonEmpty,

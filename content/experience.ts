@@ -36,8 +36,6 @@ const roles = [
     location: "Orlando, FL",
     start: "Jan 2026",
     ongoing: true,
-    // No logo. §7.3: do not download corporate logos — this entry renders
-    // typographically. See OPEN-QUESTIONS.md §Q8.
     bullets: [
       {
         text: "Educated 100+ students on AWS microservices (S3, DynamoDB, Lambda) by designing and hosting 3 hands-on technical workshops, building custom Python seeding scripts to demonstrate live S3 operations and boost interactivity.",
@@ -63,9 +61,6 @@ const roles = [
     location: "Orlando, FL",
     start: "Jan 2026",
     ongoing: true,
-    // _source: pictures/KH2025Logo.png — already in the repo and already
-    // used by the site, so this is the one org with a licensed asset.
-    logo: "KH2025Logo.png",
     bullets: [
       {
         text: "Participated in the planning and execution of a 1,000+ participant, 36-hour hackathon, coordinating cross-functional teams, sponsors, and complex logistics across multiple venues for one of Florida's largest student-run collegiate technical events.",
@@ -95,7 +90,6 @@ const roles = [
     start: "May 2026",
     end: "Jul 2026",
     ongoing: false,
-    // No logo. §7.3 — see OPEN-QUESTIONS.md §Q8.
     bullets: [
       {
         text: "Modernized and re-engineered 2 warehouse replenishment batch jobs from legacy VB6 to C#/.NET, improving long-term maintainability for inventory workflows supporting more than 3 million customers across Publix locations nationwide.",
@@ -145,7 +139,6 @@ const roles = [
     location: "Orlando, FL",
     start: "August 2025",
     ongoing: true,
-    logo: "KH2025Logo.png",
     bullets: [
       {
         // _source: app/page.tsx:33 — the card's short description, verbatim

@@ -155,11 +155,10 @@ Every résumé-sourced string is mechanically verified as a substring of `conten
 
 ## 10. Still outstanding
 
-**Closed 2026-08-04:** §Q5 (do not disclose), §Q6 (chatbot deleted), §Q7 (repo links), §Q9 (GitHub/arXiv held back), §Q10 (all seven §2.3b conflicts), §Q11 (orphaned images), §Q12 (old résumé), §Q13 (bio).
+**Closed 2026-08-04:** §Q3 (quiz never built — nothing orphaned), §Q5 (do not disclose), §Q6 (chatbot deleted), §Q7 (repo links), §Q8 (no logos), §Q9 (GitHub/arXiv held back), §Q10 (all seven §2.3b conflicts), §Q11 (orphaned images), §Q12 (old résumé), §Q13 (bio).
 
 | Open | Where |
 |---|---|
 | 🔴 The résumé PDF contains the four withheld bullets — decision needed | §Q15 |
 | 🟡 Knight Finder: site says May 2024, new description says Spring 2025 | §Q14 |
-| 🟡 Corporate logos for AWS / Publix — typographic by default | §Q8 |
-| ⚪ Quiz "secret project" — was it ever built? | §Q3 |
+| 🟡 Project images exist but render nowhere — render, delete, or keep | §Q16 |

@@ -83,18 +83,13 @@ The role line is unchanged: *Software Engineer with a passion for AI Agents, MCP
 
 ---
 
-## 🔴 Q3 — The quiz has no redirect. There is nothing to orphan.
+## ✅ Q3 — The quiz's "secret project" (CLOSED 2026-08-04)
 
-§0.1a warns: "The quiz currently gates a redirect to an unlisted project on a perfect score… Before deleting, find the redirect target in the repo and record it."
+**Adan: "The quiz was never built."**
 
-**No such redirect exists.** Searched the full repo for `redirect`, `window.location`, `router.push`, and every `href=`.
+This confirms the Phase 0 finding. `quizComponent.tsx` scored each question in isolation, had no cross-question state, and never navigated — the promise at `app/page.tsx:139` ("you will get redirected to a very important and secret project of mine") was never implemented.
 
-- `components/ui/quizComponent.tsx` renders one question in isolation. It tracks `selected` and `answered` per instance, has **no cross-question score**, and never navigates. Its only outcome is a "Correct!" / "The answer was: X" line plus a "Try again" button.
-- `app/page.tsx:152-159` renders four independent `<QuizComponent>` instances. Nothing aggregates their results.
-
-The promise at `app/page.tsx:139` — *"If you guess all of them right, you will get redirected to a very important and secret project of mine"* — was **never implemented**.
-
-**Question for Adan:** was the secret project ever built, and does its URL live somewhere outside this repo? If so, §0.1a's question still applies: drop it, link it openly, or re-gate it? If it was only ever an intention, deleting the quiz orphans nothing and this closes.
+**Nothing was orphaned by deleting the quiz.** No URL to preserve, no redirect to write.
 
 ---
 
@@ -164,13 +159,13 @@ Adan supplied the real URLs. The site's links were shifted by one — a live bug
 
 ---
 
-## 🟡 Q8 — Corporate logo assets for the new roles
+## ✅ Q8 — Corporate logos (CLOSED 2026-08-04)
 
-§7.3 forbids downloading corporate logos: "Third-party trademarks on a personal site are a licensing question, not a design one. Use typography for those entries unless Adan says otherwise."
+**Adan: "no logos is fine."**
 
-`pictures/` has `KH2025Logo.png` (Knight Hacks, already in use) and `CanvasLogo.png` (Dahiana Rojas, being deleted). There is **no AWS or Publix logo asset**, and none will be added.
+Every experience entry renders typographically. §7.3: third-party trademarks on a personal site are a licensing question, not a design one.
 
-**Confirming the default:** AWS and Publix experience entries render typographically, with no logo. Say so if you have licensed assets or explicit permission.
+**Consequence:** the `logo` field is removed from the schema and from both Knight Hacks entries, and `pictures/KH2025Logo.png` (41 KB) is deleted — with nothing rendering logos, it was an orphaned asset and a field the UI never read.
 
 ---
 
@@ -258,3 +253,31 @@ That is the narrowest reading that honours both instructions.
 - **(c) Fully public.** Drop the `noindex` and accept the figures are searchable — say so and I will remove the header, though it substantially contradicts "do not disclose".
 
 **Until you answer, (a) is what is committed.**
+
+
+---
+
+## 🟡 Q16 — Project images are in the content layer but render nowhere
+
+Noticed while clearing the logo asset. `content/projects.ts` carries an `image` field on all four projects:
+
+| File | Size | Rendered? |
+|---|---|---|
+| `pictures/iPalo.png` | 274.8 KB | ❌ |
+| `pictures/ReCueCareer.png` | 138.3 KB | ❌ |
+| `pictures/Face2Learn.jpg` | 27.8 KB | ❌ |
+| `pictures/Knight_Finder.png` | 25.7 KB | ❌ |
+
+Nothing imports them. **The redesign dropped project imagery entirely** — the old site showed a picture on each project card; the new project pages are text-first.
+
+That was a design consequence of the Retrieval direction rather than a decision anyone made explicitly, and I should have flagged it at the time. It is not covered by "no logos is fine" — those are corporate trademarks; these are your own project screenshots, which raise no licensing question at all.
+
+**I have not deleted them.** They are your content, and 466 KB sitting unused in the repo is cheaper than losing them by assumption.
+
+**Question — pick one:**
+
+- **(a) Render them.** Project detail pages get their screenshot, pre-optimised to AVIF/WebP the way the portrait was. Costs a little weight on four routes; those routes currently score 100.
+- **(b) Delete them** and drop the `image` field. The site stays text-first and the repo gets 466 KB lighter.
+- **(c) Leave as-is** — unused but retained, in case you want them later.
+
+**(c) is what is committed**, because it is the only one that is reversible in both directions.

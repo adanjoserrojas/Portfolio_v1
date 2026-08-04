@@ -381,3 +381,31 @@ Rendering both reads as a stutter. The trailing clause is removed from the lead 
 > ⚠️ **The résumé's corpus entry contains no résumé text.** Its fields are assembled from *cleared* content only — education, role titles, project names, skill lists — all already public elsewhere on the site. `content/.resume-source.txt` holds all four withheld Publix bullets, so indexing the file itself would have quietly undone the §0.3 decision through the search box.
 >
 > The PDF still contains them. `X-Robots-Tag: noindex` is set on it so a human who clicks gets the document while search engines do not ingest its text — the narrowest way to honour both instructions without editing Adan's résumé for him. **Flagged for decision: `OPEN-QUESTIONS.md` §Q15.**
+
+---
+
+## 15. Final answers, 2026-08-04 (third batch)
+
+### 15a. The quiz's "secret project" — §Q3 closed
+
+**Adan: "The quiz was never built."** This confirms the Phase 0 finding: `quizComponent.tsx` scored each question in isolation, had no cross-question state, and never navigated. The redirect promised at `app/page.tsx:139` was never implemented.
+
+**Nothing was orphaned by deleting the quiz.** No URL to preserve, no redirect to write. §5.1's proposed `/quiz` 301 stays unnecessary — see §Q4.
+
+### 15b. Corporate logos — §Q8 closed
+
+**Adan: "no logos is fine."** Every experience entry renders typographically, as §7.3 recommends.
+
+**Consequence:** the `logo` field is removed from `ExperienceSchema` and from both Knight Hacks entries, and `pictures/KH2025Logo.png` (41 KB) is deleted. With nothing rendering logos it was an orphaned asset, and a schema field the UI never reads is a promise the interface does not keep.
+
+This applies to AWS and Publix trademarks. It does **not** cover Adan's own project screenshots, which raise no licensing question — see §Q16.
+
+### 15c. Newly surfaced: project images render nowhere
+
+Found while clearing the logo asset. All four projects carry an `image` field that nothing imports:
+
+`iPalo.png` (274.8 KB), `ReCueCareer.png` (138.3 KB), `Face2Learn.jpg` (27.8 KB), `Knight_Finder.png` (25.7 KB).
+
+**The redesign dropped project imagery entirely.** The old site put a picture on each project card; the new project pages are text-first. That followed from the Retrieval direction rather than from an explicit decision, and it should have been flagged at Gate 2 rather than discovered now.
+
+The files are retained, unused, pending Adan's answer at `OPEN-QUESTIONS.md` §Q16 — deleting his project screenshots on an assumption would be the wrong error to make.
