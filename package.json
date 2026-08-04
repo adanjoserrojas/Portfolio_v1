@@ -7,7 +7,9 @@
     "dev:turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "verify:content": "tsx scripts/verify-content.ts"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.0.1",
@@ -31,7 +33,8 @@
     "react-spring": "^10.0.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.181.2"
+    "three": "^0.181.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -43,6 +46,7 @@
     "eslint-config-next": "15.5.2",
     "tailwind-scrollbar-hide": "^4.0.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.5",
     "typescript": "^5"
   }
 }

@@ -16,13 +16,17 @@ Watch: Phase 2 §3.4 needs a Playwright Chromium download (~150 MB) plus six pro
 
 ---
 
-## 🔴 Q2 — The résumé in the repo is not the résumé the plan describes
+## ✅ Q2 — Résumé version mismatch (RESOLVED 2026-08-04)
 
-**This blocks all of Phase 1.**
+**Adan supplied `Adan_Rojas_Resume.pdf`. It matches §2.3a exactly** — AWS, Knight Hacks Organizer, Publix, Information Technology / Fall 2027, `adan@4dan.dev`, and every figure the plan names (100+ students, 3 workshops, 100+ sign-ups, 200+ students, 1,000+ participants, 36-hour, 2 batch jobs, 18 engineers, 5 agents, 71.1% across 4 benchmarks).
 
-`REDESIGN.md` §0.2 and §2.3a treat `Adan_Rojas_Resume.pdf` (owner-supplied, August 2026) as authoritative. The only PDF in the repo is `public/Adan_Rojas_Resume_Oct.pdf`. Its full text was extracted and compared.
+Extracted verbatim to `content/.resume-source.txt`. All 220 résumé-backing checks in `npm run verify:content` pass. **Phase 1 unblocked and complete.**
 
-**It is an older résumé containing none of the §2.3a content.**
+The original finding is kept below, because it explains why `public/Adan_Rojas_Resume_Oct.pdf` must not be used as a truth source and why §2.3b #5 resolved the way it did.
+
+<details><summary>Original finding — the October résumé</summary>
+
+`public/Adan_Rojas_Resume_Oct.pdf` is an older résumé containing none of the §2.3a content.
 
 | §2.3a claim | Present in `Adan_Rojas_Resume_Oct.pdf`? |
 |---|---|
@@ -48,9 +52,24 @@ Watch: Phase 2 §3.4 needs a Playwright Chromium download (~150 MB) plus six pro
 
 Reconstructing AWS / Knight Hacks Organizer / Publix bullets from §2.3a's summary table would be exactly the invention §0.2 prohibits, and would publish unverified employment claims.
 
-**Status:** Adan is supplying the current résumé (decision recorded 2026-08-04). On arrival: re-extract to `content/.resume-source.txt`, re-verify every §2.3a string, then proceed with the full §0.1a migration.
+</details>
 
-**Note for §2.3b conflict #5.** The plan calls "Computer Science" in the site metadata a factual error to fix. But the résumé in the repo *also* says Computer Science, Spring 2027 — only `REDESIGN.md` says Information Technology, Fall 2027. **The new résumé decides this.** Do not "fix" the metadata until it does.
+**§2.3b conflict #5 is now settled.** The October résumé also said "Computer Science, Spring 2027", so the site metadata was not obviously wrong. The current résumé says Information Technology / Fall 2027, and §0.2 makes it canonical — so `app/layout.tsx:33` **is** a factual error, and the fix is logged in `CHANGES-CONTENT.md` §5a. Had the current résumé not arrived, "fixing" it would have meant overwriting a corroborated value on `REDESIGN.md`'s authority alone.
+
+---
+
+## 🟡 Q12 — The site serves the outdated résumé
+
+`components/ui/nav-bar.tsx:175` and `:271` both open `/Adan_Rojas_Resume_Oct.pdf`. That is the **October** résumé — the one with Computer Science, the Dahiana Rojas role, and none of the AWS/Knight Hacks/Publix history.
+
+`Adan_Rojas_Resume.pdf` currently sits untracked in the repo root, outside `public/`, so it is not served at all.
+
+**Recommended, pending confirmation:**
+1. Move `Adan_Rojas_Resume.pdf` into `public/`.
+2. Point the nav at it.
+3. Delete `public/Adan_Rojas_Resume_Oct.pdf` — it contains a superseded major and a removed employer, and it is publicly fetchable today.
+
+**Question:** confirm the October PDF should be deleted rather than kept at its URL. If anything links to it externally, deleting it 404s that link.
 
 ---
 
@@ -77,13 +96,32 @@ Recommend confirming in Search Console's Pages report post-launch rather than pr
 
 ---
 
-## 🟡 Q5 — Publix disclosure scope (§0.3)
+## 🔴 Q5 — Publix disclosure scope (§0.3) — **the most important open question**
 
-**Cannot be assessed yet** — the Publix role is absent from the résumé on disk (see Q2). Carried forward.
+Now assessable. This is a judgment call only Adan can make, and it gates both recommended signature components.
 
-Once the current résumé lands, the §0.3 confidentiality check applies to: 245,000 employees, 3M customers, "seven figures", 3,000 engineers, 18-engineer team, and the internal system names.
+**The distinction that matters:** a résumé is a private document shown to a chosen audience. A webpage is public, permanent, and indexed by Google. The same sentence is fine in one and a problem in the other.
 
-**Default until Adan confirms in writing:** ship role, dates, technologies, and the agent/token-optimization work. Hold every internal figure. §6.1 and §6.2 (the two recommended signature components) are both gated on this answer.
+Per §0.3 I have applied the conservative default. Four of the five Publix bullets are marked `disclosure: "hold"` in `content/experience.ts` and **will not render**:
+
+| Bullet | Held figure | §0.3 lists it? |
+|---|---|---|
+| VB6 → C#/.NET batch jobs | "more than 3 million customers" | ✅ yes |
+| Enterprise LMS, 18-engineer team | "245,000 employees" | ✅ yes |
+| LMS cost reduction | "over seven figures" | ✅ yes |
+| Output Token Optimization Agent Skill | "more than 3000 engineers" | ✅ yes |
+
+**Cleared by default:** the Multi-Agent MCP bullet (5 agents, MCP protocol, Supply Chain Logistics Department) — §0.3's conservative version explicitly clears "the agent/token-optimization work", and it carries no figure from the hold list.
+
+### Questions
+
+1. **Which of the four held bullets are cleared for a public site?** Answer per bullet, in writing (§10's Confidentiality gate requires written confirmation before any internal figure ships).
+2. **The token-optimization bullet is the awkward one.** Its result — surpassing the Caveman skill on 4 benchmarks by 71.1% average token savings, adopted into the Publix Plugin Marketplace — is the single most distinctive thing on the résumé and the basis for §6.1, the recommended signature component. Only the trailing "impacting the development cycles of more than 3000 engineers" triggers the hold. **May a shorter true subset ending at "Publix Plugin Marketplace" ship?** §0.2 permits rendering "a shorter true subset" but forbids paraphrase, so this needs your explicit yes rather than my judgment.
+3. **Is "Supply Chain Logistics Department" cleared?** It names an internal org unit. Not on §0.3's hold list, so it is currently cleared — flagging it because it is the kind of detail §0.3's closing rule ("when in doubt about a detail from an employer, leave it out and ask") is aimed at.
+4. **For §6.1, do the four individual benchmark names and their individual percentages exist?** §6.1 is explicit: without them, build the honest aggregate-only version. **Do not invent four bars.** If you have the real per-benchmark numbers, §6.1 becomes the full comparison; if not, option (b) is a perfectly good component.
+5. **For §6.2, what are the five actual agent roles?** Five unlabeled circles are decoration; five labeled ones are a portfolio piece. If you supply nothing, §6.2 does not get built and §6.3 (skill atlas) takes its place.
+
+**If the answer to (1) is "hold everything":** §6.1 and §6.2 are both out, and per §390 the two signature components become §6.3 (skill atlas) and §6.4 (Face2Learn concept demo). Both are backed by cleared data and neither needs a Publix answer.
 
 ---
 
@@ -138,12 +176,30 @@ Note: these came from `REDESIGN.md`, not from a fetch of the GitHub profile. The
 
 Restated here so Gate 1 has one checklist. Several now depend on Q2.
 
-1. **Knight Hacks role** — site says "Workshop Instructor" (Aug 2025 – Present); repo résumé says "Workshop Team Member" (Aug 2025 – Present); `REDESIGN.md` says "Hackathon Organizer" (Jan 2026 – Present). **Three different titles.** Sequential roles, or renames? Note the site and the repo résumé also disagree with each other, independent of Q2.
-2. **ReCueCareer date** — site `app/page.tsx:26`: "Jun 2025 - Present". Repo résumé: "Jul 2025 – Present". Which is right? Do not average or pick.
-3. **Knight Finder** — on the site, absent from both résumés. Default: keep. Confirm.
-4. **Skill list** — the résumé grouping supersedes the site's flat 38. Confirm the résumé list is canonical, and confirm which résumé (see Q2).
-5. **Major** — see Q2. Blocked on the new résumé, *not* an unambiguous metadata error.
-6. **Headline role** — site says "Full-Stack Developer" (`app/page.tsx:74`, inside a frozen bio paragraph). Should the hero role line and page titles shift toward software engineering / agentic AI? Changing it edits frozen prose, so it needs explicit approval.
+1. **Knight Hacks role — three titles for one org.** 🔴
+
+   | Source | Title | Start |
+   |---|---|---|
+   | `app/page.tsx:33` | Workshop Instructor | August 2025 |
+   | `public/Adan_Rojas_Resume_Oct.pdf` | Workshop Team Member | Aug 2025 |
+   | `Adan_Rojas_Resume.pdf` (current) | **Hackathon Organizer** | **Jan 2026** |
+
+   §0.2 makes the current résumé canonical, so `experience.ts` carries Hackathon Organizer. But §2.3b #1 asks whether these are *sequential roles* — and the dates suggest they might be: Workshop Instructor from Aug 2025, Hackathon Organizer from Jan 2026 reads like a progression, not a rename.
+
+   The Workshop Instructor entry (with its 633-character site prose) is preserved in `content/experience.ts` as `unresolvedRoles`, **unrendered**. If it is a distinct earlier role, say so and it joins the canonical array. If it is a rename, say so and it is deleted. I will not guess, because one answer destroys real history.
+
+2. **ReCueCareer date.** Site `app/page.tsx:26` says "Jun 2025 - Present". Both résumés say "Jul 2025". §0.2 makes the résumé canonical so `projects.ts` carries "Jul 2025", but §2.3b #2 says to confirm rather than pick. **Which is right — and is the project still ongoing?** The site's "- Present" is dropped by the résumé's bare "Jul 2025", which changes what the card says about the project's status.
+
+3. **Knight Finder.** On the site, absent from both résumés. Default per §2.3b #3: keep. Currently kept, deliberately thin — no stack, no bullets, no metrics, because none exist. Confirm.
+
+4. **Skill list.** The résumé's 3 groups × 45 skills replace the site's flat 38. Adds 16 (C#, .NET, PyTorch, SentenceTransformers, Linux, Windows, MacOS, Visual Studio, JetBrains, GitHub, Azure DevOps, MobaXTerm, WSL, BoldTrail, Oracle DBMS, Hugging Face); drops 6 (Node.js, PostgreSQL, Firebase, Copilot, Pandas, **Auth0**). The dropped six are held in `skills.ts` as `droppedFromSite`, restorable in one line.
+
+   **Auth0 is worth a second look:** the résumé drops it from the skill list but still names it in ReCueCareer's stack line. Deliberate, or an oversight?
+
+5. **Major.** ✅ **Resolved** — see Q2. Information Technology / Fall 2027 is canonical; the metadata keyword is a genuine error and is corrected.
+
+6. **Headline role.** Site says "Full-Stack Developer" (`app/page.tsx:74`, the opening clause of a frozen bio paragraph, mirrored in `profile.roleLine`). The résumé and GitHub both point at software engineering with an agentic-AI concentration. **Should the hero role line and page titles shift?** Changing it edits frozen prose, so it needs explicit approval — and note the phrase appears mid-sentence in bio paragraph 1, so changing the role line without changing the paragraph would leave the two contradicting each other.
+
 7. **Publix disclosure scope** — see Q5.
 
 ---

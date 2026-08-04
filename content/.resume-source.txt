@@ -1,0 +1,61 @@
+Adan Rojas
+adan@4dan.dev | linkedin.com/in/adan-rojas/ | github.com/adanjoserrojas
+Education
+University of Central Florida Orlando, FL
+Bachelor of Science in Information Technology, Minor in Computer Engineering Fall 2027
+Experience
+Student Builder Campus Leader Jan 2026 - Present
+A WS (Amazon Web Services) Orlando, FL
+• Educated 100+ students on A WS microservices(S3, DynamoDB, Lambda) by designing and hosting 3 hands-on technical
+workshops, building custom Python seeding scripts to demonstrate live S3 operations and boost interactivity.
+• Drove 100+ student sign-ups to the A WS Builder Center by executing organic social media campaigns that showcased hands-on
+technical usage of A WS technologies as the Student Builder Campus Leader at the University of Central Florida.
+• Increased A WS Builder Center awareness among 200+ students by delivering 3 class announcements that displayed the perks of the
+A WS Builder Center and partnering with Knight Hacks, UCF’s largest programming organization, to co-promote A WS services.
+Hackathon Organizer Jan 2026 - Present
+Knight Hacks Orlando, FL
+• Participated in the planning and execution of a 1,000+ participant, 36-hour hackathon, coordinating cross-functional teams,
+sponsors, and complex logistics across multiple venues for one of Florida’s largest student-run collegiate technical events.
+• Coordinated strategic processes between sponsors and hackers , strengthening collaboration, requirements gathering, and
+communication to align expectations and resolve issues quickly in a high-pressure, fast-paced environment.
+• Designed and delivered technical workshops, challenges, socials, ceremonies, and sub-events, increasing participant engagement
+and creating hands-on learning experiences for both beginner and advanced developers across multiple skill levels and backgrounds.
+Software Engineer Intern May 2026 - Jul 2026
+Publix Super Markets Lakeland, FL
+• Modernized and re-engineered 2 warehouse replenishment batch jobs from legacy VB6 to C#/.NET , improving long-term
+maintainability for inventory workflows supporting more than 3 million customers across Publix locations nationwide.
+• Collaborated with a cross-functional team of 18 engineers and associates to develop an enterprise Learning Management System
+supporting 245,000 employees, leveraging MongoDB, Azure Blob/File Storage, ASP .NET MVC, and SQL Server while
+adhering to organizational security, privacy, and data-governance standards.
+• Contributed to the in-house development of a modern enterprise LMS that reduced annual training costs by over seven figures,
+replacing third-party platform dependencies with scalable internal solutions that improved operational efficiency.
+• Improved engineer productivity by building a Multi-Agent AI system of 5 agents that leveraged the MCP protocol to consult
+documentation across the development cycle in the Supply Chain Logistics Department.
+• Developed an Output Token Optimization Agent Skill that surpassed the Caveman skill on 4 benchmarks by 71.1% on average token
+output savings and was adopted by the Publix Plugin Marketplace, impacting the development cycles of more than 3000 engineers.
+Projects
+iPalo | Swift, C++, Python, ARKit, ElevenLabs API, ESP32 Microcontroller, LRAs, 3D Print, CAD Oct 2025
+• Won 1st place (out of 22 teams) for Best Use of ElevenLabs at Knight Hacks VIII by engineering an iPhone 16 Pro Max
+LiDAR-powered assistive device that delivered directional haptic feedback to replace the white cane for blind users.
+• Developed an iOS app in Swift with ARKit that integrated a Python based pipeline to convert voice commands into real-time
+environmental audio descriptions ( ˜5 sec latency) using Gemini API and ElevenLabs API.
+• Prototyped a LiDAR-driven haptic navigation system using Linear Resonance Actuators (LRAs) and an ESP32 microcontroller
+via Core Bluetooth to provide directional feedback and enhance spatial awareness for blind users.
+F ace2Learn| HTML, CSS, JavaScript, Python, MySQL, Gemini API, Figma Sep 2025
+• Built a Chrome extension using HTML and Tailwind CSS in under 36 hours that delivered facial emotion recognition at 65%
+accuracy, enabling autistic learners to interpret interactions.
+• Trained a CNN on a Kaggle facial expression dataset using T ensorFlowwith Haar cascade detection, accurately classifying seven
+distinct emotions from live webcam input in real time for efficient, lightweight on-device analysis.
+• Enhanced user accessibility by developing non-intrusive YouTube overlays with T ailwind CSS+ Canvas API, rendering real-time
+captions and visual cues without disrupting playback, resulting in a seamless, privacy-first learning experience.
+ReCueCareer | Next.js, TypeScript, Python, Flask, Tailwind CSS, Supabase, Auth0 Jul 2025
+• Built a Python scraping pipeline using bs4, resulting in the extraction of 100+ personalized job postings per user session, by
+transforming data through Sentence-T ransformersembeddings and ranking results by semantic relevance.
+• Engineered a full-stack dashboard with Next.js, TypeScript, and T ailwind CSS, resulting in real-time visualization of tailored job
+insights, by integrating Python APIs with modular React components.
+Technical Skills
+Languages: Python, TypeScript, C#, Swift, HTML/CSS, Java/JavaScript, SQL
+F rameworks/Libraries: Selenium, .NET, Flask, bs4, Tailwind, Next.js, React, PyTorch, Gemini, Scikit-learn, NumPy, SciPy,
+SentenceTransformers, TensorFlow
+T ools/Platforms: Linux, Windows, MacOS, XCode, Visual Studio, VS Code, JetBrains CLion & IntelliJ, GitHub, Azure DevOps, Notion,
+MobaXTerm, WSL, N8N, Figma, Docker, Supabase, BoldTrail, HubSpot, MySQL, A WS, Oracle DBMS, Vercel, MongoDB, Hugging Face

@@ -1,0 +1,137 @@
+{
+  "$comment": [
+    "REDESIGN.md §2.4 — the mechanism that makes 'no invention' checkable.",
+    "Exactly two kinds of entry: removals, and résumé-backed additions.",
+    "Anything in the content diff that is not on this list and not résumé-backed fails the build.",
+    "Run with: npm run verify:content"
+  ],
+
+  "removals": {
+    "$comment": "§0.1a. Strings and files that must no longer appear anywhere outside CHANGES-CONTENT.md and OPEN-QUESTIONS.md.",
+
+    "dahianaRojas": {
+      "reason": "§0.1a #1 — internship removed entirely, superseded by the roles in §2.3a.",
+      "strings": [
+        "Dahiana Rojas De Rojas LLC",
+        "Dahiana Rojas de Rojas LLC",
+        "Dahiana Rojas",
+        "I helped this Real Estate company automating processes \nAgentic workflows made with N8N.",
+        "I worked with a real estate firm to build agentic workflows using N8N that automated their manual processes. One of the most rewarding parts was presenting these solutions to clients and stakeholders—it really pushed me to develop my public speaking skills and get comfortable explaining technical concepts to non-technical audiences. I collaborated with their IT department to understand their pain points, then designed and implemented automation systems that streamlined their operations. Getting to see the impact firsthand and communicate that value to clients made stepping outside my comfort zone totally worth it."
+      ],
+      "files": ["pictures/CanvasLogo.png"],
+      "grepTokens": ["dahiana", "CanvasLogo"]
+    },
+
+    "quiz": {
+      "reason": "§0.1a #3 — quiz removed entirely. Note: no /quiz route ever existed, and the promised redirect was never implemented (OPEN-QUESTIONS.md §Q3).",
+      "strings": [
+        "A little quiz about Me",
+        "To finish off, here is a fun little quiz to see how well you know me! If you guess all of them right, you will get redirected to a very important and secret project of mine",
+        "That I have been working on my own and very few people know about it! Good Luck, the quiz is Lowkey hard!",
+        "Which is my favorite music genre?",
+        "What do I do on my free-time?",
+        "Which is my favorite Language?",
+        "Which is my favorite animal?",
+        "McChicken",
+        "Latin Music",
+        "Don Toliver",
+        "Harsh EDM (Miau)",
+        "Going Out Often Nightly",
+        "Make music",
+        "Play Taylor Swift LOUDLY",
+        "Growing Outdoor Organic Nature",
+        "C--",
+        "Spanish",
+        "Banana",
+        "Rust",
+        "Michael",
+        "Jack",
+        "Dogs! I love dogs, please select dogs!",
+        "Ducks",
+        "Correct!",
+        "The answer was:",
+        "Try again"
+      ],
+      "files": ["components/ui/quizComponent.tsx"],
+      "grepTokens": ["quiz"]
+    },
+
+    "videos": {
+      "reason": "§0.1a #3 — both videos existed only for the quiz. Byte savings recorded in RESULTS.md §8.",
+      "files": [
+        "public/videos/headBanging.mp4",
+        "public/videos/CatBiting.mp4",
+        "pictures/headBanging.mp4"
+      ],
+      "grepTokens": ["headBanging", "CatBiting"]
+    }
+  },
+
+  "additions": {
+    "$comment": "§2.4 — every string here must be a substring of content/.resume-source.txt after normalization. The verifier asserts this mechanically; it does not take this list's word for it.",
+    "truthSource": "content/.resume-source.txt",
+    "extractedFrom": "Adan_Rojas_Resume.pdf",
+    "normalization": "lowercase, curly quotes and dashes folded to ASCII, all whitespace stripped — defeats the kerning artifacts pypdf introduces ('A WS', 'T ailwind', 'ASP .NET')",
+
+    "verifiedFields": [
+      "experience[].role",
+      "experience[].org",
+      "experience[].location",
+      "experience[].bullets[].text",
+      "projects[].stack[]",
+      "projects[].bullets[].text",
+      "education.institution",
+      "education.degree",
+      "education.minor",
+      "education.expectedGraduation",
+      "skills[].name",
+      "profile.email"
+    ],
+
+    "exemptFields": {
+      "$comment": "Fields that are legitimately NOT résumé-backed. Each names its own truth source, which must be the repo or the live site per §0.2.",
+      "profile.bio": "app/page.tsx:74,76,78 — frozen site prose",
+      "profile.greeting": "app/page.tsx:64",
+      "profile.roleLine": "app/page.tsx:74 — frozen; §2.3b #6 pending",
+      "profile.location": "live site — REDESIGN.md §2.3",
+      "profile.links": "components/ui/nav-bar.tsx:151,161 + résumé line 2; Devpost from REDESIGN.md §2.3",
+      "projects[].summary": "app/page.tsx:26-29 — frozen site one-liners, explicitly retained by §2.3a",
+      "projects[].name": "app/page.tsx:26-29",
+      "projects[].date": "résumé where present, else app/page.tsx",
+      "projects[].href": "app/page.tsx:27,29 — only the two verified-correct links",
+      "projects[].image": "pictures/ filenames",
+      "experience[].logo": "pictures/KH2025Logo.png",
+      "unresolvedRoles[]": "app/page.tsx:33-35 — retained pending §Q10 #1, not rendered",
+      "skills[].href": "components/ui/CardDemo.tsx:72-109 — carried over, never invented",
+      "reading[]": "GitHub README via REDESIGN.md §191 — NOT approved for render, §Q9",
+      "githubThemes": "GitHub README via REDESIGN.md §191 — NOT approved for render, §Q9"
+    },
+
+    "knownExtractionArtifacts": {
+      "$comment": "pypdf inserts spaces mid-word at kerning boundaries. The content layer carries the résumé's real words; whitespace-stripping normalization reconciles them.",
+      "A WS": "AWS",
+      "T ailwind": "Tailwind",
+      "T ensorFlow": "TensorFlow",
+      "Sentence-T ransformers": "Sentence-Transformers",
+      "F ace2Learn": "Face2Learn",
+      "ASP .NET": "ASP.NET",
+      "microservices(S3": "microservices (S3",
+      "hackers ,": "hackers,",
+      "C#/.NET ,": "C#/.NET,",
+      "˜5 sec": "~5 sec"
+    }
+  },
+
+  "chromeCopy": {
+    "$comment": "§0.1 — chrome, not data. May be restyled or relabeled, but every change must be logged in CHANGES-COPY.md with before/after.",
+    "strings": [
+      "Projects",
+      "Skills",
+      "Experience",
+      "Here are some of my personal and collaborative projects that I've worked on recently.",
+      "Here are some of the technologies and tools I work with:",
+      "A few roles I've had the pleasure to work in recently:",
+      "Click to learn more!"
+    ]
+  }
+}
