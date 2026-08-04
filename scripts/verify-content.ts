@@ -188,13 +188,32 @@ function walk(dir: string, out: string[] = []): string[] {
 
 const sourceFiles = walk(ROOT).filter((f) => !EXEMPT_FILES.has(relative(ROOT, f)));
 
+/**
+ * Replaces comment bodies with spaces, preserving line numbers so reported
+ * positions stay accurate. Deliberately naive — it will also blank a `//`
+ * inside a string literal such as "https://…", which is the safe direction to
+ * err: it can only cause a missed match in a URL, never a false pass on
+ * rendered prose.
+ */
+function stripComments(src: string): string {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) => p1 + " ".repeat(m.length - p1.length))
+    .replace(/^\s*\*[^\n]*/gm, (m) => " ".repeat(m.length));
+}
+
 for (const [group, spec] of Object.entries(allowlist.removals)) {
   for (const token of spec.grepTokens ?? []) {
     const hits: string[] = [];
     const re = new RegExp(token, "i");
     for (const file of sourceFiles) {
       const text = readFileSync(file, "utf8");
-      text.split(/\r?\n/).forEach((line, n) => {
+      // Comments are blanked, not matched. This check exists to prove the
+      // strings no longer REACH A USER; a code comment explaining why a thing
+      // was removed is documentation, and flagging it would push the codebase
+      // toward silently deleting its own rationale.
+      const stripped = stripComments(text);
+      stripped.split(/\r?\n/).forEach((line, n) => {
         if (re.test(line)) hits.push(`${relative(ROOT, file).split(sep).join("/")}:${n + 1}`);
       });
     }

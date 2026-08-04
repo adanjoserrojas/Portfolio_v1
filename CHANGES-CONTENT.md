@@ -4,7 +4,7 @@ The §0.1a migration — the only permitted content delta. Every removal, every 
 
 **Truth source for all additions:** `Adan_Rojas_Resume.pdf` (supplied by Adan, 2026-08-04), extracted verbatim to `content/.resume-source.txt`.
 
-**Mechanically verified:** `npm run verify:content` — 220 résumé-backing checks, all passing. No factual string in the content layer is unbacked.
+**Mechanically verified:** `npm run verify:content` — 235 checks, all passing. No factual string in the content layer is unbacked.
 
 ---
 
@@ -20,7 +20,7 @@ The §0.1a migration — the only permitted content delta. Every removal, every 
 
 **Superseded by** the three résumé roles in §3 below.
 
-**Status:** recorded in the content layer as removed; the JSX deletion happens when the UI is rebuilt in Phase 3–4. `verify:content` check B stays red until then — by design. It currently reports 3 outstanding Dahiana references.
+**Status: complete.** The content layer removed it at Phase 1; the JSX and the asset were deleted at Phase 3–6. `verify:content` check B now passes.
 
 ---
 
@@ -75,11 +75,9 @@ A résumé is shown to a chosen audience; a website is public and permanent. Per
 
 This gates both recommended signature components: §6.1 (token-optimization benchmark) and §6.2 (multi-agent MCP trace). See `OPEN-QUESTIONS.md` §Q5.
 
-### 3b. One existing role retained, unrendered, pending Gate 1
+### 3b. A fourth role, resolved at Gate 1
 
-The site's Knight Hacks **"Workshop Instructor"** (Aug 2025 – Present) is preserved in `content/experience.ts` as `unresolvedRoles` — **not** in the canonical `experience` array, so it renders nowhere.
-
-Three titles exist for one org:
+The site's Knight Hacks **"Workshop Instructor"** (Aug 2025) was held unrendered through Phase 1 while three titles existed for one org:
 
 | Source | Title | Start |
 |---|---|---|
@@ -87,7 +85,7 @@ Three titles exist for one org:
 | `public/Adan_Rojas_Resume_Oct.pdf` (old) | Workshop Team Member | Aug 2025 |
 | `Adan_Rojas_Resume.pdf` (current) | Hackathon Organizer | Jan 2026 |
 
-§0.2 makes the current résumé canonical, but §2.3b #1 says to ask whether these are sequential roles rather than one renamed. If sequential, deleting the earlier one destroys real history. Preserved so either answer is cheap. See `OPEN-QUESTIONS.md` §Q10 #1.
+**Adan resolved this at Gate 1: "It is a progression."** Both are real, sequential roles. Workshop Instructor is now canonical — see §10a. The site shows **4 roles**.
 
 ---
 
@@ -184,9 +182,100 @@ npm run verify:content
 
 | Check | Result |
 |---|---|
-| **A. Résumé backing** — every résumé-sourced string is a substring of `.resume-source.txt` | ✅ **220/220** |
-| **B. Removals** — §0.1a strings and files gone from the codebase | ⏳ 10 outstanding (the old UI still exists; clears in Phase 3–4) |
+| **A. Résumé backing** — every résumé-sourced string is a substring of `.resume-source.txt` | ✅ **all pass** |
+| **B. Removals** — §0.1a strings and files gone from the codebase | ✅ **all pass** |
 | **C. No placeholders** — nothing marked NEEDS_INPUT/TBD reaches a user | ✅ pass |
-| `npm run typecheck` | ✅ zero errors |
+| **Total** | **235 checks, 0 failed** |
+| `npm run typecheck` | ✅ clean |
+| `npm run lint` | ✅ clean |
+| `npm run verify:contrast` | ✅ 20 pairs, both modes |
 
-Normalization strips all whitespace and folds curly quotes/dashes to ASCII before comparing. This is necessary because `pypdf` inserts spaces at kerning boundaries — the résumé's "AWS" extracts as "A WS", "Tailwind" as "T ailwind", "ASP.NET" as "ASP .NET". Stripping whitespace defeats that artifact without weakening the check: a fabricated sentence still would not appear in the source text. The known artifacts are catalogued in `content/.migration-allowlist.json`.
+Normalization strips all whitespace and folds curly quotes/dashes to ASCII before comparing, because `pypdf` inserts spaces at kerning boundaries — the résumé's "AWS" extracts as "A WS", "Tailwind" as "T ailwind", "ASP.NET" as "ASP .NET". Stripping whitespace defeats that without weakening the check: a fabricated sentence still would not appear in the source text. The known artifacts are catalogued in `content/.migration-allowlist.json`.
+
+The removal check **blanks comments before matching**. It exists to prove the strings no longer reach a user; flagging a code comment that explains why something was removed would push the codebase toward silently deleting its own rationale.
+
+---
+
+## 10. Gate 1 answers, applied 2026-08-04
+
+Adan resolved four blockers. Each is recorded here with what changed.
+
+### 10a. Knight Hacks — "It is a progression"
+
+§Q10 #1 resolved. Workshop Instructor (Aug 2025) preceded Hackathon Organizer (Jan 2026) at the same org. **Both are real roles; neither is a rename of the other.**
+
+Workshop Instructor was promoted from `unresolvedRoles` into the canonical `experience` array, placed last to keep the array reverse-chronological. `unresolvedRoles` no longer exists.
+
+The site now shows **4 roles**. Its content is frozen site prose from `app/page.tsx:33-35` and appears on no résumé, so it is exempt from the §2.4 résumé-backing check by design — `verify-content.ts` skips records whose `_source` is `repo`.
+
+### 10b. Project repository URLs
+
+§Q7 resolved. Adan supplied the real URLs, replacing links that were **wrong on the live site** — the `href`s were shifted by one.
+
+| Project | Was (live) | Now |
+|---|---|---|
+| ReCueCareer | `github.com/adanjoserrojas/iPalo` ❌ | `github.com/adanjoserrojas/ReCueCareer` |
+| Face2Learn | `github.com/adanjoserrojas/ReCueCareer` ❌ | `github.com/adanjoserrojas/Face2Learn` |
+| iPalo | `github.com/adanjoserrojas/iPalo` ✅ | unchanged |
+| Knight Finder | `github.com/jaysprogram/Knight-Finder` ✅ | unchanged |
+
+### 10c. Role line
+
+§Q10 #6 resolved. Adan's instruction: *"Change for Software Engineer with a passion for AI Agents, MCPs, Full-Stack Development, etc etc."*
+
+`profile.roleLine`: **"Full-Stack Developer"** → **"Software Engineer with a passion for AI Agents, MCPs, and Full-Stack Development"**
+
+This is data, not chrome — it describes Adan — so it changed only on his explicit approval. **The trailing "etc etc" was not expanded.** Inventing further interests would breach §0.2.
+
+⚠️ `profile.bio[0]` still opens *"I'm a Full-Stack Developer…"*. Adan approved the role line, not the paragraph, so the paragraph stays frozen. The two now disagree, visibly. See `OPEN-QUESTIONS.md` §Q13.
+
+### 10d. Benchmarks exist
+
+§Q5 question 4 answered: the four individual benchmark names and percentages **do** exist. They were not supplied, so §6.1 was not built — inventing four bars is exactly what §6.1 forbids.
+
+**§Q5 questions 1–3 and 5 remain unanswered**, so the four Publix bullets stay held and §6.1/§6.2 stay unbuilt. Per §390, the signature components are **§6.3 (skill atlas)** and the v2 trace treatment on `/experience`, both backed by cleared data.
+
+---
+
+## 11. Additional deletions (Phases 3–6)
+
+Beyond the §0.1a removals in §1–2 above.
+
+### 11a. Dead chatbot subsystem — `OPEN-QUESTIONS.md` §Q6
+
+`AIChatSection.tsx`, `chat-section.tsx`, `search-bar.tsx` deleted.
+
+**This went beyond §0.1a's three authorised changes, and the reasoning should be visible.** The subsystem was commented out at `app/page.tsx:66`, rendered nothing, and hardcoded `http://localhost:5000/chat` — mixed-content-blocked in production regardless. §4.4 requires deleting everything not rebuilt, and keeping it would have forced `framer-motion` and `lucide-react` to stay installed for code that never runs.
+
+**No user-visible content changed**, because none of it rendered. Recoverable from git history. `app/backend/` (the Flask service and `adan_persona.json`) is untouched — it is not part of the Next build.
+
+### 11b. Old UI components
+
+`CardDemo.tsx`, `ProjectCard.tsx`, `FloatExperience.tsx`, `nav-bar.tsx`, `RotatingCube.tsx`, `spotlight-new.tsx`, `background-gradient-animation.tsx`, `lib/utils.ts`, `tailwind.config.ts`, `components.json`. All replaced by the Phase 3–5 rebuild.
+
+### 11c. Assets
+
+`DSC_0037.png` (36.5 MB) replaced by `public/img/portrait.{avif,webp,jpg}` at 640×640 — twice the largest render. The 6000×4000 original remains in git history.
+
+`public/images/og-image.png` (27 MB) replaced by `app/opengraph-image.tsx`, generated by `next/og` at 32.9 KiB.
+
+`public/*.svg` (Next boilerplate) and `public/robots.txt` (superseded by `app/robots.ts`) deleted.
+
+**Not deleted:** `pictures/McChicekn.png` (5.3 MB) and `pictures/WrongLogo.png` — orphaned but unresolved (§Q11). They are not in the bundle; they only bloat the repo.
+
+### 11d. Phase 2 design lab
+
+`app/lab/` and its six prototypes deleted, per §10's cleanup gate. Screenshots remain in `design-lab/` (gitignored). `DESIGN-REVIEW.md` records the comparison.
+
+---
+
+## 12. Content the redesign added
+
+Only two categories, both from the content layer:
+
+1. **Routes.** 8 detail pages (`/projects/[slug]` × 4, `/experience/[slug]` × 4) rendering data that already existed but had no URL. §5.1's SEO argument.
+2. **`/llms.txt`.** Generated from the content layer; cannot drift from the site.
+
+**No new factual claims.** `verify:content` proves it: 235 checks, every résumé-sourced string verified as a substring of `content/.resume-source.txt`.
+
+The email is in neither. `/llms.txt` points to `/about` instead of printing the address — a plaintext file at a well-known path is the easiest thing on a site to harvest, and §0.2 requires obfuscation.

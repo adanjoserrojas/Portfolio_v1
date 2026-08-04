@@ -1,4 +1,5 @@
 import { ProjectSchema, validate, type Project } from "./types";
+import { skillInStack } from "@/lib/skill-match";
 
 /**
  * Projects in SITE order (§2.2: site order for anything carried over).
@@ -181,7 +182,5 @@ export function projectBySlug(slug: string): Project | undefined {
  * résumé stack line."
  */
 export function projectsUsingSkill(skillName: string): Project[] {
-  return projects.filter((p) =>
-    p.stack?.some((s) => s.toLowerCase() === skillName.toLowerCase()),
-  );
+  return projects.filter((p) => (p.stack ? skillInStack(skillName, p.stack) : false));
 }

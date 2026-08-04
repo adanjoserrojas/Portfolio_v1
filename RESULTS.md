@@ -1,165 +1,166 @@
 # RESULTS.md
 
-Baseline vs. final for every metric. **Phase 0 baseline captured 2026-08-04.** Final columns fill in at Phase 9.
+Baseline vs. final for every metric.
 
-Baseline was measured against the **live production site** (`https://www.4dan.dev`), per §1.3 — not localhost.
+- **Baseline:** 2026-08-04, live production site (`https://www.4dan.dev`), Lighthouse 12.8.2 mobile, throttled.
+- **Final:** production build (`next build` → `next start`), same Lighthouse version, same mobile throttling, seven routes.
+- axe-core 4.11.0 via `@axe-core/cli`, per route.
 
-- Lighthouse 12.8.2, Chrome 150.0.7871.187, headless
-- axe-core 4.11.0 via `@axe-core/cli`
-- Build: Next.js 15.5.2 (installed; `package.json` declares 15.5.9 — see `AUDIT.md` §6.1)
+> **Measurement caveat, stated plainly.** Final numbers come from a local production server, not a Vercel preview. TTFB and LCP will differ on real hosting — almost certainly for the better, since Vercel's edge beats localhost on cold cache. Bundle sizes, byte weights, axe results, and Accessibility/Best-Practices/SEO scores are host-independent and will not move. **Re-run against the preview URL before merging** (§10).
 
 ---
 
-## 1. Lighthouse — baseline
+## 1. Headline
 
-| Category | Mobile | Desktop | Target (§7.1) | Gap |
+| Metric | Baseline | Final | Target (§7.1) | |
 |---|---|---|---|---|
-| **Performance** | **66** | **89** | ≥ 95 / 100 | −29 / −11 |
-| **Accessibility** | **88** | **88** | 100 | −12 |
-| **Best Practices** | **96** | **96** | 100 | −4 |
-| **SEO** | **100** | **100** | 100 | ✅ already met |
+| Lighthouse Performance (mobile) | **66** | **99–100** | ≥ 95 | ✅ |
+| Lighthouse Accessibility | **88** | **100** | 100 | ✅ |
+| Lighthouse Best Practices | **96** | **100** | 100 | ✅ |
+| Lighthouse SEO | **100** | **100** | 100 | ✅ |
+| LCP (mobile) | **3.4 s** | **1.8 s** typical, 2.1 s worst | ≤ 1.8 s | ⚠️ see §6 |
+| CLS | **0.053** | **0.000** typical, 0.009 worst | ≤ 0.01 | ✅ |
+| TBT | **600 ms** | **40–80 ms** | ≤ 100 ms | ✅ |
+| Total transferred | **37.5 MB** | **179–210 KiB** | ≤ 400 KB | ✅ |
+| First Load JS (`/`) | **333 kB** | **108 kB** | ≤ 110 KB | ✅ |
+| axe violations | **30** | **0** | 0 | ✅ |
+| Runtime dependencies | **22** (12 unused) | **4** | — | ✅ |
 
-## 2. Core Web Vitals & lab metrics — baseline
+**Page weight fell 99.5%.** The site is now roughly 1/190th of its former size.
 
-| Metric | Mobile | Desktop | Target | Status |
-|---|---|---|---|---|
-| First Contentful Paint | 1.1 s | 0.5 s | — | |
-| **Largest Contentful Paint** | **3.4 s** | 0.9 s | ≤ 1.8 s | ❌ mobile 1.9× over |
-| **Total Blocking Time** | **600 ms** | 60 ms | ≤ 100 ms | ❌ mobile 6× over |
-| **Cumulative Layout Shift** | **0.053** | 0.000 | ≤ 0.01 | ❌ mobile 5× over |
-| **Speed Index** | **62.6 s** | 11.4 s | — | ❌ catastrophic |
-| **Time to Interactive** | **107.8 s** | 17.7 s | — | ❌ catastrophic |
-| Server response time | 40 ms | 40 ms | — | ✅ Vercel edge is fine |
-| INP | not measured in lab | — | ≤ 200 ms | needs field data or a scripted interaction pass |
+## 2. Per-route final scores
 
-> Speed Index of **62.6 s** and TTI of **107.8 s** on mobile are not typical "needs improvement" numbers — they are the signature of a single enormous render-blocking image. See §3.
+| Route | Perf | A11y | Best Prac. | SEO | LCP | TBT | CLS | Bytes |
+|---|---|---|---|---|---|---|---|---|
+| `/` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0 | 179 KiB |
+| `/projects` | 100 | 100 | 100 | 100 | 1.8 s | 40 ms | 0 | 209 KiB |
+| `/projects/ipalo` | 99 | 100 | 100 | 100 | 1.8 s | 80 ms | 0 | 186 KiB |
+| `/experience` | 100 | 100 | 100 | 100 | 1.8 s | 60 ms | 0 | 194 KiB |
+| `/experience/publix` | 100 | 100 | 100 | 100 | 1.8 s | 50 ms | 0.009 | 185 KiB |
+| `/skills` | 100 | 100 | 100 | 100 | 1.8 s | 60 ms | 0 | 181 KiB |
+| `/about` | 99 | 100 | 100 | 100 | 2.1 s | 80 ms | 0 | 210 KiB |
 
-## 3. Page weight — baseline
+**Accessibility, Best Practices, and SEO are 100 on every route.** Performance is 99–100 on every route.
 
-| Resource type | Requests | Transferred |
-|---|---|---|
-| **Image** | 7 | **37,510 KiB** |
-| Media (video) | 4 | 463 KiB |
-| Script | 15 | 337 KiB |
-| Font | 2 | 52 KiB |
-| Document | 1 | 34 KiB |
-| Stylesheet | 2 | 8 KiB |
-| Third-party | 0 | 0 KiB |
-| **Total** | **31** | **38,403 KiB (37.5 MB)** |
-
-**Target (§7.1): ≤ 400 KB total transferred on `/`. Baseline is 96× over budget.**
-
-### Largest resources
-
-| Size | Type | URL |
-|---|---|---|
-| **37,445 KiB** | Image | `/_next/static/media/DSC_0037.c01731b7.png` |
-| 220 KiB | Media | `/videos/CatBiting.mp4` |
-| 180 KiB | Media | `/videos/headBanging.mp4` |
-| 84 KiB | Script | `chunks/b536a0f1-…js` |
-| 62 KiB | Script | `chunks/600-…js` |
-| 55 KiB | Script | `chunks/4bd1b696-…js` |
-| 48 KiB | Script | `chunks/bd904a5c-…js` |
-| 45 KiB | Script | `chunks/255-…js` |
-| 34 KiB | Document | `/` |
-
-**A single file is 97.5% of the page.** `DSC_0037.png` ships **raw and unoptimized** because `app/page.tsx:81` renders it through a plain `<motion.img src={…}>` rather than `next/image` — so Next's image pipeline never touches it. It is displayed at a maximum of 420×420 CSS px.
-
-Lighthouse's own estimates for this one asset:
-- `uses-responsive-images`: **37,332 KiB savings**
-- `modern-image-formats`: **33,518 KiB savings**
-
-## 4. Bundle — baseline
-
-From `npm run build` on `redesign/v2`:
+## 3. Bundle
 
 ```
-Route (app)                                 Size  First Load JS
-┌ ○ /                                     231 kB         333 kB
-├ ○ /_not-found                            991 B         103 kB
-└ ○ /sitemap.xml                           123 B         102 kB
-+ First Load JS shared by all             102 kB
-  ├ chunks/255-e3bf15caf1f1e0f9.js       45.7 kB
-  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
-  └ other shared chunks (total)             2 kB
+Route (app)                                Size  First Load JS
+┌ ○ /                                    2.3 kB         108 kB
+├ ○ /about                                170 B         106 kB
+├ ○ /experience                         1.16 kB         107 kB
+├ ● /experience/[slug]                    170 B         106 kB   (4 pages)
+├ ○ /projects                             162 B         106 kB
+├ ● /projects/[slug]                      170 B         106 kB   (4 pages)
+├ ○ /skills                             1.45 kB         107 kB
+├ ○ /llms.txt · /robots.txt · /sitemap.xml · /opengraph-image
++ First Load JS shared by all                           102 kB
 ```
 
-| Metric | Baseline | Target (§7.1) | Gap |
-|---|---|---|---|
-| **First Load JS, `/`** | **333 kB** | ≤ 110 KB gzip | ❌ ~3× over |
-| Route JS, `/` | 231 kB | — | |
-| Shared baseline | 102 kB | — | |
+Every route is under the 110 KB budget. 22 routes prerender as static HTML; **zero** are server-rendered on demand.
 
-Lighthouse additionally reports **73 KiB of unused JavaScript** (mobile) and 11 KiB of legacy/transpiled JS.
+Of the 102 kB shared baseline, essentially all of it is React 19 + the Next App Router runtime. The site's own code is 170 B–2.3 kB per route.
 
-Headroom is real: `AUDIT.md` §4 identifies **12 of 22 runtime dependencies with zero imports**, and the whole site is one `"use client"` component (`AUDIT.md` §6.4), so every string currently ships as JS.
+**Two fixes did most of the JS work:**
 
-## 5. Accessibility violations — baseline
+1. `/` initially came in at **130 kB** because `Retrieval` was a client component importing `lib/retrieval` → the content layer → **zod**. Splitting the corpus builder (`lib/retrieval.ts`, `server-only`) from the pure ranker (`lib/rank.ts`, imports nothing) dropped it to 108 kB. The client now receives documents as props and ships ~1.5 kB of scoring.
+2. `/about` was **111 kB** because of `next/image`. The portrait is pre-resized at build time and never needs runtime negotiation, so a plain `<picture>` with AVIF/WebP/JPEG sources does the same job for 0 bytes of JS. `/about` fell to 106 kB.
 
-**axe-core 4.11.0: 30 issues across 4 rules.** Target: zero.
+## 4. Page weight — where 37.3 MB went
 
-| Rule | Occurrences | Where |
+| Asset | Baseline | Final |
 |---|---|---|
-| **`svg-img-alt`** | **25** | Every `react-icons` skill glyph in `CardDemo.tsx`. They render `<svg role="img">` with no accessible text, so a screen reader announces 25 unlabeled images instead of the skill names. |
-| `button-name` | 2 | `nav-bar.tsx:98` (the rotating `X` logo button) and `nav-bar.tsx:183` (mobile hamburger) — icon-only buttons with no accessible name. |
-| `heading-order` | 2 | `ProjectCard.tsx:63` (`<h3>` inside a card, following the page `<h1>`) and `app/page.tsx:137` (`<h4>` for the quiz heading). |
-| `link-name` | 1 | `nav-bar.tsx:97` — `<a href="…youtube.com/shorts/…">` wrapping an icon button, no discernible text. |
+| `pictures/DSC_0037.png` (portrait, rendered ≤320 px) | **37,445 KiB** raw | **31.8 KiB** AVIF / 32.2 KiB WebP / 53.1 KiB JPEG |
+| `public/images/og-image.png` | **27,000 KiB** | **32.9 KiB**, generated by `next/og` at request time |
+| `public/videos/headBanging.mp4` | 411 KiB | deleted |
+| `public/videos/CatBiting.mp4` | 219.5 KiB | deleted |
+| `pictures/headBanging.mp4` (unreferenced duplicate) | 411 KiB | deleted |
+| `pictures/CanvasLogo.png` | 275.5 KiB | deleted |
+| `public/*.svg` (Next boilerplate) | 3.2 KiB | deleted |
+| Favicon | **absent — 404 on every load** | 12 KiB `app/icon.png` |
 
-Lighthouse's desktop run flags the same rules with a wider node count (4 `button-name`, 3 `link-name`) because it also evaluates the mobile-menu markup.
+The portrait was 97.5% of the old page. It shipped raw because `app/page.tsx:81` rendered it through a plain `<motion.img>`, so Next's image pipeline never ran. Source: 6000×4000, 36.5 MB. Now 640×640 — twice the largest render — encoded once at build time.
 
-**Automated tools catch roughly a third of issues.** `AUDIT.md` §6.3 lists what inspection already found and axe cannot see — most importantly the **keyboard trap** in the skills carousel (`CardDemo.tsx:278,306-313`), the sub-AA body-copy contrast (≈4.0:1), the absent skip link, the absent landmarks, and the complete absence of `prefers-reduced-motion` handling anywhere in the codebase.
+**A 27 MB Open Graph image was a live defect, not just weight.** Most link-preview crawlers would time out fetching it and render no preview at all.
 
-## 6. Best Practices — baseline
+## 5. Dependencies: 22 → 4
 
-One failing audit: **`errors-in-console`**.
+**Removed (18):** `@fortawesome/free-brands-svg-icons`, `@fortawesome/free-solid-svg-icons`, `@fortawesome/react-fontawesome`, `@react-spring/parallax`, `@react-spring/web`, `react-spring`, `@react-three/drei`, `@react-three/fiber`, `three`, `developer-icons`, `mini-svg-data-uri`, `tailwindcss-animate`, `class-variance-authority`, `framer-motion`, `motion`, `lucide-react`, `react-icons`, `clsx` + `tailwind-merge` + `tailwind-scrollbar-hide`.
 
-```
-404  https://www.4dan.dev/favicon.ico
-```
+**Remaining (4):** `next`, `react`, `react-dom`, `zod`.
 
-There is no favicon in the repo. Every page load logs a console error. Trivial to fix; it is the only thing between the site and Best Practices 100.
+12 of the original 22 had **zero imports** before this work began. The rest went with the components that used them. `zod` is the only addition, and it never reaches the browser.
 
-## 7. SEO — baseline
+Also resolved: `package.json` declared `next@15.5.9` while the installed tree was `15.5.2`, missing that release's RSC security fix. The tree is now genuinely on 15.5.9.
 
-**100 / 100 on both mobile and desktop.** No automated SEO audit fails today.
+## 6. Targets not fully met — stated honestly
 
-That score is not the goal, though — §9 is about *entity* SEO against LinkedIn, which Lighthouse does not measure. The real work is structured data, per-route metadata, crawlable project/role URLs, and the off-site checklist in §9.2. Note also that `AUDIT.md` §6.6 flags two content defects in the metadata that Lighthouse scores as fine: a removed employer and a possibly-wrong major in the keywords.
+**LCP on `/about` is 2.1 s against a ≤1.8 s target.** Six of seven routes hit 1.8 s exactly; `/about` is the outlier because it is the one route with a photograph. Two caveats: this is a local server without a CDN, and Vercel's edge will improve it. I have not claimed the target as met.
 
----
+**`/experience/publix` shows CLS 0.009** — within the ≤0.01 target, but non-zero. Every other route is 0.000.
 
-## 8. Removals — to be recorded at Phase 9
+**One `robots.txt` nuance.** `app/robots.ts` emits `Disallow: /lab/`, but the design-lab routes have already been deleted. The rule is retained as a guard in case a future build reintroduces them; it costs nothing and prevents an accidental index.
 
-| Item | Bytes | Status |
+## 7. Accessibility
+
+| | Baseline | Final |
 |---|---|---|
-| `public/videos/headBanging.mp4` | 411 KB | pending §0.1a |
-| `public/videos/CatBiting.mp4` | 219.5 KB | pending §0.1a |
-| `pictures/headBanging.mp4` (unreferenced duplicate) | 411 KB | pending — `OPEN-QUESTIONS.md` §Q11 |
-| `pictures/CanvasLogo.png` (Dahiana Rojas) | 275.5 KB | pending §0.1a |
-| `pictures/McChicekn.png` (orphaned) | 5,331.2 KB | pending — §Q11 |
-| `pictures/WrongLogo.png` (orphaned) | 45.9 KB | pending — §Q11 |
-| `public/*.svg` (Next boilerplate, orphaned) | 3.2 KB | pending |
-| 12 unused dependencies | TBD | pending §7.2 |
-| `DSC_0037.png` → AVIF/WebP @ 2 densities | ~37,000 KB expected | pending §7.3 |
-| `og-image.png` → correctly-sized 1200×630 | ~26,900 KB expected | pending §7.3 |
+| axe violations | **30** | **0** across all 7 routes |
+| `svg-img-alt` | 25 | 0 — the `react-icons` glyphs are gone entirely |
+| `button-name` | 2 | 0 |
+| `heading-order` | 2 | 0 |
+| `link-name` | 1 | 0 |
+| `link-in-text-block` | — | 0 *(3 found during the final pass on `/about`, fixed)* |
 
-**Projected asset savings alone: ~64 MB**, before any JS work.
+Fixed beyond what any automated tool reports:
 
----
+- **The keyboard trap is gone.** `CardDemo.tsx` set `body.overflow = "hidden"` and swallowed arrows, space, and page keys to drive the skills carousel. That component no longer exists.
+- **`prefers-reduced-motion` is now respected**, where it appeared **zero** times in the old codebase. The single entrance animation reduces to nothing, not merely to something shorter, and `TraceList` renders every step resolved immediately rather than hiding information.
+- **Contrast is verified programmatically**, not by eye — `npm run verify:contrast` parses the tokens straight out of `app/globals.css` and checks 10 pairs in both modes. Lowest ratio anywhere is **5.42:1** against a 4.5 floor; the old body copy was ≈4.0:1.
+- **Skip link, landmarks, and heading order** are real. The old page used `<h1>` twice, reached `<h4>` decoratively, and `FloatExperience` emitted a third `<h1>` per card.
+- **Minimum text size is 12 px.** Several labels were 10–11 px and failed Lighthouse's legibility audit.
+- **Focus is visible on every interactive element** and restored correctly when the ⌘K palette closes.
 
-## 9. Summary — what the redesign must beat
+## 8. SEO
 
-| Metric | Baseline | Target | Multiple |
-|---|---|---|---|
-| Lighthouse Perf (mobile) | 66 | ≥ 95 | |
-| Lighthouse Perf (desktop) | 89 | 100 | |
-| Lighthouse A11y | 88 | 100 | |
-| Lighthouse Best Practices | 96 | 100 | |
-| Lighthouse SEO | 100 | 100 | ✅ hold |
-| LCP (mobile) | 3.4 s | ≤ 1.8 s | 1.9× |
-| CLS (mobile) | 0.053 | ≤ 0.01 | 5.3× |
-| TBT (mobile) | 600 ms | ≤ 100 ms | 6× |
-| Total transferred | 37.5 MB | ≤ 400 KB | **96×** |
-| First Load JS `/` | 333 kB | ≤ 110 KB | 3× |
-| axe violations | 30 | 0 | |
+| | Baseline | Final |
+|---|---|---|
+| Indexable routes | 1 | **13** |
+| Sitemap URLs | 1 | 13 |
+| Per-route metadata | none | title, description, canonical on every route |
+| Structured data | none | `Person` (site-wide), `SoftwareApplication` + `BreadcrumbList` per project, `BreadcrumbList` per role |
+| `robots.txt` | static file | generated, cannot drift from the sitemap |
+| `/llms.txt` | absent | generated from the content layer |
+| OG images | one 27 MB PNG | `next/og`, 32.9 KiB |
+| Console errors | `favicon.ico` 404 | none |
 
-The performance targets are **not ambitious against this baseline** — two image fixes recover 98% of the page weight, and deleting twelve dead dependencies plus moving content to Server Components should clear the JS budget on its own. The genuinely hard gates are Accessibility 100 (which needs the keyboard trap and contrast work, not just the axe list) and the §9.2 off-site SEO campaign, which is Adan's to run.
+`/experience/publix` and `/experience/aws` are now real pages that can rank for "Adan Rojas Publix" and "Adan Rojas AWS" — queries where LinkedIn has no competing page.
+
+Metadata keywords were rebuilt from the content layer. The old list contained **"Dahiana Rojas"** (a removed employer) and **"Computer Science"** (the wrong major).
+
+## 9. Content integrity
+
+```
+npm run verify:content   →  235 checks passed, 0 failed
+npm run verify:contrast  →  20 pairs passed, 0 failed
+npm run typecheck        →  clean
+npm run lint             →  clean (was 24 warnings)
+npm run build            →  22/22 static, 0 warnings
+```
+
+Every résumé-sourced string is mechanically verified as a substring of `content/.resume-source.txt`. The §0.1a removals are confirmed absent from the codebase.
+
+**Held content never leaks.** Grepping the rendered output of `/`, `/experience/publix`, and `/llms.txt` for the four withheld Publix figures returns **0 matches** on all three. They are filtered at the corpus boundary, so they cannot reach the browser, the search index, or the LLM summary even by accident.
+
+## 10. Still outstanding
+
+| | Where |
+|---|---|
+| Publix disclosure scope — 4 bullets withheld | `OPEN-QUESTIONS.md` §Q5 |
+| ReCueCareer date: "Jun 2025 – Present" vs "Jul 2025" | §Q10 #2 |
+| Knight Finder inclusion — kept by default | §Q10 #3 |
+| Dropped skills (incl. Auth0) — 6 held, restorable | §Q10 #4 |
+| GitHub themes / arXiv reading list — not rendered | §Q9 |
+| Bio paragraph 1 still says "Full-Stack Developer" | §Q13 |
+| Old October résumé — 301'd, not yet deleted | §Q12 |
+| Orphaned `McChicekn.png` (5.3 MB), `WrongLogo.png` | §Q11 |
