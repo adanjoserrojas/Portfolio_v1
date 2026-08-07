@@ -55,6 +55,11 @@ const PAIRS: [string, string, number, string][] = [
   ["accent", "surface", 4.5, "accent text / links on page"],
   ["accent", "raised", 4.5, "accent text on raised surface"],
   ["line", "surface", 1.2, "hairline separators (decorative, not UI state)"],
+  // The calendar's one filled state: the selected day, and the "now" pill on
+  // the day rail. Both put surface-coloured text on an accent fill, which is
+  // the only place in the site where accent is a background rather than a
+  // foreground — and so the only pair the list above did not already cover.
+  ["surface", "accent", 4.5, "selected day / now marker — text on accent fill"],
   ["ink", "match", 4.5, "highlighted match text"],
   ["focus", "surface", 3, "focus ring against page"],
   ["focus", "raised", 3, "focus ring against raised surface"],

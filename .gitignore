@@ -45,3 +45,12 @@ design-lab/
 
 # Screenshot output - regenerate with: node scripts/shoot.mjs
 screenshots/
+
+# Creds
+service-account.json
+
+# cache
+*/__pycache__/
+
+# mcp config
+.mcp.json
