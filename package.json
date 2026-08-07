@@ -10,12 +10,16 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "verify:content": "tsx scripts/verify-content.ts",
+    "smoke:calendar": "tsx --conditions=react-server --env-file=.env scripts/smoke-calendar.ts",
     "verify:contrast": "tsx scripts/verify-contrast.ts",
     "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast"
   },
   "dependencies": {
+    "date-fns": "^4.4.0",
+    "google-auth-library": "^11.0.0",
     "next": "15.5.9",
     "react": "^19.2.0",
+    "react-day-picker": "^10.0.1",
     "react-dom": "^19.2.0",
     "zod": "^4.4.3"
   },
@@ -29,6 +33,7 @@
     "eslint-config-next": "15.5.2",
     "playwright": "^1.62.1",
     "server-only": "^0.0.1",
+    "shadcn": "^4.16.2",
     "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "tsx": "^4.23.5",

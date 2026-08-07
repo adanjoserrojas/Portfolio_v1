@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Page, PageTitle, Tags } from "@/components/site/Prose";
+{/* import Link from "next/link"; Add Tags in import below too*/} 
+import { Page, PageTitle } from "@/components/site/Prose";
+import CalendarPanel from "@/components/site/calendar/CalendarPanel";
 
 export const dynamic = "force-static";
 
@@ -17,8 +18,11 @@ export default function ProjectsIndex() {
       <PageTitle
         eyebrow="Index"
         title="Assistant"
-        lede="A personal project that actually speaks about me!"
+        lede="This is Assistant, my personal time management bot. I am adding more features periodically so he becomes a 10x Assistant!"
       />
+
+      {/* The only client component on the page; it fetches its own data. */}
+      <CalendarPanel />
     </Page>
   );
 }

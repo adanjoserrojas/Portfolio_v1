@@ -207,6 +207,14 @@ Three cluster hues are not three accents — they are a categorical encoding car
 |---|---|---|---|
 | — | none yet | Phase 2 prototypes use no Magic UI. Adoption is a Phase 5 decision, made after Gate 2 picks a direction, and each adoption gets measured before it is kept. | — |
 
+## Third-party component adoption log (§6.5, same rule)
+
+| Component | Adopted? | Why / gzip cost | Stripped |
+|---|---|---|---|
+| shadcn/ui `calendar` | yes, `/assistant` | **19.2 KB gz, in a deferred chunk — 0 KB of first load.** Adopted for react-day-picker's a11y grid, not its looks: `role="grid"`, roving tabindex, arrow/Home/End/PageUp/PageDown, `aria-disabled` on out-of-range days. Hand-rolling that correctly is the expensive part; the styling was the cheap part and was rewritten anyway. Imported after `requestIdleCallback`, so it costs nothing at hydration. `/assistant` first load: 109 KB, against 108 KB for `/`. | Every class (the registry assumes shadcn's own `bg-background`/`text-muted-foreground` token layer, which does not exist here — as shipped it rendered unstyled). `lucide-react` → inline SVG. `components/ui/button.tsx` → plain `<button>`, which dropped `class-variance-authority` and `radix-ui`. `clsx` + `tailwind-merge` → a 12-line `cn` in `lib/utils.ts`, since nothing left relies on conflict resolution. |
+
+**The one thing to watch.** A future `shadcn add` will write components that assume the full token layer and a real `tailwind-merge`. Neither is present. `lib/utils.ts` documents the swap-back, and the restyling is per-component work, not a one-time setup cost — budget for it rather than assuming `add` just works.
+
 **Pre-rejected on sight, per §6.5:** `globe` (cobe is significant weight for zero information), `icon-cloud` (a rotating ball of logos is decoration; the skills deserve the atlas), `meteors`, `confetti` (the quiz is gone — there is no completion moment left to celebrate), and anything with `neon` or `rainbow` in the name.
 
 ---

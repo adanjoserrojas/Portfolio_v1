@@ -177,6 +177,33 @@ const items = [
     _source: "owner",
     _sourceRef: "Adan, 2026-08-04 (conversation) + app/page.tsx:29",
   },
+  {
+    slug: "assistant",
+    name: "Assistant",
+    
+    summary: "Time management AI Assistant that learns from me!",
+    
+    date: "Summer 2026",
+    
+    stack: ["AWS", "Python", "DeepSeek V3.2", "Google Calendar API", "AWS CDK"],
+    bullets: [
+      {
+        text: "Tracks my gym sessions and uses Logistic Regressions to predict what session out of 3 candidates I am the most likely to attend to.",
+        disclosure: "cleared",
+      },
+      {
+        text: "Uses DynamoDB, Lambda, CloudWatch, IAM Users-> Roles-> Policies, S3, BedRock, API Gateway, Secrets Manager.",
+        disclosure: "cleared",
+      },
+      {
+        text: "So far, it schedules my breakfast, lunch, dinner, and Gym Sessions dynamically, there is more things to come!",
+        disclosure: "cleared",
+      },
+    ],
+    href: "https://github.com/adanjoserrojas/Assistant",
+    _source: "owner",
+    _sourceRef: "Adan, 2026-08-04 (conversation) + app/page.tsx:29",
+  },
 ] as const;
 
 export const projects: Project[] = items.map((p, i) =>
