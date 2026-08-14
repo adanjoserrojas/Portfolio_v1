@@ -15,6 +15,8 @@
     "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1110.0",
+    "@aws-sdk/lib-dynamodb": "^3.1110.0",
     "date-fns": "^4.4.0",
     "google-auth-library": "^11.0.0",
     "next": "15.5.9",

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 {/* import Link from "next/link"; Add Tags in import below too*/} 
 import { Page, PageTitle } from "@/components/site/Prose";
 import CalendarPanel from "@/components/site/calendar/CalendarPanel";
+import RecordsTable from "@/components/site/calendar/DataTable";
 
-export const dynamic = "force-static";
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Assistant",
@@ -23,6 +24,7 @@ export default function ProjectsIndex() {
 
       {/* The only client component on the page; it fetches its own data. */}
       <CalendarPanel />
+      <RecordsTable/>
     </Page>
   );
 }
