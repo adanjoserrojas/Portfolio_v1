@@ -15,7 +15,7 @@ export function PageTitle({
 }: {
   eyebrow?: string;
   title: string;
-  lede?: string;
+  lede?: React.ReactNode | string;
 }) {
   return (
     <header className="enter mb-10">
