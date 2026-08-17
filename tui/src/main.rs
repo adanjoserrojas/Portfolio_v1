@@ -29,21 +29,45 @@ use ratzilla::{event::KeyCode, DomBackend, WebRenderer};
 // Palette
 // ---------------------------------------------------------------------------
 
-const FG: Color = Color::Rgb(0xc9, 0xd1, 0xd9);
-const DIM: Color = Color::Rgb(0x6e, 0x76, 0x81);
-const ACCENT: Color = Color::Rgb(0x39, 0xd3, 0x53);
-const CYAN: Color = Color::Rgb(0x56, 0xd4, 0xdd);
-const AMBER: Color = Color::Rgb(0xd2, 0x99, 0x22);
-const RED: Color = Color::Rgb(0xf8, 0x51, 0x49);
+// Monochrome on black: white through grey, no hue anywhere.
+//
+// Colour was doing the work of separating headings from labels from errors, so
+// with it gone that job falls to brightness and weight. Hence four widely
+// spaced steps rather than six close ones — greys that sit near each other read
+// as one muddy tone on a real display, especially at this font size.
 
+const WHITE: Color = Color::Rgb(0xff, 0xff, 0xff);
+const FG: Color = Color::Rgb(0xd4, 0xd4, 0xd4);
+const MUTED: Color = Color::Rgb(0x8a, 0x8a, 0x8a);
+const DIM: Color = Color::Rgb(0x55, 0x55, 0x55);
+
+/// Borders, hints, anything that should recede.
 fn dim() -> Style {
     Style::default().fg(DIM)
 }
+
+/// Ordinary output.
 fn body() -> Style {
     Style::default().fg(FG)
 }
+
+/// Field labels and command names — visible, but subordinate to body text.
+fn label() -> Style {
+    Style::default().fg(MUTED)
+}
+
+/// Headings, the prompt, the cursor.
 fn accent() -> Style {
-    Style::default().fg(ACCENT).add_modifier(Modifier::BOLD)
+    Style::default().fg(WHITE).add_modifier(Modifier::BOLD)
+}
+
+/// Errors. Inverting is the one loud signal a monochrome palette still has, so
+/// nothing else uses REVERSED — that exclusivity is what makes it read as an
+/// alarm instead of decoration.
+fn error() -> Style {
+    Style::default()
+        .fg(WHITE)
+        .add_modifier(Modifier::BOLD | Modifier::REVERSED)
 }
 
 // ---------------------------------------------------------------------------
@@ -176,10 +200,10 @@ impl App {
             .push(Line::from(Span::styled(text.into(), style)));
     }
 
-    /// A two-tone line: `label` in the accent colour, `value` in body text.
-    fn push_pair(&mut self, label: &str, value: impl Into<String>) {
+    /// A two-tone line: `name` muted, `value` in body text.
+    fn push_pair(&mut self, name: &str, value: impl Into<String>) {
         self.lines.push(Line::from(vec![
-            Span::styled(format!("{label:<14}"), Style::default().fg(CYAN)),
+            Span::styled(format!("{name:<14}"), label()),
             Span::styled(value.into(), body()),
         ]));
     }
@@ -212,10 +236,7 @@ impl App {
         match COMMANDS.iter().find(|c| c.name == *name) {
             Some(command) => (command.run)(self, args),
             None => {
-                self.push_styled(
-                    format!("command not found: {name}"),
-                    Style::default().fg(RED),
-                );
+                self.push_styled(format!(" command not found: {name} "), error());
                 self.push_styled("Try `help`.", dim());
             }
         }
@@ -315,7 +336,7 @@ fn cmd_help(app: &mut App, _args: &[&str]) {
     app.blank();
     for command in COMMANDS {
         app.lines.push(Line::from(vec![
-            Span::styled(format!("  {:<12}", command.name), Style::default().fg(CYAN)),
+            Span::styled(format!("  {:<12}", command.name), accent()),
             Span::styled(command.help, body()),
         ]));
     }
@@ -416,14 +437,49 @@ fn render(frame: &mut Frame, app: &App) {
     let [output_area, prompt_area] =
         Layout::vertical([Constraint::Min(0), Constraint::Length(1)]).areas(inner);
 
-    // Show the tail of the scrollback that fits, offset by however far the user
-    // has scrolled up. Wrapped lines make this approximate rather than exact,
-    // which is fine for a shell that mostly sits pinned to the bottom.
+    // Pick the tail of the scrollback that fits, measured in *wrapped* rows.
+    //
+    // Counting logical lines instead is the obvious mistake and a bad one: a
+    // wrapped paragraph occupies more rows than it has lines, the slice then
+    // overflows the viewport, and Paragraph fills top-down — so the overflow
+    // falls off the bottom, hiding the newest output. A shell that hides the
+    // line you just typed is broken, so the arithmetic has to be exact.
+    let width = output_area.width.max(1) as usize;
     let height = output_area.height as usize;
-    let total = app.lines.len();
-    let end = total.saturating_sub(app.scrollback);
-    let start = end.saturating_sub(height);
-    let visible = app.lines[start..end].to_vec();
+
+    let rows_for = |line: &Line| -> usize {
+        let w = line.width();
+        if w == 0 {
+            1
+        } else {
+            w.div_ceil(width)
+        }
+    };
+
+    // Walk back from the newest line, discarding however far the user scrolled.
+    let mut end = app.lines.len();
+    let mut skipped = 0usize;
+    while end > 0 && skipped < app.scrollback {
+        end -= 1;
+        skipped += rows_for(&app.lines[end]);
+    }
+
+    // Then take as many older lines as fit *without* exceeding the viewport.
+    let mut start = end;
+    let mut used = 0usize;
+    while start > 0 {
+        let needed = rows_for(&app.lines[start - 1]);
+        if used + needed > height {
+            break;
+        }
+        used += needed;
+        start -= 1;
+    }
+
+    // Paragraph draws from the top, so pad above to pin output to the bottom
+    // the way a real terminal does.
+    let mut visible: Vec<Line> = vec![Line::from(""); height.saturating_sub(used)];
+    visible.extend_from_slice(&app.lines[start..end]);
 
     frame.render_widget(
         Paragraph::new(visible).wrap(Wrap { trim: false }),
