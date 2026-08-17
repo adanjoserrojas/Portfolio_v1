@@ -33,11 +33,39 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        /**
+         * Everything except /tui/* keeps the strict DENY.
+         *
+         * The negative lookahead is load-bearing. `X-Frame-Options: DENY` is
+         * absolute — it blocks framing by *any* page including our own origin,
+         * so a blanket DENY stopped app/RIND/page.tsx from embedding the WASM
+         * terminal it serves from /tui (net::ERR_BLOCKED_BY_RESPONSE). Carving
+         * the exception out here rather than relaxing the global value to
+         * SAMEORIGIN keeps every real page as locked down as it was.
+         */
+        source: "/:path((?!tui/).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "DENY" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+        ],
+      },
+      {
+        /**
+         * The WASM terminal, framed by /RIND. SAMEORIGIN lets our own pages
+         * embed it while still refusing every other site — so this is not an
+         * open frame, just one that trusts this origin.
+         */
+        source: "/tui/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",

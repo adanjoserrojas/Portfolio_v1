@@ -36,6 +36,7 @@ use ratzilla::{event::KeyCode, DomBackend, WebRenderer};
 // spaced steps rather than six close ones — greys that sit near each other read
 // as one muddy tone on a real display, especially at this font size.
 
+const BLACK: Color = Color::Rgb(0x00, 0x00, 0x00);
 const WHITE: Color = Color::Rgb(0xff, 0xff, 0xff);
 const FG: Color = Color::Rgb(0xd4, 0xd4, 0xd4);
 const MUTED: Color = Color::Rgb(0x8a, 0x8a, 0x8a);
@@ -62,12 +63,19 @@ fn accent() -> Style {
 }
 
 /// Errors. Inverting is the one loud signal a monochrome palette still has, so
-/// nothing else uses REVERSED — that exclusivity is what makes it read as an
-/// alarm instead of decoration.
+/// nothing else uses a filled background — that exclusivity is what makes it
+/// read as an alarm instead of decoration.
+///
+/// Set both colours explicitly; do NOT use `Modifier::REVERSED` here. REVERSED
+/// swaps foreground with background, and these spans carry no background, so it
+/// swaps white onto nothing and paints a solid white bar with invisible text.
+/// The text still lands in the DOM, so assertions on rendered text keep
+/// passing — this only ever shows up by looking at it.
 fn error() -> Style {
     Style::default()
-        .fg(WHITE)
-        .add_modifier(Modifier::BOLD | Modifier::REVERSED)
+        .fg(BLACK)
+        .bg(WHITE)
+        .add_modifier(Modifier::BOLD)
 }
 
 // ---------------------------------------------------------------------------
@@ -153,12 +161,32 @@ const LANGUAGES: &[&str] = &[
     "SQL",
 ];
 
+/// Raw strings (`r"..."`) so the art is byte-for-byte what renders. Escaping
+/// every backslash in ASCII art is how you get a banner that is subtly wrong
+/// and painful to edit — here what you read is what appears.
+///
+/// 26 columns wide, which fits the frame at every size the page uses.
 const BANNER: &[&str] = &[
-    "  __ _  ____   __   __ _ ",
-    " / _` |/ __ \\ / _` |/ _` |",
-    "| (_| | (__| | (_| | | | |",
-    " \\__,_|\\____/ \\__,_|_| |_|",
+    r" ____   ___  _   _  ____  ",
+    r"|  _ \ |_ _|| \ | ||  _ \ ",
+    r"| |_) | | | |  \| || | | |",
+    r"|  _ <  | | | |\  || |_| |",
+    r"|_| \_\|___||_| \_||____/ ",
 ];
+
+/// Shell identity, branded to RIND rather than to the portfolio hosting it.
+///
+/// One constant per string because these were three different spellings a
+/// moment ago — the frame said one thing, echoed commands another, and the live
+/// prompt a third. Text duplicated across render sites drifts; text that lives
+/// in one place cannot.
+const SHELL_TITLE: &str = " RIND ";
+const PROMPT: &str = "RIND@rind.dev";
+
+/// _source: `app/RIND/page.tsx` — the page's own meta description, verbatim.
+/// The banner now names RIND, so the line under it describes RIND rather than
+/// repeating the résumé role line, which still belongs to `about`.
+const TAGLINE: &str = "A coding agent harness design for heavy tool-invocation workflows to save $$$ through ML. Still in development!";
 
 // ---------------------------------------------------------------------------
 // Application state
@@ -220,7 +248,7 @@ impl App {
         self.scrollback = 0;
 
         self.lines.push(Line::from(vec![
-            Span::styled("adan@portfolio", accent()),
+            Span::styled(PROMPT, accent()),
             Span::styled(":~$ ", dim()),
             Span::styled(raw.clone(), body()),
         ]));
@@ -349,7 +377,7 @@ fn cmd_help(app: &mut App, _args: &[&str]) {
 
 fn cmd_about(app: &mut App, _args: &[&str]) {
     app.push_styled(NAME, accent());
-    app.push_styled(ROLE, Style::default().fg(AMBER));
+    app.push_styled(ROLE, label());
     app.blank();
     for paragraph in BIO {
         app.push(*paragraph);
@@ -379,7 +407,7 @@ fn cmd_experience(app: &mut App, _args: &[&str]) {
     for role in EXPERIENCE {
         app.lines.push(Line::from(vec![
             Span::styled(role.title, accent()),
-            Span::styled(format!("  @ {}", role.org), Style::default().fg(CYAN)),
+            Span::styled(format!("  @ {}", role.org), label()),
         ]));
         app.push_styled(format!("{}  -  {}", role.location, role.period), dim());
         app.blank();
@@ -413,7 +441,7 @@ fn cmd_banner(app: &mut App, _args: &[&str]) {
         app.push_styled(*row, accent());
     }
     app.blank();
-    app.push_styled(ROLE, Style::default().fg(AMBER));
+    app.push_styled(TAGLINE, label());
 }
 
 fn cmd_clear(app: &mut App, _args: &[&str]) {
@@ -426,10 +454,12 @@ fn cmd_clear(app: &mut App, _args: &[&str]) {
 // ---------------------------------------------------------------------------
 
 fn render(frame: &mut Frame, app: &App) {
+    // Square corners: BorderType::Plain. Rounded corners read as soft/decorative,
+    // which fights the thing this is supposed to look like.
     let shell = Block::bordered()
-        .border_type(BorderType::Rounded)
+        .border_type(BorderType::Plain)
         .border_style(Style::default().fg(DIM))
-        .title(Span::styled(" adan@portfolio ", accent()));
+        .title(Span::styled(SHELL_TITLE, accent()));
 
     let inner = shell.inner(frame.area());
     frame.render_widget(shell, frame.area());
@@ -487,11 +517,11 @@ fn render(frame: &mut Frame, app: &App) {
     );
 
     let prompt = Line::from(vec![
-        Span::styled("adan@portfolio", accent()),
+        Span::styled(PROMPT, accent()),
         Span::styled(":~$ ", dim()),
         Span::styled(app.input.clone(), body()),
         // A block glyph stands in for a cursor; the DOM backend has no real one.
-        Span::styled("\u{2588}", Style::default().fg(ACCENT)),
+        Span::styled("\u{2588}", Style::default().fg(WHITE)),
     ]);
     frame.render_widget(Paragraph::new(prompt), prompt_area);
 }

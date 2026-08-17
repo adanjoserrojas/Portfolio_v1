@@ -16,8 +16,8 @@
     -->
     
 <script type="module">
-import init, * as bindings from '/tui/portfolio-tui-94cd0ddd842f334b.js';
-const wasm = await init({ module_or_path: '/tui/portfolio-tui-94cd0ddd842f334b_bg.wasm' });
+import init, * as bindings from '/tui/portfolio-tui-f56ed89a3eb15c80.js';
+const wasm = await init({ module_or_path: '/tui/portfolio-tui-f56ed89a3eb15c80_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -35,8 +35,30 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     -->
     <style>
       :root {
-        --bg: #0d1117;
+        --bg: #000000;
       }
+      /*
+        Cell geometry is pinned to exactly 10x20px. Do not "clean this up" into
+        a plain font-size — the numbers are matched to the backend on purpose.
+
+        Ratzilla's DomBackend measures one probe cell when it starts and then
+        never again except on a resize event. Inside an iframe that measurement
+        runs before layout settles, the probe comes back zero-sized, and it
+        falls back to DEFAULT_CELL_SIZE = 10x20px (src/backend/dom.rs). It then
+        divides the parent width by 10 to get the column count. With a real
+        advance of 8.78px that produced ~122 columns of content inside a grid
+        140 columns wide: the border closed early and a dead strip ran down the
+        right-hand side.
+
+        Forcing a resize to trigger the re-measure path was tried and is worse —
+        it wipes the grid without repainting it, leaving the terminal blank.
+
+        So instead the rendered cell is made to *be* 10x20px. Then the assumed
+        geometry and the drawn geometry agree, and it no longer matters whether
+        the probe succeeds: if it measures, it measures these same 10x20 cells.
+        Robust in both directions, and independent of which monospace font the
+        viewer's OS actually resolves.
+      */
       html,
       body {
         margin: 0;
@@ -45,22 +67,31 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         height: 100%;
         background-color: var(--bg);
         overflow: hidden;
-      }
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      pre {
         font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas,
           "DejaVu Sans Mono", monospace;
-        font-size: 15px;
-        line-height: 1.15;
+        font-size: 16px;
+        line-height: 20px;
+      }
+      pre {
+        /* Inherit the metrics above rather than restating them. */
+        font: inherit;
+        line-height: 20px;
         margin: 0;
         /* Let the TUI own the click target so keyboard focus behaves. */
         user-select: none;
       }
+      /*
+        Ratzilla sizes each cell inline as `width: 1ch`, which varies by font.
+        Override it to the fixed 10px the backend assumes. !important is
+        required: inline styles otherwise win. The 16px font above has an
+        advance under 10px in every monospace face in the stack, so glyphs sit
+        inside the cell with a little tracking rather than being clipped.
+      */
+      pre > span {
+        width: 10px !important;
+        line-height: 20px !important;
+      }
     </style>
-  <link rel="modulepreload" href="/tui/portfolio-tui-94cd0ddd842f334b.js" crossorigin="anonymous" integrity="sha384-q6YGU/vPti6nZAn4WhW717UCMDss2NuzRxH70nomnnCi1RLyp4omqQLVOt8UMTfq"><link rel="preload" href="/tui/portfolio-tui-94cd0ddd842f334b_bg.wasm" crossorigin="anonymous" integrity="sha384-86jo5oArLBXyoUzRwLWy6qCeEk/GVdViST5214a3AsAG0SqdR+MchnkfVXDwgalJ" as="fetch" type="application/wasm"></head>
+  <link rel="modulepreload" href="/tui/portfolio-tui-f56ed89a3eb15c80.js" crossorigin="anonymous" integrity="sha384-q6YGU/vPti6nZAn4WhW717UCMDss2NuzRxH70nomnnCi1RLyp4omqQLVOt8UMTfq"><link rel="preload" href="/tui/portfolio-tui-f56ed89a3eb15c80_bg.wasm" crossorigin="anonymous" integrity="sha384-GMXWprDKDY9pYikG6q706e64vb80v6k038SDbrycJ41sAWaG3bRBn7bWc+kYfD2h" as="fetch" type="application/wasm"></head>
   <body></body>
 </html>

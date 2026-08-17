@@ -18,6 +18,11 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      // wasm-bindgen glue for the Rust TUI (see tui/README.md). Generated
+      // output, rewritten on every `trunk build` — linting it only ever
+      // reports bugs in a generator we don't control.
+      "public/tui/**",
+      "tui/**",
     ],
   },
 ];
