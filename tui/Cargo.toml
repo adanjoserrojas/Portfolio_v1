@@ -1,0 +1,19 @@
+[package]
+name = "portfolio-tui"
+version = "0.1.0"
+edition = "2021"
+
+# Ratzilla re-exports the exact ratatui it was built against as
+# `ratzilla::ratatui`. Depending on ratatui separately here is how you get two
+# incompatible copies in the tree, so don't — import through ratzilla instead.
+[dependencies]
+ratzilla = "0.3.1"
+
+# WASM ships over the wire, so optimise for size, not speed. This is the
+# difference between a ~1.2 MB and a ~400 KB payload.
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

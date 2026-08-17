@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>adan@portfolio</title>
+
+    <!-- Tells trunk to compile this crate to WASM and inject the loader. -->
+    <link data-trunk rel="rust" data-wasm-opt="z" />
+
+    <!--
+      No CDN font on purpose: this gets embedded in the Next.js site, and a
+      remote stylesheet is one more thing that can fail or get blocked. The
+      system monospace stack renders box-drawing characters correctly on
+      Windows, macOS and Linux.
+    -->
+    <style>
+      :root {
+        --bg: #0d1117;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg);
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      pre {
+        font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas,
+          "DejaVu Sans Mono", monospace;
+        font-size: 15px;
+        line-height: 1.15;
+        margin: 0;
+        /* Let the TUI own the click target so keyboard focus behaves. */
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
