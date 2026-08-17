@@ -9,6 +9,15 @@ edition = "2021"
 [dependencies]
 ratzilla = "0.3.1"
 
+# Not used directly — this is here to select an implementation.
+#
+# ratatui 0.30's layout cache locks through `critical-section`, which ships no
+# default impl. On wasm32-unknown-unknown nothing else provides one, so the
+# release link fails with `undefined symbol: _critical_section_1_0_acquire`.
+# Ratzilla only enables this in its dev-dependencies, so consumers must do it.
+# The `std` impl is correct here: wasm32-unknown-unknown is single-threaded.
+critical-section = { version = "1.2", features = ["std"] }
+
 # WASM ships over the wire, so optimise for size, not speed. This is the
 # difference between a ~1.2 MB and a ~400 KB payload.
 [profile.release]

@@ -14,12 +14,18 @@
       "memory.copy operations require bulk memory operations". Each flag below
       re-enables a feature rustc already emitted.
     -->
-    <link
-      data-trunk
-      rel="rust"
-      data-wasm-opt="z"
-      data-wasm-opt-params="--enable-bulk-memory --enable-mutable-globals --enable-nontrapping-float-to-int --enable-sign-ext"
-    />
+    
+<script type="module">
+import init, * as bindings from '/tui/portfolio-tui-94cd0ddd842f334b.js';
+const wasm = await init({ module_or_path: '/tui/portfolio-tui-94cd0ddd842f334b_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
 
     <!--
       No CDN font on purpose: this gets embedded in the Next.js site, and a
@@ -55,6 +61,6 @@
         user-select: none;
       }
     </style>
-  </head>
+  <link rel="modulepreload" href="/tui/portfolio-tui-94cd0ddd842f334b.js" crossorigin="anonymous" integrity="sha384-q6YGU/vPti6nZAn4WhW717UCMDss2NuzRxH70nomnnCi1RLyp4omqQLVOt8UMTfq"><link rel="preload" href="/tui/portfolio-tui-94cd0ddd842f334b_bg.wasm" crossorigin="anonymous" integrity="sha384-86jo5oArLBXyoUzRwLWy6qCeEk/GVdViST5214a3AsAG0SqdR+MchnkfVXDwgalJ" as="fetch" type="application/wasm"></head>
   <body></body>
 </html>
