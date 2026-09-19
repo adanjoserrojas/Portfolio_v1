@@ -1,17 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { createSession, examples, fixtures, sampleDiff, statusLabels, type Scenario, type Session, type ToolEvent } from "./model";
 import s from "./Workspace.module.css";
 
 type InspectorTab = "Overview" | "Tool details" | "Changes" | "Usage";
 const tabs: InspectorTab[] = ["Overview", "Tool details", "Changes", "Usage"];
 
-function Glyph({ kind }: { kind: "mark" | "arrow" | "panel" | "expand" | "plus" }) {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{
-    kind === "mark" ? <><path d="M5 20V4h8a5 5 0 0 1 0 10H5m7 0 7 6" /><path d="M9 4v10" /></> :
+function RindIcon() {
+  return <span className={s.brandMark} aria-hidden="true" data-rind-icon>
+    <Image src="/rind/icon-light.svg" alt="" width={32} height={32} className={s.lightIcon} data-logo-theme="light" />
+    <Image src="/rind/icon-dark.svg" alt="" width={32} height={32} className={s.darkIcon} data-logo-theme="dark" />
+  </span>;
+}
+
+function Glyph({ kind }: { kind: "arrow" | "panel" | "expand" | "plus" }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="butt" strokeLinejoin="miter" aria-hidden="true">{
     kind === "arrow" ? <path d="M12 19V5m-6 6 6-6 6 6" /> :
-    kind === "panel" ? <><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M9 4v16" /></> :
+    kind === "panel" ? <><rect x="3" y="4" width="18" height="16" /><path d="M9 4v16" /></> :
     kind === "expand" ? <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" /> : <path d="M12 5v14M5 12h14" />
   }</svg>;
 }
@@ -32,12 +39,20 @@ export default function Workspace() {
   const [compact, setCompact] = useState(false);
   const feed = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLTextAreaElement>(null);
+  const sessionsToggle = useRef<HTMLButtonElement>(null);
+  const inspectorToggle = useRef<HTMLButtonElement>(null);
   const follow = useRef(true);
   const session = sessions.find(item => item.id === activeId)!;
   const draft = drafts[activeId] || "";
   const running = session.status === "running";
   const busy = running || session.status === "needs-input";
   const hasRunning = sessions.some(item => item.status === "running");
+
+  useEffect(() => {
+    if (!input.current) return;
+    input.current.style.height = "auto";
+    input.current.style.height = `${Math.min(input.current.scrollHeight, 160)}px`;
+  }, [draft, activeId]);
 
   useEffect(() => {
     const resize = () => { setNarrow(window.innerWidth <= 760); setCompact(window.innerWidth <= 1100); };
@@ -113,37 +128,47 @@ export default function Workspace() {
   function showChanges() { setTab("Changes"); setInspector(true); if (compact) setSidebar(false); }
 
   return <section id="rind-workspace" className={`${s.workspace} ${expanded ? s.expanded : ""}`} aria-label="RIND agent workspace" onKeyDown={event => {
-    if (event.key === "Escape") { setSidebar(false); setInspector(false); setExpanded(false); }
+    if (event.key === "Escape") {
+      event.preventDefault();
+      if (renaming) { setRenaming(false); return; }
+      if (inspector) { setInspector(false); window.setTimeout(() => inspectorToggle.current?.focus(), 0); }
+      else if (sidebar && narrow) { setSidebar(false); window.setTimeout(() => sessionsToggle.current?.focus(), 0); }
+      else if (expanded) setExpanded(false);
+      else { setSidebar(false); window.setTimeout(() => sessionsToggle.current?.focus(), 0); }
+    }
+    if (event.key === "Tab" && ((inspector && compact) || (sidebar && narrow) || expanded)) {
+      const panel = inspector && compact ? '[aria-label="Run inspector"]' : sidebar && narrow ? '[aria-label="Sessions"]' : '#rind-workspace';
+      const controls = Array.from(document.querySelectorAll<HTMLElement>(`${panel} button, ${panel} input, ${panel} textarea, ${panel} summary`)).filter(el => !el.closest('[inert]') && !el.matches(':disabled') && el.getClientRects().length);
+      const first = controls[0], last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
   }}>
     <header className={s.topbar}>
-      <div className={s.brand}><span className={s.logo}><Glyph kind="mark" /></span><h1>RIND</h1><span className={s.alpha}>PRE-ALPHA</span><span className={s.divider} /><span className={s.subtitle}>Agent workspace</span></div>
+      <div className={s.brand}><h1><RindIcon /><span className="sr-only">RIND</span></h1><span className={s.alpha}>PRE-ALPHA</span><span className={s.divider} /><span className={s.subtitle}>Agent workspace</span></div>
       <div className={s.topActions}><span className={s.demo}><span /> UI preview</span><button className={s.iconButton} aria-label={expanded ? "Exit expanded workspace" : "Expand workspace"} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}><Glyph kind="expand" /></button></div>
     </header>
     <div className={`${s.body} ${sidebar ? s.showSidebar : ""} ${inspector ? s.showInspector : ""}`}>
       <aside className={s.sidebar} aria-label="Sessions" inert={!sidebar ? true : undefined}>
-        <div className={s.panelHeading}><span>WORKSPACE</span><button className={s.textButton} onClick={() => setSidebar(false)} aria-label="Close sessions">Close</button></div>
+        <div className={s.panelHeading}><span>WORKSPACE</span><button className={s.textButton} onClick={() => { setSidebar(false); window.setTimeout(() => sessionsToggle.current?.focus(), 0); }} aria-label="Close sessions">Close</button></div>
         <button className={s.newSession} onClick={newSession}><Glyph kind="plus" /> New session <span>↗</span></button>
         <div className={s.sectionLabel}>THIS VISIT <span>{sessions.length.toString().padStart(2, "0")}</span></div>
         <div className={s.sessionList}>{sessions.map(item => <button key={item.id} className={`${s.session} ${item.id === activeId ? s.activeSession : ""}`} aria-current={item.id === activeId ? "true" : undefined} onClick={() => choose(item.id)}><span className={s.sessionTitle}>{item.title}</span><span className={s.sessionMeta}><span className={`${s.dot} ${item.status === "running" ? s.pulse : ""}`} />{statusLabels[item.status]}</span></button>)}</div>
-        <div className={s.sidebarFooter}><span className={s.miniMark}><Glyph kind="mark" /></span><strong>A space for focused work.</strong><p>Sessions stay here until you refresh. No account required.</p><span className={s.localBadge}>○ &nbsp; In this browser tab</span></div>
+        <div className={s.sidebarFooter}><span className={s.localBadge}>○ &nbsp; Saved for this visit</span><p>Sessions clear when you refresh.</p></div>
       </aside>
-      <div className={s.center} inert={(narrow && sidebar) || (compact && inspector) ? true : undefined}>
+      <div className={`${s.center} ${session.messages.length === 0 ? s.emptyCenter : ""}`} inert={(narrow && sidebar) || (compact && inspector) ? true : undefined}>
         <div className={s.taskbar}>
-          <button className={s.iconButton} aria-label="Toggle sessions" aria-expanded={sidebar} onClick={() => { setSidebar(!sidebar); setInspector(false); }}><Glyph kind="panel" /></button>
-          {renaming ? <form className={s.renameForm} onSubmit={event => { event.preventDefault(); if (newTitle.trim()) update({ title: newTitle.trim() }); setRenaming(false); }}><input aria-label="Session name" autoFocus value={newTitle} maxLength={65} onChange={event => setNewTitle(event.target.value)} /><button className={s.textButton}>Save</button><button type="button" className={s.textButton} onClick={() => setRenaming(false)}>Cancel</button></form> : <button className={s.taskTitle} title="Rename session" onClick={() => { setNewTitle(session.title); setRenaming(true); }}>{session.title}<span>⌄</span></button>}
-          <button className={`${s.textButton} ${s.inspectToggle}`} aria-expanded={inspector} onClick={() => { setInspector(!inspector); if (compact) setSidebar(false); }}>Inspector <Glyph kind="panel" /></button>
+          <button ref={sessionsToggle} className={s.iconButton} aria-label="Toggle sessions" aria-expanded={sidebar} onClick={() => { setSidebar(!sidebar); setInspector(false); }}><Glyph kind="panel" /></button>
+          {renaming ? <form className={s.renameForm} onSubmit={event => { event.preventDefault(); if (newTitle.trim()) update({ title: newTitle.trim() }); setRenaming(false); }}><input aria-label="Session name" autoFocus value={newTitle} maxLength={65} onChange={event => setNewTitle(event.target.value)} /><button className={s.textButton}>Save</button><button type="button" className={s.textButton} onClick={() => setRenaming(false)}>Cancel</button></form> : <button className={s.taskTitle} title="Rename session" onClick={() => { setNewTitle(session.title); setRenaming(true); }}><span className={s.titleText}>{session.title}</span><span aria-hidden="true">✎</span></button>}
+          <button ref={inspectorToggle} className={`${s.textButton} ${s.inspectToggle}`} aria-expanded={inspector} onClick={() => { setInspector(!inspector); if (compact) setSidebar(false); }}>Inspector <Glyph kind="panel" /></button>
         </div>
-        <div className={s.previewNotice}><span aria-hidden="true">◇</span> Interactive preview <span className={s.noticeDetail}>— sample runs, no tools executed or costs incurred.</span></div>
         <div className={s.feed} ref={feed} onScroll={() => { const el = feed.current!; follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80; if (follow.current) setNewActivity(false); }}>
           {session.messages.length === 0 ? <div className={s.welcome}>
-            <div className={s.welcomeMark}><Glyph kind="mark" /></div>
-            <p className={s.eyebrow}>FROM INTENT TO OUTCOME</p>
-            <h2>Good work starts<br />with a clear task.</h2>
-            <p className={s.intro}>A workspace to give your agent direction,<br className={s.desktopBreak} /> follow its progress, and review what comes next.</p>
-            <div className={s.examples}>{examples.map(example => <button key={example.scenario} onClick={() => start(example.prompt, example.scenario)}><span className={s.exampleNumber}>{example.number}<span>↗</span></span><strong>{example.title}</strong><span>{example.description}</span></button>)}</div>
-            <p className={s.sampleHint}>Choose a sample above or describe a task below.</p>
+            <div className={s.welcomeMark}><RindIcon /></div>
+            <h2>Good work starts with a clear task.</h2>
+            <p className={s.intro}>Give your agent direction. Follow the work. Review the outcome.</p>
           </div> : <div className={s.conversation}>
-            {session.messages.filter(message => !(session.status === "completed" && message === session.messages.at(-1))).map(message => message.events ? <details className={s.execution} key={message.id}><summary className={s.executionHeading}>{message.text} · {message.events.length} events</summary>{message.events.map(event => <button key={event.id} className={s.toolRow} onClick={() => inspect(event)}>{event.name}<span className={s.duration}>{event.duration} ↗</span></button>)}</details> : <article key={message.id} className={message.role === "user" ? s.userMessage : s.agentMessage}><div className={s.messageLabel}>{message.role === "user" ? <><span className={s.avatar}>Y</span> YOU</> : <><span className={s.agentAvatar}><Glyph kind="mark" /></span> RIND <span className={s.sampleTag}>SAMPLE</span></>}</div><p>{message.text}</p></article>)}
+            {session.messages.filter(message => !(session.status === "completed" && message === session.messages.at(-1))).map(message => message.events ? <details className={s.execution} key={message.id}><summary className={s.executionHeading}>{message.text} · {message.events.length} events</summary>{message.events.map(event => <button key={event.id} className={s.toolRow} onClick={() => inspect(event)}>{event.name}<span className={s.duration}>{event.duration} ↗</span></button>)}</details> : <article key={message.id} className={message.role === "user" ? s.userMessage : s.agentMessage}><div className={s.messageLabel}>{message.role === "user" ? <><span className={s.avatar}>Y</span> YOU</> : <><span className={s.agentAvatar}><RindIcon /></span> RIND <span className={s.sampleTag}>SAMPLE</span></>}</div><p>{message.text}</p></article>)}
             <div className={s.execution}><div className={s.executionHeading}><span>TOOL ACTIVITY</span><span>Sample run · {session.elapsed}s</span></div>
               {session.events.map((event, index) => <button className={s.toolRow} key={event.id} onClick={() => inspect(event)}><span className={s.toolSymbol}>{session.status === "failed" && index === session.events.length - 1 ? "!" : "✓"}</span><span><strong>{event.name}</strong><small>{event.description}</small></span><span className={s.duration}>{event.duration} <span>↗</span></span></button>)}
               {running && <div className={s.runningRow}><span className={`${s.dot} ${s.pulse}`} />{fixtures[session.scenario][session.step]?.name || "Preparing the result"}<span>Running</span></div>}
@@ -158,9 +183,10 @@ export default function Workspace() {
         <form className={s.composer} onSubmit={event => { event.preventDefault(); start(draft); }}>
           <label className="sr-only" htmlFor="rind-task">Describe a task</label>
           <textarea ref={input} id="rind-task" placeholder="What would you like to work on?" value={draft} maxLength={6000} disabled={busy} rows={2} onChange={event => setDrafts(items => ({ ...items, [activeId]: event.target.value }))} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); start(draft); } }} />
-          <div className={s.composerBottom}><span role="status"><span className={s.dot} />{statusLabels[session.status]}<span className={s.composerHint}> · {session.status === "needs-input" ? "Choose an action above" : "Scripted demo"}</span></span>{running ? <button type="button" className={s.send} onClick={() => update({ status: "stopped" })}>■ <span>Stop</span></button> : <button type="submit" className={s.send} disabled={!draft.trim() || busy}><span>Send</span><Glyph kind="arrow" /></button>}</div>
+          <div className={s.composerBottom}><span role="status"><span className={s.dot} />{statusLabels[session.status]}<span className={s.composerHint}> · {session.status === "needs-input" ? "Choose an action above" : "Sample run"}</span></span>{running ? <button type="button" className={s.send} onClick={() => update({ status: "stopped" })}>■ <span>Stop</span></button> : <button type="submit" className={s.send} disabled={!draft.trim() || busy}><span>Send</span><Glyph kind="arrow" /></button>}</div>
         </form>
-        <div className={s.composerFootnote}><span>UI preview · No live agent connected</span><span>Enter to send <span aria-hidden="true">·</span> Shift + Enter for a new line</span></div>
+        {session.messages.length === 0 && <div className={s.examples} aria-label="Try a sample task">{examples.map(example => <button key={example.scenario} title={example.description} onClick={() => start(example.prompt, example.scenario)}><strong>{example.title}</strong><span aria-hidden="true">↗</span></button>)}</div>}
+        <div className={s.composerFootnote}><span>Sample runs only · No tools executed or costs incurred</span><span>Enter to send · Shift + Enter for a new line</span></div>
       </div>
       <aside className={s.inspector} aria-label="Run inspector" inert={!inspector ? true : undefined}>
         <div className={s.panelHeading}><span>INSPECTOR</span><button className={s.textButton} aria-label="Close inspector" onClick={() => { setInspector(false); window.setTimeout(() => input.current?.focus(), 0); }}>Close</button></div>

@@ -45,6 +45,7 @@ design-lab/
 
 # Screenshot output - regenerate with: node scripts/shoot.mjs
 screenshots/
+.playwright-mcp/
 
 # Creds
 service-account.json
