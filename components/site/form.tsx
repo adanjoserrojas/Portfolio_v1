@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 
 export default function Form() {
     const [name, setName] = useState("");
+    const [contact, setContact] = useState("");
     const [message, setMessage] = useState("");
     const [submit, setSubmit] = useState<"iddle" | "loading" | "submitted">("iddle");
 
@@ -16,19 +17,47 @@ export default function Form() {
 
             const timer = setTimeout(() => {
                 setVisible(true);
-            }, 50);
+            }, 500);
             return () => clearTimeout(timer);
         }
     }, [submit]);
 
     // Handle timeout
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setSubmit("loading");
+        try {
+            await submitForm();
 
-        setTimeout(() => {
-            setSubmit("submitted");
-        }, 1000);
+            setTimeout(() => {
+                setSubmit("submitted");
+            }, 1000);
+        } catch (error) {
+            console.error(error);
+
+            setSubmit("iddle");
+        }
     };
+
+    // POST req submission
+    const submitForm = async () => {
+        const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                contact,
+                message,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to submit request!");
+        }
+
+        return response.json();
+    }
     
     if (submit === "loading"){
         return (
@@ -62,18 +91,15 @@ export default function Form() {
             </main>
         );
     } else if (submit == "submitted"){
-
         return (
             <div className={`flex flex-col p-4 items-center justify-center ${visible ? "opacity-100" : "opacity-0"}`}>
-                <div className={`w-40 h-40 flex p-4 items-center 
-                justify-center rounded-full transition-color duration-500 bg-[#e6e8ea]`}>
-                    <Check className="w-20 h-20 text-[#0d0f11]"/>
+                <div className={`w-40 h-40 flex p-4 items-center ${visible ? "bg-ink opacity-100" : "bg-transparent opacity-0"} 
+                justify-center rounded-full transition-color duration-500 bg-ink`}>
+                    <Check className="w-20 h-20 text-surface"/>
                 </div>
-                <p className="p-4 text-[#e6e8ea]">Your message has been submitted to me!</p>
+                <p className="p-4 text-ink">Your message has been submitted to me!</p>
             </div>
-            
         );
-
     } else {
         return(
         <main className="grid px-4">
@@ -83,6 +109,13 @@ export default function Form() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 className="mb-8 w-min p-4"/>
+
+            <input
+                type="text"
+                value={contact}
+                onChange={(a) => setContact(a.target.value)}
+                placeholder="Enter your point of contact (email or phone number)"
+                className="mb-8 w-full p-4"/>
             
             <textarea
                 value={message}

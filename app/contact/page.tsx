@@ -15,7 +15,7 @@ export default function ProjectsIndex() {
       <PageTitle
         eyebrow="Index"
         title="Contact"
-        lede={`Type your name and message. This will go directly to my phone number!`}
+        lede={`Type your name and message. This will go directly to my phone!`}
       />
       <Form/>
     </Page>
