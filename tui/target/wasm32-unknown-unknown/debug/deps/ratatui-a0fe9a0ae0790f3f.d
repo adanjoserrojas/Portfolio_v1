@@ -1,9 +1,0 @@
-C:\Users\17866\Downloads\Adan_Rojas_Workspace_2025\portfolio_v1\tui\target\wasm32-unknown-unknown\debug\deps\ratatui-a0fe9a0ae0790f3f.d: C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\lib.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\prelude.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\stateful_widget_ref.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\widget_ref.rs
-
-C:\Users\17866\Downloads\Adan_Rojas_Workspace_2025\portfolio_v1\tui\target\wasm32-unknown-unknown\debug\deps\libratatui-a0fe9a0ae0790f3f.rmeta: C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\lib.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\prelude.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\stateful_widget_ref.rs C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\widget_ref.rs
-
-C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\lib.rs:
-C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\prelude.rs:
-C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets.rs:
-C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\stateful_widget_ref.rs:
-C:\Users\17866\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-0.30.2\src\widgets\widget_ref.rs:

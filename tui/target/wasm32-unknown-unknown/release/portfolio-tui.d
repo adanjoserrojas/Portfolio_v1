@@ -1,1 +1,0 @@
-C:\Users\17866\Downloads\Adan_Rojas_Workspace_2025\portfolio_v1\tui\target\wasm32-unknown-unknown\release\portfolio-tui.wasm: C:\Users\17866\Downloads\Adan_Rojas_Workspace_2025\portfolio_v1\tui\src\main.rs
