@@ -5,6 +5,15 @@ import {
   PutCommand,
 } from "@aws-sdk/lib-dynamodb";
 
+import {
+  checkRateLimit,
+} from "@/lib/rateLimit";
+
+import {
+    getHashedVisitorId,
+    getHashedIp,
+} from "@/lib/visitorIdentity";
+
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
 });
@@ -16,6 +25,7 @@ const ContactSchema = z.object({
 });
 
 export async function POST(request: Request) {
+
     try {
         const body = await request.json();
         const result = ContactSchema.safeParse(body);
@@ -27,6 +37,36 @@ export async function POST(request: Request) {
                     error: "Invalid data",
                 },
                 { status: 400 }
+            );
+        }
+
+        const hashedVisitorId = getHashedVisitorId();
+        const hashedIp = getHashedIp(request);
+
+        console.log("Visitor:", hashedVisitorId);
+        console.log("IP:", hashedIp);
+
+        const visitorAllowed = await checkRateLimit(
+            `VISITOR#${hashedVisitorId}`,
+            3,
+        );
+
+        if (!visitorAllowed){
+            return Response.json(
+                {error: "Too many request from this user!"},
+                { status: 429 }, 
+            );
+        }
+
+        const IpAllowed = await checkRateLimit(
+            `IP#${hashedIp}`,
+            20,
+        );
+
+        if (!IpAllowed){
+            return Response.json(
+                {error: "Too many request from this network!"},
+                { status: 429 }, 
             );
         }
 
@@ -44,6 +84,7 @@ export async function POST(request: Request) {
                     name,
                     contact,
                     message,
+
                 }
             })
         )
