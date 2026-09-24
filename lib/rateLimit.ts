@@ -16,6 +16,7 @@ export async function checkRateLimit(
 
         Key: {
           PK: `RATE#${identifier}#${today}`,
+          SK: `DATE#${today}`,
         },
 
         UpdateExpression:

@@ -14,10 +14,8 @@ import {
     getHashedIp,
 } from "@/lib/visitorIdentity";
 
-const client = new DynamoDBClient({
-  region: process.env.AWS_REGION,
-});
-const db = DynamoDBDocumentClient.from(client);
+import { ddb } from "@/lib/dynamo/dynamo";
+
 const ContactSchema = z.object({
     name: z.string().trim().min(1).max(100),
     contact: z.string().min(10).max(50),
@@ -75,7 +73,7 @@ export async function POST(request: Request) {
         console.log("Received form:");
         console.log(result.data);
 
-        await db.send(
+        await ddb.send(
             new PutCommand({
                 TableName: process.env.CONTACT_TABLE_NAME,
                 Item: {

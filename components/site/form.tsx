@@ -52,6 +52,8 @@ export default function Form() {
             }),
         });
 
+        console.log(response)
+
         if (!response.ok) {
             throw new Error("Failed to submit request!");
         }
@@ -108,15 +110,26 @@ export default function Form() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
-                className="mb-8 w-min p-4"/>
+                maxLength={100}
+                className="w-min p-4"/>
+
+            <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
+                <span>1-100 characters</span>
+                <span>{name.length}/100</span>
+            </div>
 
             <input
                 type="text"
                 value={contact}
                 onChange={(a) => setContact(a.target.value)}
                 placeholder="Enter your point of contact (email or phone number)"
-                className="mb-8 w-full p-4"/>
-            
+                minLength={10}
+                maxLength={50}
+                className="w-full p-4"/>
+            <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
+                <span>10-50 characters</span>
+                <span>{contact.length}/50</span>
+            </div>
             <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
