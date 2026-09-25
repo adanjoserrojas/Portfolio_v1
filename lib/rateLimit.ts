@@ -3,6 +3,8 @@ import "server-only";
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { ddb } from "@/lib/dynamo/dynamo";
 
+
+
 export async function checkRateLimit(
   identifier: string,
   limit: number
@@ -38,7 +40,7 @@ export async function checkRateLimit(
     );
 
     return true;
-  } catch (error: any) {
+  } catch (error: unknown | any) {
     if (error.name === "ConditionalCheckFailedException") {
       return false;
     }
