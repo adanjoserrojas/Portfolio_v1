@@ -40,11 +40,7 @@ export async function checkRateLimit(
     );
 
     return true;
-  } catch (error: unknown | any) {
-    if (error.name === "ConditionalCheckFailedException") {
-      return false;
-    }
-
-    throw error;
+  } catch (error) {
+    return false;
   }
 }
