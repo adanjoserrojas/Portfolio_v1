@@ -2,6 +2,7 @@ import "server-only";
 
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { ddb } from "@/lib/dynamo/dynamo";
+import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 
 
 
@@ -41,6 +42,10 @@ export async function checkRateLimit(
 
     return true;
   } catch (error) {
-    return false;
+    if (error instanceof ConditionalCheckFailedException){
+      return false;
+    }
+
+    throw error;
   }
 }

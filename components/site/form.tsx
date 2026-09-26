@@ -1,6 +1,7 @@
 "use client"
 import {useState, useEffect} from "react"
 import { Check } from "lucide-react";
+import TooManyRequest from "@/components/site/ratelimit"
 
 
 export default function Form() {
@@ -8,6 +9,9 @@ export default function Form() {
     const [contact, setContact] = useState("");
     const [message, setMessage] = useState("");
     const [submit, setSubmit] = useState<"iddle" | "loading" | "submitted">("iddle");
+
+    // rate limiter UI boolean
+    const [request, setRequest] = useState(false);
 
     // Visual Effect of check mark appearing
     const [visible, setVisible] = useState(false);
@@ -33,7 +37,6 @@ export default function Form() {
             }, 1000);
         } catch (error) {
             console.error(error);
-
             setSubmit("iddle");
         }
     };
@@ -54,8 +57,11 @@ export default function Form() {
 
         console.log(response)
 
-        if (!response.ok) {
-            throw new Error("Failed to submit request!");
+        if (response.status == 429) {
+            setRequest(true);
+            throw new Error("Too many request try again tomorrow!")
+        } else if (!response.ok) {
+            throw new Error("Failed to submit request!")
         }
 
         return response.json();
@@ -103,47 +109,51 @@ export default function Form() {
             </div>
         );
     } else {
-        return(
-        <main className="grid px-4">
-            <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
-                maxLength={100}
-                className="w-min p-4"/>
+        if (request == true) {
+            return <TooManyRequest/>
+        } else {
+            return(
+                <main className="grid px-4">
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter your name"
+                        maxLength={100}
+                        className="w-min p-4"/>
 
-            <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
-                <span>1-100 characters</span>
-                <span>{name.length}/100</span>
-            </div>
+                    <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
+                        <span>1-100 characters</span>
+                        <span>{name.length}/100</span>
+                    </div>
 
-            <input
-                type="text"
-                value={contact}
-                onChange={(a) => setContact(a.target.value)}
-                placeholder="Enter your point of contact (email or phone number)"
-                minLength={10}
-                maxLength={50}
-                className="w-full p-4"/>
-            <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
-                <span>10-50 characters</span>
-                <span>{contact.length}/50</span>
-            </div>
-            <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Enter your message"
-                className="w-full resize-none overflow-hidden min-h-[40px] p-4 boder rounded-md"
-                onInput={(e) => {
-                    e.currentTarget.style.height = "auto";
-                    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-                }}/>
-            <button className="max-w-full whitespace-normal break-words bg-white/20 rounded-md hover:cursor-pointer hover:bg-white/60 transition-colors p-4 mt-8 duration-500"
-                    onClick={handleSubmit}>
-                <p className="text-black">Submit</p>
-            </button>
-        </main>
-    );
+                    <input
+                        type="text"
+                        value={contact}
+                        onChange={(a) => setContact(a.target.value)}
+                        placeholder="Enter your point of contact (email or phone number)"
+                        minLength={10}
+                        maxLength={50}
+                        className="w-full p-4"/>
+                    <div className="mt-2 mb-2 flex justify-between text-xs text-white/50">
+                        <span>10-50 characters</span>
+                        <span>{contact.length}/50</span>
+                    </div>
+                    <textarea
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Enter your message"
+                        className="w-full resize-none overflow-hidden min-h-[40px] p-4 boder rounded-md"
+                        onInput={(e) => {
+                            e.currentTarget.style.height = "auto";
+                            e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                        }}/>
+                    <button className="max-w-full whitespace-normal break-words bg-white/20 rounded-md hover:cursor-pointer hover:bg-white/60 transition-colors p-4 mt-8 duration-500"
+                            onClick={handleSubmit}>
+                        <p className="text-black">Submit</p>
+                    </button>
+                </main>
+            );
+        }
     }  
 }
