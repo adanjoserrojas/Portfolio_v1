@@ -148,9 +148,9 @@ export default function Form() {
                             e.currentTarget.style.height = "auto";
                             e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
                         }}/>
-                    <button className="max-w-full whitespace-normal break-words bg-white/20 rounded-md hover:cursor-pointer hover:bg-white/60 transition-colors p-4 mt-8 duration-500"
+                    <button className="max-w-full whitespace-normal break-words bg-raised rounded-md hover:cursor-pointer hover:bg-match transition-colors p-4 mt-8 duration-500"
                             onClick={handleSubmit}>
-                        <p className="text-black">Submit</p>
+                        <p className="text-ink">Submit</p>
                     </button>
                 </main>
             );
