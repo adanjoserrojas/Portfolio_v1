@@ -54,3 +54,4 @@ service-account.json
 
 # mcp config
 .mcp.json
+tui/*
