@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { profile } from "@/content/profile";
 import EmailLink from "./EmailLink";
 
@@ -26,6 +27,23 @@ export default function Footer() {
           </li>
         </ul>
       </div>
+      <nav
+        aria-label="Site policies"
+        className="mx-auto flex max-w-5xl flex-wrap gap-x-6 gap-y-2 px-4 pb-8 sm:px-6"
+      >
+        <Link
+          href="/privacy"
+          className="inline-flex min-h-6 items-center text-xs text-muted underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Privacy policy
+        </Link>
+        <Link
+          href="/terms"
+          className="inline-flex min-h-6 items-center text-xs text-muted underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Terms &amp; conditions
+        </Link>
+      </nav>
     </footer>
   );
 }
