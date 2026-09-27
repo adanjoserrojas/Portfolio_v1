@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         const client = new PinpointSMSVoiceV2Client(config);
         const input = {
             DestinationPhoneNumber: process.env.MY_PHONE_NUMBER,
-            OriginationIdentity: "portfolio",
+            OriginationIdentity: process.env.AWS_PHONE_NUMBER,
             MessageBody: 
                 `From your portfolio. ${name} has sent you a message.\n
                 \t${message}\n
