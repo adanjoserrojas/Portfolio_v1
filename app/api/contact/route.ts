@@ -13,22 +13,38 @@ import {
 const ContactSchema = z.object({
     name: z.string().trim().min(1).max(100),
     contact: z.string().min(10).max(50),
-    message: z.string().trim().min(1).max(2000),
+    message: z.string().trim().min(1).max(1600),
 });
 
 export async function POST(request: Request) {
 
+    let body: unknown;
+
     try {
-        const body = await request.json();
+        
+        try {
+            body = await request.json();
+        } catch (error) {
+            if (error instanceof SyntaxError){
+                return Response.json({
+                    success: false,
+                    error: "Request body must contain valid JSON.",
+                },
+                { status: 400 });
+            }
+
+            throw error;
+        }
+        
         const result = ContactSchema.safeParse(body);
 
         if (!result.success) {
             return Response.json(
                 {
                     success: false,
-                    error: "Invalid data",
+                    error: "Invalid contact form data.",
                 },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -78,14 +94,14 @@ export async function POST(request: Request) {
                 `From your portfolio. ${name} has sent you a message.\n
                 \t${message}\n
                 their contact is: ${contact}`,
-            TimeToLive: Number("24"),
+            TimeToLive: Number("86400"),
         };
         const command = new SendTextMessageCommand(input);
         const response = await client.send(command);
 
         return Response.json(
             {
-                sucess: true,
+                success: true,
                 received: response.MessageId,
             },
             { status: 200 }
