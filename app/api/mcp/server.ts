@@ -12,7 +12,22 @@ const getProjectInputSchema = z.object({
 
 export function createPortfolioServer(): McpServer {
 
-    const server: any = ""
+    const server = new McpServer({ name: "portfolio", version: "1.0.0 "});
+    server.registerTool(
+        "search_portfolio",
+        { description: "Searches information through the portfolio", inputSchema: { query: z.string().min(1).max(200) }},
+        async ({ query }) => ({
+            content: [{ type: "text", text: JSON.stringify(searchPortfolio(query, 5))}],
+        }),
+    );
+    server.registerTool(
+        "getPublicProject",
+        { description: "gets a specific portfolio project through a slug (a short word referencing the project)", inputSchema: {slug: z.string().min(1).max(50)}},
+        async ({ slug }) => ({
+            content: [{ type: "text", text: JSON.stringify(getPublicProject(slug))}],
+        }),
+    );
+
     return server;
 }
 

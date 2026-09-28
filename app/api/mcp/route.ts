@@ -1,11 +1,17 @@
-"use server";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { createPortfolioServer } from "./server";
 
-import { z } from "zod";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
+async function handle( req: Request): Promise<Response> {
 
+    const server = createPortfolioServer();
+    const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+    await server.connect(transport);
 
-export default function GET() {
-
-    return
+    return transport.handleRequest(req);
     
 }
+
+export { handle as GET, handle as POST, handle as DELETE };
