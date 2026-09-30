@@ -1,4 +1,4 @@
-import { projectBySlug } from "@/content/projects";4
+import { projectBySlug } from "@/content/projects";
 import { corpus } from "@/lib/retrieval";
 import { retrieve } from "@/lib/rank";
 
@@ -10,9 +10,9 @@ export function searchPortfolio(query: string, limit: number){
 
     return {
 
-        query: query,
+        query,
         totalMatches: totalMatches,
-        results: information.map(({ doc, score, matched }) => ({
+        results: results.map(({ doc, score, matched }) => ({
             id: doc.id,
             kind: doc.kind,
             title: doc.title,
@@ -35,13 +35,13 @@ export function getPublicProject(slug: string) {
     }
 
     return {
-        slug: project.slug,
+        slug,
         name: project.name,
         summary: project.summary,
         date: project.date,
         stack: project.stack ?? [],
         github_url: project.href,
-        absolute_portfolio_url: `https://4dan.dev/projects/${project.slug}`,
+        absolute_portfolio_url: `https://www.4dan.dev/projects/${project.slug}`,
         accomplishments: (project.bullets ?? [])
         .filter((bullet) => bullet.disclosure === "cleared")
         .map((bullet) => bullet.text),

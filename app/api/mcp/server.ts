@@ -16,20 +16,42 @@ const searchPortfolioInputSchema = z.object({
 
 export function createPortfolioServer(): McpServer {
 
-    const server = new McpServer({ name: "portfolio", version: "1.0.0 "});
+    const server = new McpServer({ name: "portfolio", version: "1.0.0" });
     server.registerTool(
         "search_portfolio",
-        { description: "Searches information through the portfolio", inputSchema: { query: z.string().min(1).max(200) }},
-        async ({ query }) => ({
-            content: [{ type: "text", text: JSON.stringify(searchPortfolio(query, 5))}],
-        }),
+        {
+            description: "Search Adan's public projects, experience, skills, and education. Returns ranked excerpts and source URLs; use a returned projectSlug with get_project for details.",
+            inputSchema: searchPortfolioInputSchema,
+            annotations: { readOnlyHint: true },
+        },
+        async ({ query, limit }): Promise<CallToolResult> => {
+            const data = searchPortfolio(query, limit);
+            return {
+                content: [{ type: "text", text: JSON.stringify(data) }],
+                structuredContent: data,
+            };
+        },
     );
     server.registerTool(
-        "getPublicProject",
-        { description: "gets a specific portfolio project through a slug (a short word referencing the project)", inputSchema: {slug: z.string().min(1).max(50)}},
-        async ({ slug }) => ({
-            content: [{ type: "text", text: JSON.stringify(getPublicProject(slug))}],
-        }),
+        "get_project",
+        {
+            description: "Get a public project's summary, stack, accomplishments, and links by slug. Use the projectSlug returned by search_portfolio, such as ipalo.",
+            inputSchema: getProjectInputSchema,
+            annotations: { readOnlyHint: true },
+        },
+        async ({ slug }): Promise<CallToolResult> => {
+            const data = getPublicProject(slug);
+            if (!data) {
+                return {
+                    isError: true,
+                    content: [{ type: "text", text: `Project "${slug}" was not found. Use search_portfolio to find a projectSlug.` }],
+                };
+            }
+            return {
+                content: [{ type: "text", text: JSON.stringify(data) }],
+                structuredContent: data,
+            };
+        },
     );
 
     return server;
