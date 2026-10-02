@@ -4,14 +4,26 @@ import { createPortfolioServer } from "./server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-async function handle( req: Request): Promise<Response> {
-
+export async function POST(req: Request): Promise<Response> {
     const server = createPortfolioServer();
-    const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-    await server.connect(transport);
+    const transport = new WebStandardStreamableHTTPServerTransport({
+        sessionIdGenerator: undefined,
+        enableJsonResponse: true,
+    });
 
-    return transport.handleRequest(req);
-    
+    try {
+        await server.connect(transport);
+        const response = await transport.handleRequest(req);
+        response.headers.set("Cache-Control", "no-store");
+        return response;
+    } finally {
+        // JSON mode finishes the tool call before handleRequest resolves.
+        await server.close();
+    }
 }
 
-export { handle as GET, handle as POST, handle as DELETE };
+function methodNotAllowed(): Response {
+    return new Response(null, { status: 405, headers: { Allow: "POST" } });
+}
+
+export { methodNotAllowed as GET, methodNotAllowed as DELETE };

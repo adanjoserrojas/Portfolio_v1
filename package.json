@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "verify:content": "tsx scripts/verify-content.ts",
     "smoke:calendar": "tsx --conditions=react-server --env-file=.env scripts/smoke-calendar.ts",
+    "smoke:mcp": "node --conditions=react-server --require tsx/cjs scripts/smoke-mcp.ts",
     "verify:contrast": "tsx scripts/verify-contrast.ts",
     "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast"
   },
