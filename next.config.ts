@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   images: {
     // §7.3 — AVIF first, WebP fallback.
     formats: ["image/avif", "image/webp"],
@@ -43,11 +44,6 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
           },
         ],
-      },
-      {
-        // Fingerprinted build assets are immutable.
-        source: "/_next/static/:path*",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
       {
         /**

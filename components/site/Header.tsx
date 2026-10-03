@@ -17,6 +17,7 @@ const LINKS = [
   { href: "/skills", label: "Skills" },
   { href: "/about", label: "About" },
   { href: "/assistant", label: "Assistant"},
+  { href: "/contact", label: "Contact"},
   { href: "/mcp", label: "MCP"},
 ];
 

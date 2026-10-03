@@ -1,0 +1,108 @@
+- generic [active] [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f5e3]:
+    - generic [ref=f5e4]:
+      - link "4dan.dev" [ref=f5e5] [cursor=pointer]:
+        - /url: /
+      - navigation "Main" [ref=f5e6]:
+        - list [ref=f5e7]:
+          - listitem [ref=f5e8]:
+            - link "Projects" [ref=f5e9] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=f5e10]:
+            - link "Experience" [ref=f5e11] [cursor=pointer]:
+              - /url: /experience
+          - listitem [ref=f5e12]:
+            - link "Skills" [ref=f5e13] [cursor=pointer]:
+              - /url: /skills
+          - listitem [ref=f5e14]:
+            - link "About" [ref=f5e15] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f5e16]:
+            - link "Assistant" [ref=f5e17] [cursor=pointer]:
+              - /url: /assistant
+          - listitem [ref=f5e18]:
+            - link "RIND" [ref=f5e19] [cursor=pointer]:
+              - /url: /RIND
+          - listitem [ref=f5e20]:
+            - link "Résumé (PDF)" [ref=f5e21] [cursor=pointer]:
+              - /url: /Adan_Rojas_Resume.pdf
+              - text: Résumé
+              - generic [ref=f5e22]: (PDF)
+      - generic [ref=f5e23]:
+        - button "Search Ctrl K" [ref=f5e24]:
+          - generic [ref=f5e25]: Search
+          - generic [ref=f5e26]: Ctrl K
+        - button "Switch theme" [ref=f5e27]
+  - main [ref=f5e30]:
+    - region "RIND agent workspace" [ref=f5e31]:
+      - generic [ref=f5e32]:
+        - generic [ref=f5e33]:
+          - heading "RIND" [level=1] [ref=f5e34]
+          - generic [ref=f5e37]: PRE-ALPHA
+        - generic [ref=f5e38]:
+          - generic [ref=f5e39]: UI preview
+          - button "Expand workspace" [ref=f5e41] [cursor=pointer]
+      - generic [ref=f5e45]:
+        - generic [ref=f5e46]:
+          - button "Toggle sessions" [ref=f5e47] [cursor=pointer]
+          - button "New session ⌄" [ref=f5e50] [cursor=pointer]:
+            - text: New session
+            - generic [ref=f5e51]: ⌄
+          - button "Inspector" [ref=f5e52] [cursor=pointer]
+        - generic [ref=f5e55]:
+          - generic [aria-hidden] [ref=f5e56]: ◇
+          - text: Interactive preview
+        - generic [ref=f5e58]:
+          - paragraph [ref=f5e61]: FROM INTENT TO OUTCOME
+          - heading "Good work starts with a clear task." [level=2] [ref=f5e62]: Good work startswith a clear task.
+          - paragraph [ref=f5e63]: A workspace to give your agent direction, follow its progress, and review what comes next.
+          - generic [ref=f5e64]:
+            - button "01 ↗ Build something Follow a change from task to diff." [ref=f5e65] [cursor=pointer]:
+              - generic [ref=f5e66]:
+                - text: "01"
+                - generic [ref=f5e67]: ↗
+              - strong [ref=f5e68]: Build something
+              - generic [ref=f5e69]: Follow a change from task to diff.
+            - button "02 ↗ Review a change Explore a run that asks for your input." [ref=f5e70] [cursor=pointer]:
+              - generic [ref=f5e71]:
+                - text: "02"
+                - generic [ref=f5e72]: ↗
+              - strong [ref=f5e73]: Review a change
+              - generic [ref=f5e74]: Explore a run that asks for your input.
+            - button "03 ↗ Investigate an issue See how a blocked tool call is handled." [ref=f5e75] [cursor=pointer]:
+              - generic [ref=f5e76]:
+                - text: "03"
+                - generic [ref=f5e77]: ↗
+              - strong [ref=f5e78]: Investigate an issue
+              - generic [ref=f5e79]: See how a blocked tool call is handled.
+          - paragraph [ref=f5e80]: Choose a sample above or describe a task below.
+        - generic [ref=f5e81]:
+          - generic [ref=f5e82]: Describe a task
+          - textbox "Describe a task" [ref=f5e83]:
+            - /placeholder: What would you like to work on?
+          - generic [ref=f5e84]:
+            - status [ref=f5e85]:
+              - text: Ready
+              - generic [ref=f5e87]: · Scripted demo
+            - button "Send" [disabled] [ref=f5e88]
+        - generic [ref=f5e92]: UI preview · No live agent connected
+  - contentinfo [ref=f5e94]:
+    - generic [ref=f5e95]:
+      - paragraph [ref=f5e96]: Adan Rojas · Oviedo, FL
+      - list [ref=f5e97]:
+        - listitem [ref=f5e98]:
+          - link "GitHub" [ref=f5e99] [cursor=pointer]:
+            - /url: https://github.com/adanjoserrojas
+        - listitem [ref=f5e100]:
+          - link "LinkedIn" [ref=f5e101] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/adan-rojas/
+        - listitem [ref=f5e102]:
+          - link "Devpost" [ref=f5e103] [cursor=pointer]:
+            - /url: https://devpost.com/adanjoserrojas
+        - listitem [ref=f5e104]:
+          - generic [ref=f5e105]:
+            - text: adan [at]
+            - generic [ref=f5e106]: at
+            - text: 4dan.dev
