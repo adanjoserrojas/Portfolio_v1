@@ -257,8 +257,11 @@ $env:NEXT_DIST_DIR = '.next-security'
 $env:NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'contact-ui-test-key'
 $env:TURNSTILE_SECRET_KEY = 'contact-ui-test-secret'
 $env:CONTACT_ALLOWED_ORIGINS = 'http://127.0.0.1:3100'
-npm run dev -- --hostname 127.0.0.1 --port 3100
+node ./node_modules/next/dist/bin/next dev --hostname 127.0.0.1 --port 3100
 ```
+
+This invokes Next.js directly so npm/PowerShell argument forwarding cannot consume
+the hostname and port flags.
 
 In another terminal, run `npm run test:contact:ui`. It checks validation, challenge
 requirements, retries, preserved inputs, success, and mobile/tablet/desktop layouts
