@@ -18,6 +18,7 @@ const LINKS = [
   { href: "/about", label: "About" },
   { href: "/assistant", label: "Assistant"},
   { href: "/contact", label: "Contact"},
+  { href: "/mcp", label: "MCP"},
 ];
 
 // Not a route — a file. Kept out of LINKS so it renders as a plain <a>
