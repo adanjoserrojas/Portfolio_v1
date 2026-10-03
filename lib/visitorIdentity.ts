@@ -2,6 +2,8 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { createHmac, randomUUID } from "node:crypto";
+import { isIP } from "node:net";
+import { unavailable } from "@/lib/contact/security";
 
 const VISITOR_COOKIE = "visitor_id";
 
@@ -22,7 +24,7 @@ export async function getHashedVisitorId() {
 
   let visitorId = cookieStore.get(VISITOR_COOKIE)?.value;
 
-  if (!visitorId) {
+  if (!visitorId || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(visitorId)) {
     visitorId = randomUUID();
 
     cookieStore.set(VISITOR_COOKIE, visitorId, {
@@ -38,11 +40,18 @@ export async function getHashedVisitorId() {
 }
 
 export function getHashedIp(request: Request) {
-  const forwarded =
-    request.headers.get("x-vercel-forwarded-for") ??
-    request.headers.get("x-forwarded-for");
-
-  const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
-
+  // Local requests share a bucket; arbitrary headers can't select a new IP.
+  if (process.env.NODE_ENV === "development" && process.env.VERCEL !== "1") {
+    return hashIdentifier("127.0.0.1", "ip");
+  }
+  const header = process.env.VERCEL === "1"
+    ? "x-vercel-forwarded-for"
+    : process.env.CONTACT_TRUSTED_IP_HEADER;
+  if (!header || !["x-vercel-forwarded-for", "x-forwarded-for", "x-real-ip"].includes(header)) {
+    return unavailable("ip_proxy_not_configured");
+  }
+  const raw = request.headers.get(header)?.split(",")[0]?.trim();
+  if (!raw || !isIP(raw)) return unavailable("ip_unavailable");
+  const ip = isIP(raw) === 6 ? new URL(`http://[${raw}]/`).hostname : raw;
   return hashIdentifier(ip, "ip");
 }

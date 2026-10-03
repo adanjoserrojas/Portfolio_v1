@@ -11,21 +11,29 @@
     "typecheck": "tsc --noEmit",
     "verify:content": "tsx scripts/verify-content.ts",
     "smoke:calendar": "tsx --conditions=react-server --env-file=.env scripts/smoke-calendar.ts",
+    "test:contact": "tsx --conditions=react-server --test tests/contact-security.test.ts",
+    "test:contact:ui": "node scripts/check-contact-ui.mjs",
     "verify:contrast": "tsx scripts/verify-contrast.ts",
     "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1140.0",
     "@aws-sdk/client-pinpoint-sms-voice-v2": "^3.1141.0",
+    "@aws-sdk/client-sns": "^3.1146.0",
     "@aws-sdk/lib-dynamodb": "^3.1140.0",
     "date-fns": "^4.4.0",
     "google-auth-library": "^11.0.0",
-    "lucide-react": "^1.48.0",
-    "next": "15.5.9",
+    "lucide-react": "^1.50.0",
+    "next": "15.5.27",
     "react": "^19.2.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.2.0",
     "zod": "^4.4.3"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.28"
+    }
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -34,7 +42,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.2",
+    "eslint-config-next": "15.5.27",
     "playwright": "^1.62.1",
     "server-only": "^0.0.1",
     "shadcn": "^4.16.2",

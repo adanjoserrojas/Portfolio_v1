@@ -5,7 +5,7 @@ import Form from "@/components/site/form";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "This is a form submission to contact me directly to my phone.",
+    "Send a message directly to my inbox about a project or professional opportunity.",
   alternates: { canonical: "/contact" },
 };
 
@@ -15,7 +15,7 @@ export default function ProjectsIndex() {
       <PageTitle
         eyebrow="Index"
         title="Contact"
-        lede={`Type your name and message. This will go directly to my phone!`}
+        lede="Send a message to my inbox. Leave your email address so I can reply."
       />
       <Form/>
     </Page>
