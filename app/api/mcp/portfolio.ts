@@ -1,6 +1,8 @@
 import { projectBySlug } from "@/content/projects";
 import { corpus } from "@/lib/retrieval";
 import { retrieve } from "@/lib/rank";
+import type { BusyBlock } from "@/lib/calendar/schema";
+import { addDays, clock, zonedIso, zonedMidnight } from "@/lib/calendar/time";
 
 export function searchPortfolio(query: string, limit: number){
     
@@ -47,3 +49,40 @@ export function getPublicProject(slug: string) {
         .map((bullet) => bullet.text),
     };
 };
+
+/**
+ * The gaps between busy blocks on one local day, earliest first.
+ *
+ * Bounded by local midnight to midnight, so a block that spans midnight only
+ * counts for the part inside `day`. Starts no earlier than now: a free hour
+ * that already passed would mislead someone asking "when is he free today?".
+ * Sorted defensively — Google already merges overlaps, but this is cheap.
+ */
+export function freeSlots(day: string, busy: BusyBlock[], timeZone: string): BusyBlock[] {
+    const dayStart = zonedMidnight(day, timeZone).getTime();
+    const dayEnd = zonedMidnight(addDays(day, 1), timeZone).getTime();
+    const iso = (ms: number) => zonedIso(new Date(ms), timeZone);
+
+    const free: BusyBlock[] = [];
+    let cursor = Math.max(dayStart, Date.now());
+
+    const sorted = [...busy].sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
+    for (const block of sorted) {
+        const start = Math.max(Date.parse(block.start), dayStart);
+        const end = Math.min(Date.parse(block.end), dayEnd);
+        if (start > cursor) free.push({ start: iso(cursor), end: iso(start) });
+        cursor = Math.max(cursor, end);
+    }
+    if (cursor < dayEnd) free.push({ start: iso(cursor), end: iso(dayEnd) });
+
+    return free;
+}
+
+/** `9:00 AM – 10:30 AM` in Adan's zone, so the client never converts from UTC itself. */
+export function labelled(blocks: BusyBlock[], timeZone: string) {
+    return blocks.map(({ start, end }) => ({
+        start,
+        end,
+        label: `${clock(start, timeZone)} – ${clock(end, timeZone)}`,
+    }));
+}

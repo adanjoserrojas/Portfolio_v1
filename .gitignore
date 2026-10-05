@@ -61,3 +61,5 @@ service-account.json
 tui/*
 
 CLAUDE.md
+.npm-cache/*
+/.next-security/
