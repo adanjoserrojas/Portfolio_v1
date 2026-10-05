@@ -2,7 +2,7 @@ import { projectBySlug } from "@/content/projects";
 import { corpus } from "@/lib/retrieval";
 import { retrieve } from "@/lib/rank";
 import type { BusyBlock } from "@/lib/calendar/schema";
-import { addDays, clock, zonedMidnight } from "@/lib/calendar/time";
+import { addDays, clock, zonedIso, zonedMidnight } from "@/lib/calendar/time";
 
 export function searchPortfolio(query: string, limit: number){
     
@@ -61,7 +61,7 @@ export function getPublicProject(slug: string) {
 export function freeSlots(day: string, busy: BusyBlock[], timeZone: string): BusyBlock[] {
     const dayStart = zonedMidnight(day, timeZone).getTime();
     const dayEnd = zonedMidnight(addDays(day, 1), timeZone).getTime();
-    const iso = (ms: number) => new Date(ms).toISOString();
+    const iso = (ms: number) => zonedIso(new Date(ms), timeZone);
 
     const free: BusyBlock[] = [];
     let cursor = Math.max(dayStart, Date.now());
