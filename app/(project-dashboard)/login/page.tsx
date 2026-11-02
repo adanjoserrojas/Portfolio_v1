@@ -12,20 +12,12 @@ export default async function Login({
         <ArrowLeft size={16} /> Back to the board
       </Link>
       <section className="login-card">
-        <div className="brand">
-          b<span>↗</span>
-        </div>
-        <p className="eyebrow">THE WORKSPACE</p>
+        <p className="eyebrow">Adan&apos;s mega-cool workspace</p>
         <h1>
-          Good things
+          Idk what you are doing here...
           <br />
-          are in progress.
+          This is for me to sign in lol
         </h1>
-        <p>
-          Sign in to manage projects, share updates,
-          <br />
-          and keep the work moving.
-        </p>
         {error && (
           <p role="alert" className="error">
             Sign-in could not be completed. Please try again.
@@ -37,9 +29,6 @@ export default async function Login({
         </a>
         <small>Private workspace · Owner access only</small>
       </section>
-      <footer>
-        BUILDLOG <span>A little more behind the scenes.</span>
-      </footer>
     </main>
   );
 }

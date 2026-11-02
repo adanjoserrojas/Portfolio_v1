@@ -398,21 +398,17 @@ export default function BoardView({
         <main id="main" className="board-main">
           <div className="intro">
             <div>
-              <p className="eyebrow">
-                <span className="status-dot" />
-                {admin ? "A LITTLE PROGRESS, EVERY DAY" : "THE WORK, IN MOTION"}
-              </p>
               <h1>
                 {archive
-                  ? "The archive."
+                  ? "Archive"
                   : admin
                     ? "Project board."
-                    : "From idea to shipped."}
+                    : "This is my personal J*ra."}
               </h1>
               <p className="subtitle">
                 {admin
-                  ? "A home for what’s next. Keep your projects moving."
-                  : "An open notebook of things I’m building, exploring, and putting into the world."}
+                  ? "A home for what’s next... To keep my projects moving."
+                  : "Explore my projects! This dashboard is build with React/Next.js, and backend Ruby on Rails and AWS services."}
               </p>
             </div>
             {admin ? (
@@ -465,9 +461,9 @@ export default function BoardView({
             <div className="overview-end">
               <span className="mini-line" />
               <span>
-                Ideas become projects.
+                Ideas =
                 <br />
-                Projects become progress.
+                Progress
               </span>
             </div>
           </div>
