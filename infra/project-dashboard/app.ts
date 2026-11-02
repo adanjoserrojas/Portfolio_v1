@@ -1,4 +1,5 @@
 import * as cdk from "aws-cdk-lib";
+import deployment from "./deployment-config.json";
 import {
   aws_dynamodb as ddb,
   aws_iam as iam,
@@ -16,16 +17,15 @@ const stack = new cdk.Stack(app, "BuildlogPrototype", {
     region: "us-east-1",
   },
 });
-const webOrigin = process.env.BUILDLOG_WEB_ORIGIN || "http://localhost:3100";
+const webOrigin = process.env.BUILDLOG_WEB_ORIGIN || deployment.webOrigin;
 const localOrigins = ["http://localhost:3000", "http://localhost:3100"];
-const webOrigins = localOrigins.includes(webOrigin)
-  ? localOrigins
-  : [webOrigin];
+// Keep local testing available alongside the explicitly configured hosted origin.
+const webOrigins = [...new Set([...localOrigins, webOrigin])];
 if (
   !localOrigins.includes(webOrigin) &&
-  new URL(webOrigin).protocol !== "https:"
+  (new URL(webOrigin).protocol !== "https:" || new URL(webOrigin).origin !== webOrigin)
 )
-  throw new Error("Hosted dashboard origin must use HTTPS");
+  throw new Error("Hosted dashboard origin must be an HTTPS origin without a path");
 const table = new ddb.Table(stack, "Board", {
   tableName: "buildlog-prototype-board",
   partitionKey: { name: "pk", type: ddb.AttributeType.STRING },
@@ -204,19 +204,21 @@ runtime.addToPolicy(
     resources: [sessions.tableArn],
   }),
 );
-const team = process.env.VERCEL_TEAM_SLUG,
-  project = process.env.VERCEL_PROJECT_NAME;
-if (Boolean(team) !== Boolean(project))
+const team = process.env.VERCEL_TEAM_SLUG || deployment.vercelTeamSlug,
+  project = process.env.VERCEL_PROJECT_NAME || deployment.vercelProjectName;
+if (Boolean(process.env.VERCEL_TEAM_SLUG) !== Boolean(process.env.VERCEL_PROJECT_NAME))
   throw new Error("Set both VERCEL_TEAM_SLUG and VERCEL_PROJECT_NAME");
 if (team && project) {
   const issuerHost = `oidc.vercel.com/${team}`;
-  const provider = new iam.OpenIdConnectProvider(stack, "VercelIdentity", {
+  const provider = new iam.CfnOIDCProvider(stack, "VercelIdentity", {
     url: `https://${issuerHost}`,
-    clientIds: [`https://vercel.com/${team}`],
+    clientIdList: [`https://vercel.com/${team}`],
   });
   const web = new iam.Role(stack, "VercelWebRole", {
+    roleName: "buildlog-vercel-production",
+    description: "Production portfolio: public board reads and isolated admin session storage.",
     assumedBy: new iam.FederatedPrincipal(
-      provider.openIdConnectProviderArn,
+      provider.attrArn,
       {
         StringEquals: {
           [`${issuerHost}:aud`]: `https://vercel.com/${team}`,
