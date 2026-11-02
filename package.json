@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbo",
+    "dev": "node scripts/project-dashboard/dev.mjs",
+    "dev:turbo": "node scripts/project-dashboard/dev.mjs --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -14,7 +14,11 @@
     "test:contact": "tsx --conditions=react-server --test tests/contact-security.test.ts",
     "test:contact:ui": "node scripts/check-contact-ui.mjs",
     "verify:contrast": "tsx scripts/verify-contrast.ts",
-    "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast"
+    "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast",
+    "test:dashboard": "tsx --test tests/project-dashboard/*.test.ts",
+    "synth:dashboard": "tsx infra/project-dashboard/app.ts",
+    "smoke:dashboard": "node scripts/project-dashboard/smoke-dev.mjs",
+    "smoke:dev-assets": "node scripts/project-dashboard/smoke-dev-assets.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1140.0",
@@ -23,14 +27,16 @@
     "@aws-sdk/lib-dynamodb": "^3.1140.0",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@modelcontextprotocol/server": "^2.1.0",
+    "@vercel/oidc-aws-credentials-provider": "^3.3.17",
     "date-fns": "^4.4.0",
     "google-auth-library": "^11.0.0",
     "lucide-react": "^1.50.0",
+    "jose": "^6.1.0",
     "next": "15.5.27",
     "react": "^19.2.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.2.0",
-    "zod": "^4.6.5"
+    "zod": "^4.6.6"
   },
   "overrides": {
     "next": {
@@ -43,6 +49,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "aws-cdk-lib": "latest",
+    "constructs": "^10",
     "eslint": "^9",
     "eslint-config-next": "15.5.27",
     "playwright": "^1.62.1",

@@ -1,0 +1,1174 @@
+.buildlog-root {
+  --surface: #fcfcfc;
+  --raised: #f4f5f6;
+  --card: #fff;
+  --ink: #17191b;
+  --muted: #555c63;
+  --line: #e5e7e9;
+  --accent: #8a5a12;
+  --match: #f6e9cc;
+  --green: #2a7256;
+  --blue: #386da0;
+  --purple: #8057a3;
+  --shadow: 0 2px 4px #17202a03;
+}
+.buildlog-root * {
+  box-sizing: border-box;
+}
+html[data-theme="dark"] .buildlog-root {
+  --surface: #0d0f11;
+  --raised: #16191c;
+  --card: #191c20;
+  --ink: #e6e8ea;
+  --muted: #a2aab3;
+  --line: #30353b;
+  --accent: #e2ae55;
+  --match: #3a2e14;
+  --green: #75bf9c;
+  --blue: #8dbbe5;
+  --purple: #b59adc;
+  color-scheme: dark;
+}
+.buildlog-root {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.buildlog-root button,
+.buildlog-root input,
+.buildlog-root select,
+.buildlog-root textarea {
+  font: inherit;
+}
+.buildlog-root button,
+.buildlog-root a,
+.buildlog-root input,
+.buildlog-root select,
+.buildlog-root textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+.buildlog-root button,
+.buildlog-root a {
+  touch-action: manipulation;
+}
+.buildlog-root button {
+  cursor: pointer;
+}
+.buildlog-root a {
+  color: inherit;
+  text-decoration: none;
+}
+.buildlog-root button {
+  color: inherit;
+}
+.buildlog-root button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.buildlog-root button:focus-visible,
+.buildlog-root a:focus-visible,
+.buildlog-root input:focus-visible,
+.buildlog-root select:focus-visible,
+.buildlog-root textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.buildlog-root .skip {
+  position: absolute;
+  top: -80px;
+  left: 20px;
+  background: var(--match);
+  padding: 12px;
+  z-index: 100;
+}
+.buildlog-root .skip:focus {
+  top: 10px;
+}
+.buildlog-root .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.buildlog-root .app-shell {
+  min-height: 100vh;
+}
+.buildlog-root .admin-shell {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+}
+.buildlog-root .sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+  padding: 32px 18px 18px;
+  background: var(--raised);
+  min-height: 100vh;
+}
+.buildlog-root .workspace-brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 0 12px 46px;
+}
+.buildlog-root .brand {
+  display: inline-flex;
+  align-items: center;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+.buildlog-root .brand span {
+  font-size: 26px;
+  color: var(--accent);
+  margin-left: 4px;
+}
+.buildlog-root .workspace-brand strong {
+  font-size: 18px;
+  letter-spacing: -0.6px;
+}
+.buildlog-root .workspace-brand small {
+  display: block;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 3px;
+}
+.buildlog-root .side-label {
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  color: var(--muted);
+  margin: 0 14px 12px;
+  font-family: var(--font-mono);
+}
+.buildlog-root .nav-item {
+  border: 0;
+  background: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border-radius: 7px;
+  text-align: left;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.buildlog-root .nav-item.active {
+  color: var(--accent);
+  background: var(--match);
+  font-weight: 600;
+}
+.buildlog-root .nav-item span {
+  margin-left: auto;
+  font-size: 11px;
+}
+.buildlog-root .sidebar-note {
+  margin: auto 12px 30px;
+  padding-top: 80px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.buildlog-root .sidebar-note p {
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.7px;
+  color: var(--ink);
+}
+.buildlog-root .sidebar-note a {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.buildlog-root .user-block {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  font-size: 11px;
+}
+.buildlog-root .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--match);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+.buildlog-root .user-block strong,
+.buildlog-root .user-block small {
+  display: block;
+}
+.buildlog-root .user-block small {
+  color: var(--muted);
+}
+.buildlog-root .user-block form {
+  margin-left: auto;
+}
+.buildlog-root .main-shell {
+  min-width: 0;
+}
+.buildlog-root .topbar {
+  height: 76px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 46px;
+  gap: 20px;
+}
+.buildlog-root .portfolio-brand {
+  font-weight: 600;
+  font-size: 15px;
+}
+.buildlog-root .portfolio-brand span {
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 16px;
+}
+.buildlog-root .topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-left: auto;
+  font-size: 12px;
+}
+.buildlog-root .topbar nav a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.buildlog-root .breadcrumb {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+.buildlog-root .breadcrumb strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.buildlog-root .admin-shell .theme-btn {
+  margin-left: auto;
+}
+.buildlog-root .icon-btn {
+  border: 0;
+  background: none;
+  padding: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  border-radius: 5px;
+}
+.buildlog-root .icon-btn:hover {
+  background: var(--line);
+}
+.buildlog-root .board-main {
+  padding: 46px 46px 20px;
+  max-width: 1700px;
+  margin: auto;
+}
+.buildlog-root .intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.buildlog-root .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 16px;
+}
+.buildlog-root .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-block;
+  margin-right: 5px;
+}
+.buildlog-root .intro h1 {
+  font-size: 38px;
+  letter-spacing: -1.6px;
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0 0 13px;
+}
+.buildlog-root .subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+.buildlog-root .primary,
+.buildlog-root .secondary {
+  border-radius: 6px;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.buildlog-root .primary {
+  background: var(--ink);
+  color: var(--surface);
+  border: 1px solid var(--ink);
+}
+.buildlog-root .primary:hover {
+  opacity: 0.85;
+}
+.buildlog-root .secondary {
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.buildlog-root .public-pill {
+  border: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 20px;
+  padding: 7px 13px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.buildlog-root .overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.2fr;
+  gap: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px 26px;
+  margin: 32px 0;
+}
+.buildlog-root .overview > div {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+}
+.buildlog-root .overview > div:not(:first-child) {
+  border-left: 1px solid var(--line);
+  padding-left: 26px;
+}
+.buildlog-root .overview-number {
+  font-family: var(--font-mono);
+  font-size: 29px;
+  font-weight: 400;
+  letter-spacing: -2px;
+}
+.buildlog-root .overview > div > span:not(.overview-number) {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.buildlog-root .overview strong {
+  font-weight: 400;
+}
+.buildlog-root .amber {
+  color: var(--accent);
+}
+.buildlog-root .green {
+  color: var(--green);
+}
+.buildlog-root .mini-line {
+  display: block;
+  width: 24px;
+  height: 28px;
+  border-left: 2px solid var(--accent);
+  transform: skew(-15deg);
+  opacity: 0.6;
+}
+.buildlog-root .board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 17px;
+  gap: 16px;
+}
+.buildlog-root .view-tabs {
+  display: flex;
+  background: var(--raised);
+  padding: 3px;
+  border-radius: 6px;
+  gap: 3px;
+}
+.buildlog-root .view-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  padding: 6px 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.buildlog-root .view-tabs .selected {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 1px 4px #00000012;
+}
+.buildlog-root .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.buildlog-root .search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.buildlog-root .search input {
+  width: 155px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 11px;
+  outline-offset: 0;
+}
+.buildlog-root .search kbd {
+  font-size: 10px;
+  border: 1px solid var(--line);
+  padding: 0 5px;
+  border-radius: 3px;
+}
+.buildlog-root .status-filter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+}
+.buildlog-root .status-filter select {
+  border: 0;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  max-width: 110px;
+}
+.buildlog-root .kanban {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 22px;
+  min-height: 390px;
+}
+.buildlog-root .column {
+  min-width: 0;
+}
+.buildlog-root .column-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px 17px;
+  min-height: 48px;
+}
+.buildlog-root .column-head > div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.buildlog-root .column h2 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+.buildlog-root .column-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--muted);
+  border-radius: 50%;
+}
+.buildlog-root .column-dot.in_progress {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.buildlog-root .column-dot.in_review {
+  border-color: var(--purple);
+  background: var(--purple);
+}
+.buildlog-root .column-dot.finished {
+  border-color: var(--green);
+  background: var(--green);
+}
+.buildlog-root .count {
+  color: var(--muted);
+  background: var(--raised);
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.buildlog-root .column-cards {
+  display: grid;
+  gap: 12px;
+}
+.buildlog-root .project-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 17px 17px 11px;
+  box-shadow: var(--shadow);
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+.buildlog-root .project-card:hover {
+  border-color: var(--muted);
+  transform: translateY(-1px);
+}
+.buildlog-root .project-card[draggable="true"] {
+  cursor: grab;
+}
+.buildlog-root .card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+.buildlog-root .card-id {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.6px;
+}
+.buildlog-root .tiny-dot {
+  height: 4px;
+  width: 4px;
+  background: var(--line);
+  border-radius: 50%;
+}
+.buildlog-root .draft {
+  font-size: 9px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--muted);
+}
+.buildlog-root .card-title {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.25px;
+  line-height: 1.45;
+  text-align: left;
+}
+.buildlog-root .description {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 8px 0 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.buildlog-root .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.buildlog-root .tags span {
+  font-size: 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--muted);
+  background: var(--surface);
+}
+.buildlog-root .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  margin-top: 17px;
+  padding-top: 10px;
+  color: var(--muted);
+  font-size: 9px;
+  min-height: 31px;
+}
+.buildlog-root .card-footer span,
+.buildlog-root .card-footer a,
+.buildlog-root .text-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.buildlog-root .text-btn {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.buildlog-root .add-project {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 5px;
+  border: 0;
+  background: none;
+  font-size: 11px;
+  color: var(--muted);
+}
+.buildlog-root .column-empty {
+  padding: 26px 12px;
+  border: 1px dashed var(--line);
+  border-radius: 7px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+}
+.buildlog-root .board-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 19px;
+  margin-top: 30px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.buildlog-root .board-footer > span {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.buildlog-root .footer-mark {
+  font-size: 20px;
+  color: var(--ink);
+  margin-left: 15px;
+}
+.buildlog-root .list-view {
+  padding: 20px 0;
+  min-height: 390px;
+}
+.buildlog-root .list-view > button {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  padding: 19px 12px;
+  text-align: left;
+}
+.buildlog-root .list-view strong {
+  flex: 1;
+  font-size: 13px;
+}
+.buildlog-root .list-view > button > span:not(.column-dot) {
+  color: var(--muted);
+  font-size: 11px;
+}
+.buildlog-root .notice {
+  padding: 9px 0;
+  font-size: 12px;
+  color: var(--accent);
+}
+.buildlog-root .project-dialog {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 12px;
+  width: 580px;
+  max-width: calc(100vw - 28px);
+  padding: 0;
+  box-shadow: 0 24px 100px #0003;
+}
+.buildlog-root .project-dialog::backdrop {
+  background: #11182080;
+  backdrop-filter: blur(3px);
+}
+.buildlog-root .dialog-content {
+  padding: 28px;
+}
+.buildlog-root .dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buildlog-root .dialog-head .eyebrow {
+  margin: 0;
+}
+.buildlog-root .dialog-content h2 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin: 20px 0;
+}
+.buildlog-root .dialog-content form > label,
+.buildlog-root .form-row > label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  margin: 13px 0;
+}
+.buildlog-root .dialog-content input:not([type="checkbox"]),
+.buildlog-root .dialog-content textarea,
+.buildlog-root .dialog-content select {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 9px 11px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 12px;
+  margin-top: 6px;
+}
+.buildlog-root .dialog-content textarea {
+  resize: vertical;
+}
+.buildlog-root .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.buildlog-root .form-row > label {
+  margin: 0;
+}
+.buildlog-root .optional {
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 8px;
+}
+.buildlog-root .checks {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  margin: 19px 0;
+}
+.buildlog-root .checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.buildlog-root .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.buildlog-root .dialog-notice {
+  font-size: 12px;
+  color: var(--accent);
+}
+.buildlog-root .detail-status {
+  font-size: 11px;
+  background: var(--match);
+  color: var(--accent);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.buildlog-root .detail-description {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  margin: 24px 0;
+}
+.buildlog-root .detail-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+.buildlog-root .login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 35px 50px;
+  background:
+    radial-gradient(ellipse at 50% 50%, var(--match), transparent 65%),
+    var(--surface);
+}
+.buildlog-root .back {
+  font-size: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+}
+.buildlog-root .login-card {
+  margin: auto;
+  text-align: center;
+  padding: 60px 20px;
+}
+.buildlog-root .login-card .brand {
+  margin-bottom: 40px;
+  font-size: 44px;
+}
+.buildlog-root .login-card .eyebrow {
+  justify-content: center;
+}
+.buildlog-root .login-card h1 {
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  font-weight: 500;
+}
+.buildlog-root .login-card > p:not(.eyebrow) {
+  font-size: 14px;
+  color: var(--muted);
+}
+.buildlog-root .login-card > .primary {
+  margin: 24px 0 15px;
+  padding: 14px 24px;
+}
+.buildlog-root .login-card small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+}
+.buildlog-root .login-page footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+.buildlog-root .unavailable {
+  padding: 120px 30px;
+  text-align: center;
+}
+.buildlog-root .collapsed {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+.buildlog-root .collapsed .sidebar {
+  display: none;
+}
+.buildlog-root .error {
+  color: #b44737 !important;
+}
+@media (min-width: 1500px) {
+  .buildlog-root .board-main {
+    padding-top: 60px;
+  }
+  .buildlog-root .intro h1 {
+    font-size: 44px;
+  }
+  .buildlog-root .project-card {
+    padding: 21px 21px 14px;
+  }
+  .buildlog-root .description {
+    font-size: 12px;
+  }
+}
+@media (max-width: 1150px) {
+  .buildlog-root .admin-shell {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+  .buildlog-root .board-main {
+    padding: 32px 25px 20px;
+  }
+  .buildlog-root .topbar {
+    padding: 0 25px;
+  }
+  .buildlog-root .overview-end {
+    display: none !important;
+  }
+  .buildlog-root .overview {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .buildlog-root .kanban {
+    gap: 10px;
+  }
+  .buildlog-root .project-card {
+    padding: 12px;
+  }
+  .buildlog-root .column h2 {
+    font-size: 11px;
+  }
+  .buildlog-root .sidebar {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .buildlog-root .collapsed {
+    grid-template-columns: 0 minmax(0, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .buildlog-root .admin-shell {
+    display: block;
+  }
+  .buildlog-root .sidebar {
+    display: none;
+  }
+  .buildlog-root .kanban {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .buildlog-root .intro h1 {
+    font-size: 34px;
+  }
+  .buildlog-root .public-pill {
+    display: none;
+  }
+  .buildlog-root .overview {
+    margin: 26px 0;
+  }
+  .buildlog-root .overview > div:not(:first-child) {
+    padding-left: 16px;
+  }
+  .buildlog-root .board-footer {
+    gap: 20px;
+  }
+}
+@media (max-width: 560px) {
+  .buildlog-root .topbar {
+    height: 64px;
+    padding: 0 20px;
+    gap: 14px;
+  }
+  .buildlog-root .topbar nav > a:first-child {
+    display: none;
+  }
+  .buildlog-root .portfolio-brand span {
+    margin-left: 5px;
+  }
+  .buildlog-root .board-main {
+    padding: 30px 18px 20px;
+  }
+  .buildlog-root .intro {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .buildlog-root .intro h1 {
+    font-size: 32px;
+  }
+  .buildlog-root .subtitle {
+    font-size: 12px;
+  }
+  .buildlog-root .eyebrow {
+    font-size: 9px;
+  }
+  .buildlog-root .intro > .primary {
+    margin-top: 4px;
+  }
+  .buildlog-root .overview {
+    padding: 18px 12px;
+    gap: 8px;
+  }
+  .buildlog-root .overview > div {
+    gap: 8px;
+  }
+  .buildlog-root .overview > div:not(:first-child) {
+    padding-left: 10px;
+  }
+  .buildlog-root .overview-number {
+    font-size: 23px;
+  }
+  .buildlog-root .overview > div > span:not(.overview-number) {
+    font-size: 9px;
+  }
+  .buildlog-root .overview strong {
+    display: none;
+  }
+  .buildlog-root .board-toolbar {
+    flex-wrap: wrap;
+  }
+  .buildlog-root .toolbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .buildlog-root .search {
+    flex: 1;
+  }
+  .buildlog-root .search input {
+    width: 100%;
+    min-width: 0;
+  }
+  .buildlog-root .search kbd {
+    display: none;
+  }
+  .buildlog-root .kanban {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .buildlog-root .column-head {
+    padding-bottom: 10px;
+  }
+  .buildlog-root .column h2 {
+    font-size: 13px;
+  }
+  .buildlog-root .column-cards {
+    gap: 10px;
+  }
+  .buildlog-root .project-card {
+    padding: 18px;
+  }
+  .buildlog-root .description {
+    font-size: 12px;
+  }
+  .buildlog-root .tags span {
+    font-size: 10px;
+  }
+  .buildlog-root .card-title {
+    font-size: 15px;
+  }
+  .buildlog-root .board-footer {
+    align-items: flex-start;
+    font-size: 9px;
+  }
+  .buildlog-root .board-footer > span {
+    flex-wrap: wrap;
+  }
+  .buildlog-root .dialog-content {
+    padding: 20px;
+  }
+  .buildlog-root .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .buildlog-root .form-row > label {
+    margin: 10px 0;
+  }
+  .buildlog-root .checks {
+    flex-direction: column;
+  }
+  .buildlog-root .login-page {
+    padding: 25px;
+  }
+  .buildlog-root .login-card h1 {
+    font-size: 40px;
+  }
+  .buildlog-root .login-page footer span {
+    display: none;
+  }
+  .buildlog-root .list-view > button > span:not(.column-dot) {
+    font-size: 9px;
+  }
+  .buildlog-root .list-view strong {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .buildlog-root * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.buildlog-root {
+  --danger: #a52d24;
+  --danger-bg: #fff3f1;
+}
+html[data-theme="dark"] .buildlog-root {
+  --danger: #ffb4a9;
+  --danger-bg: #3b2020;
+}
+.buildlog-root .delete-trigger {
+  margin-right: auto;
+  color: var(--danger);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  font-size: 12px;
+  padding: 8px 0;
+}
+.buildlog-root .danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--danger);
+  background: var(--danger);
+  color: var(--surface);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+.buildlog-root .delete-confirmation {
+  border: 1px solid var(--danger);
+  border-radius: 7px;
+  padding: 16px;
+  background: var(--danger-bg);
+}
+.buildlog-root .delete-confirmation h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.buildlog-root .delete-confirmation p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.buildlog-root .delete-confirmation .form-actions {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+.buildlog-root {
+  --surface: var(--color-surface);
+  --raised: var(--color-raised);
+  --ink: var(--color-ink);
+  --muted: var(--color-muted);
+  --line: var(--color-line);
+  --accent: var(--color-accent);
+  --match: var(--color-match);
+}
+.buildlog-root .project-dialog {
+  margin: auto;
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+}
+
+.buildlog-root .mobile-admin-nav {
+  display: none;
+}
+.buildlog-root .project-dialog {
+  margin: auto;
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+}
+@media (max-width: 900px) {
+  .buildlog-root .mobile-admin-nav {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+  }
+  .buildlog-root .mobile-admin-nav button {
+    border: 0;
+    background: none;
+    padding: 4px 0;
+  }
+  .buildlog-root .mobile-admin-nav .selected {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .buildlog-root .mobile-admin-nav form {
+    margin-left: auto;
+  }
+}

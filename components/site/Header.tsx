@@ -12,6 +12,7 @@ import PaletteTrigger from "./PaletteTrigger";
  * are client leaves.
  */
 const LINKS = [
+  { href: "/board", label: "Buildlog" },
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
   { href: "/skills", label: "Skills" },

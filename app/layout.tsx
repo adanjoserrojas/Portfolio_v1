@@ -5,6 +5,7 @@ import "./globals.css";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { profile, emailAddress } from "@/content/profile";
 import { education } from "@/content/education";
+import SiteChrome from "@/components/site/SiteChrome";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import Palette from "@/components/site/Palette";
@@ -150,14 +151,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header />
-        <main id="main" tabIndex={-1}>
+        <SiteChrome header={<Header />} footer={<Footer />} palette={<Palette docs={corpus} />}>
           {children}
-        </main>
-        <Footer />
-        {/* Corpus is built on the server and handed down, so zod and the
-            content modules never enter the client bundle (§5.3). */}
-        <Palette docs={corpus} />
+        </SiteChrome>
       </body>
     </html>
   );

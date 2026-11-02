@@ -14,7 +14,11 @@ const eslintConfig = [
   {
     ignores: [
       "node_modules/**",
+      "cdk.out/**",
+      "cdk.build/**",
+      "services/project-dashboard/vendor/**",
       ".next/**",
+      ".next-dev/**",
       ".next-security/**",
       ".npm-cache/**",
       "tui/target/**",

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
@@ -27,10 +28,16 @@ const nextConfig: NextConfig = {
         destination: "/Adan_Rojas_Resume.pdf",
         permanent: true,
       },
-      { source: "/resume", destination: "/Adan_Rojas_Resume.pdf", permanent: false },
+      {
+        source: "/resume",
+        destination: "/Adan_Rojas_Resume.pdf",
+        permanent: false,
+      },
     ];
   },
 
+  // Let Next.js set asset caching: development filenames are reused after edits,
+  // while production assets are fingerprinted and can safely be cached.
   async headers() {
     return [
       {
@@ -41,7 +48,8 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+            value:
+              "camera=(), microphone=(), geolocation=(), interest-cohort=()",
           },
         ],
       },
@@ -66,4 +74,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default function config(phase: string): NextConfig {
+  return {
+    ...nextConfig,
+    distDir: phase === PHASE_DEVELOPMENT_SERVER ? ".next-dev" : ".next",
+  };
+}
