@@ -20,7 +20,7 @@ assert.ok(
 const page = await fetch(`${origin}/board`);
 assert.equal(page.status, 200);
 assert.ok(
-  (await page.text()).includes("From idea to shipped."),
+  (await page.text()).includes('<main id="main" class="board-main">'),
   "Board page must render instead of its unavailable state",
 );
 const privatePage = await fetch(`${origin}/admin`, { redirect: "manual" });

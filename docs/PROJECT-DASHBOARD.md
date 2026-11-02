@@ -142,3 +142,11 @@ After the owner merges and deploys the feature, verify:
 4. Check production logs for OIDC/access-denied errors and compare Lambda invocations during a public-only read window. A warm cache reuses data; a cold or revalidated read may access DynamoDB directly but never Lambda. Admin reads intentionally use Lambda.
 
 Local development and the hosted site share the prototype tables. Each environment has its own cache, so a local mutation does not immediately invalidate Vercel's cache; Vercel refreshes on a later read after the five-minute revalidation interval. Use the hosted admin for immediate hosted invalidation. There is no real-time browser push.
+
+## UI edits and development hydration
+
+Development assets must not have a long-lived immutable cache policy. Next.js reuses JavaScript/CSS filenames during development; a custom one-year rule on all /_next/static paths made browsers combine updated server HTML with an older BoardView module. The global override was removed so Next.js sets development and production caching appropriately. This does not disable the board's Data Cache, ISR or production asset caching.
+
+After upgrading from the old configuration, hard-refresh existing localhost tabs once (Ctrl+Shift+R in Chrome) to discard previously cached assets. Normal UI edits then use Fast Refresh. There is no separate server copy of the board layout to maintain: BoardView supplies the server pre-render and browser hydration.
+
+Run `npm run smoke:dev-assets` against `npm run dev` to verify the actual JavaScript/CSS URLs reject stale browser caching. The check fails on the old immutable header and passes with Next.js development defaults. `npm run smoke:dashboard` now checks board structure instead of a particular heading so personalized copy is supported.

@@ -16,7 +16,8 @@
     "verify": "npm run typecheck && npm run lint && npm run verify:content && npm run verify:contrast",
     "test:dashboard": "tsx --test tests/project-dashboard/*.test.ts",
     "synth:dashboard": "tsx infra/project-dashboard/app.ts",
-    "smoke:dashboard": "node scripts/project-dashboard/smoke-dev.mjs"
+    "smoke:dashboard": "node scripts/project-dashboard/smoke-dev.mjs",
+    "smoke:dev-assets": "node scripts/project-dashboard/smoke-dev-assets.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1110.0",

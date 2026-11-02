@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Let Next.js set asset caching: development filenames are reused after edits,
+  // while production assets are fingerprinted and can safely be cached.
   async headers() {
     return [
       {
@@ -47,16 +49,6 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value:
               "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-          },
-        ],
-      },
-      {
-        // Fingerprinted build assets are immutable.
-        source: "/_next/static/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
           },
         ],
       },
