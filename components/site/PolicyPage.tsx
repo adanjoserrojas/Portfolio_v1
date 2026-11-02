@@ -7,19 +7,23 @@ export default function PolicyPage({
   relatedHref,
   relatedLabel,
   children,
+  updatedDate = "2026-10-02",
+  updatedLabel = "October 2, 2026",
 }: {
   title: string;
   description: string;
   relatedHref: string;
   relatedLabel: string;
   children: React.ReactNode;
+  updatedDate?: string;
+  updatedLabel?: string;
 }) {
   return (
     <Page>
       <PageTitle eyebrow="Site information" title={title} lede={description} />
       <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-y border-line py-3 font-mono text-xs text-muted">
         <p>
-          Last updated <time dateTime="2026-09-26">September 26, 2026</time>
+          Last updated <time dateTime={updatedDate}>{updatedLabel}</time>
         </p>
         <Link
           href={relatedHref}

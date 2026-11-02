@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublishPortfolioContact",
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns:REGION:ACCOUNT_ID:TOPIC_NAME"
+    },
+    {
+      "Sid": "UpdateContactRateLimits",
+      "Effect": "Allow",
+      "Action": "dynamodb:UpdateItem",
+      "Resource": "arn:aws:dynamodb:REGION:ACCOUNT_ID:table/CONTACT_TABLE_NAME"
+    }
+  ]
+}

@@ -31,9 +31,10 @@ export default function TermsPage() {
         <h2 id="terms-contact">Getting in touch</h2>
         <p>
           Use the contact options for relevant questions, professional
-          opportunities, or project discussions. Provide accurate contact
-          information if you would like a response, and share only information
-          you have permission to submit.
+          opportunities, or project discussions. You must provide accurate contact
+          information, including a real email address that you own or are authorized
+          to use and can receive replies at. Do not use fabricated contact details.
+          Share only information you have permission to submit.
         </p>
         <p>
           Sending an inquiry does not create a service agreement or guarantee a
@@ -67,17 +68,19 @@ export default function TermsPage() {
         </p>
       </section>
 
-      <section aria-labelledby="terms-sms">
-        <h2 id="terms-sms">SMS notifications to the owner</h2>
+      <section aria-labelledby="terms-notifications">
+        <h2 id="terms-notifications">Email notifications and contact privacy</h2>
         <p>
-          When enabled, the SMS feature sends contact notifications exclusively
-          to my own configured phone number. Visitors are not enrolled in an SMS
-          program by submitting the form and cannot choose a notification recipient.
+          Contact submissions are sent through AWS to my configured email inbox.
+          Visitors cannot choose a notification recipient and are not subscribed
+          to marketing or text messages by submitting the form.
         </p>
         <p>
-          Notification frequency depends on contact submissions. Carrier message
-          and data rates may apply to the receiving phone. Delivery can be delayed
-          or fail because of provider or carrier conditions.
+          Your contact information is kept private and is not published, sold,
+          or disclosed to others for marketing. Hosting, messaging, and email
+          providers process it to operate the site and deliver your inquiry, as
+          described in the privacy policy. Information may also be disclosed if
+          required by law.
         </p>
       </section>
 

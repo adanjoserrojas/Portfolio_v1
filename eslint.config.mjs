@@ -20,6 +20,7 @@ const eslintConfig = [
       ".next/**",
       ".next-dev/**",
       ".next-security/**",
+      ".npm-cache/**",
       "tui/target/**",
       "out/**",
       "build/**",
