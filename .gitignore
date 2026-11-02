@@ -59,3 +59,10 @@ tui/*
 CLAUDE.md
 .npm-cache/*
 /.next-security/
+
+# Project dashboard generated files
+/cdk.out/
+/cdk.build/
+/services/project-dashboard/vendor/
+/services/project-dashboard/.bundle/
+/services/project-dashboard/*.zip

@@ -1,0 +1,11 @@
+BOARD_AWS_REGION=us-east-1
+BOARD_TABLE=buildlog-prototype-board
+SESSION_TABLE=buildlog-prototype-sessions
+APP_ORIGIN=http://localhost:3100
+COGNITO_POOL_ID=
+COGNITO_CLIENT_ID=
+COGNITO_DOMAIN=
+BOARD_API=
+SESSION_SECRET=
+# Vercel production requires a project/environment-scoped OIDC role:
+BOARD_AWS_ROLE_ARN=
