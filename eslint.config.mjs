@@ -18,6 +18,7 @@ const eslintConfig = [
       "cdk.build/**",
       "services/project-dashboard/vendor/**",
       ".next/**",
+      ".next-dev/**",
       ".next-security/**",
       "tui/target/**",
       "out/**",

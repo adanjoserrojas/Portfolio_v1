@@ -66,3 +66,4 @@ CLAUDE.md
 /services/project-dashboard/vendor/
 /services/project-dashboard/.bundle/
 /services/project-dashboard/*.zip
+/.next-dev/

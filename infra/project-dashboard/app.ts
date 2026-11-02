@@ -17,8 +17,12 @@ const stack = new cdk.Stack(app, "BuildlogPrototype", {
   },
 });
 const webOrigin = process.env.BUILDLOG_WEB_ORIGIN || "http://localhost:3100";
+const localOrigins = ["http://localhost:3000", "http://localhost:3100"];
+const webOrigins = localOrigins.includes(webOrigin)
+  ? localOrigins
+  : [webOrigin];
 if (
-  webOrigin !== "http://localhost:3100" &&
+  !localOrigins.includes(webOrigin) &&
   new URL(webOrigin).protocol !== "https:"
 )
   throw new Error("Hosted dashboard origin must use HTTPS");
@@ -86,8 +90,8 @@ const client = pool.addClient("Web", {
       cognito.OAuthScope.resourceServer(resource, read),
       cognito.OAuthScope.resourceServer(resource, write),
     ],
-    callbackUrls: [`${webOrigin}/auth/callback`],
-    logoutUrls: [`${webOrigin}/login`],
+    callbackUrls: webOrigins.map((origin) => `${origin}/auth/callback`),
+    logoutUrls: webOrigins.map((origin) => `${origin}/login`),
   },
   supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.COGNITO],
 });

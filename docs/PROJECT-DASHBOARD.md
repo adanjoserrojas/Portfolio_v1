@@ -99,3 +99,9 @@ The owner controls the password after the first-login reset. Subsequent password
 ## Rebuilding the backend
 
 From the repository, run `pwsh -File scripts/project-dashboard/package-backend.ps1 -Profile <deployment-profile>` to rebuild in AWS and synthesize the CDK template. Add `-Deploy` to update the prototype stack. The profile must have deployment permissions; the scoped web role cannot deploy infrastructure. This script uses the private artifact bucket only for code packaging and executes both Rails test files before producing the ZIP.
+
+## Normal development server
+
+`npm run dev` now obtains the scoped dashboard session automatically and serves the portfolio and Buildlog at http://localhost:3000. `npm run dev:turbo` uses the same setup. Credentials stay in the child process environment and do not overwrite existing portfolio AWS credentials or environment files. AWS CLI and the existing `calendar-agent-dev` profile are required; `BOARD_AWS_PROFILE` selects another authorized profile. Restart after eight hours to renew the session.
+
+Cognito accepts localhost ports 3000 and 3100 for this prototype. Hosted configuration continues to accept only its configured HTTPS origin. Next.js development output uses `.next-dev`, while the production preview uses `.next`, so both servers can run without overwriting each other. Run `npm run smoke:dashboard` against port 3000 to verify the public board, private route protection, and Cognito callback.
